@@ -20,6 +20,7 @@ use App\Http\Controllers\CapturarResultadoController;
 use App\Http\Controllers\AdviserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,6 +69,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['middleware' => 'admin'], function() {
+        Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+        Route::post('register', [RegisteredUserController::class, 'store']);
         Route::resources([
             'usuarios' => UserController::class,
         ]);
