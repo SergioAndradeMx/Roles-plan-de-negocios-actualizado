@@ -1,16 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between dark:text-gray-100">
+        <div class="flex items-center justify-center dark:text-gray-100">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('GESTIÓN DE USUARIOS') }}
+                {{ __('Nuevo usuario') }}
             </h2>
-            @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-            @endif
         </div>
     </x-slot>
     <div class="justify-items-center grid">
-        <div class="w-1/4 dark:text-gray-100 m-8 bg-gray-800 p-8 rounded-3xl">
+        <div class="w-1/4 dark:text-gray-100 m-8 bg-white border-4 dark:border-none border-gray-200 dark:bg-gray-800 p-8 rounded-3xl">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
@@ -95,7 +92,7 @@
                 </div>
 
                 <div class="flex items-center justify-between mt-4">
-                    <a class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-200 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-red-700 focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4" 
+                    <a class="inline-flex items-center px-4 py-2 bg-red-800 dark:bg-red-800 dark:bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-200 uppercase tracking-widest hover:bg-red-700 dark:hover:bg-red-700 focus:bg-red-700 dark:focus:bg-red-600 active:bg-red-900 dark:active:bg-red-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4" 
                         href="{{ route('usuarios.index') }}">
                         {{ __('Cancelar') }}
                     </a>

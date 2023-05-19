@@ -11,7 +11,7 @@ class AdviserController extends Controller
      */
     public function index()
     {
-        return view('teacher', [
+        return view('asesor', [
             'planes_de_negocios' => auth()->user()->planes_de_negocios,
         ]);
     }
