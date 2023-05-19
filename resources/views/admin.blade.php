@@ -33,7 +33,7 @@
         </a>
 
         <!--  segunda card -->
-        <div href="#" class="
+        <a href="{{ route('admin_plan_de_negocio.index') }}" class="
             w-72
             h-80
             mb-6
@@ -54,10 +54,10 @@
                 <p class="pt-4 text-center text-gray-500 dark:text-gray-200 text-2xl leading-5 mt-1">Planes de negocio</p>
                 <p class="mt-4 text-center text-gray-600 dark:text-gray-400 text-sm leading-5 mt-1 border-t-2 border-gray-400 pt-4 dark:border-t-2 dark:border-gray-500 pt-4">Ver planes de negocio y estudios de mercado, editarlos y eliminarlos</p>
             </div>
-        </div>
+        </a>
 
         <!--     tercera card -->
-        <div href="#" class="
+        <a href="#" class="
             w-72
             h-80
             mb-6
@@ -78,7 +78,7 @@
                 <p class="pt-4 text-center text-gray-500 dark:text-gray-200 text-2xl leading-5 mt-1">Extra</p>
                 <p class="mt-4 text-center text-gray-600 dark:text-gray-400 text-sm leading-5 mt-1 border-t-2 border-gray-400 pt-4 dark:border-t-2 dark:border-gray-500 pt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </div>
-        </div>
+        </a>
 
     </div>
 </x-app-layout>

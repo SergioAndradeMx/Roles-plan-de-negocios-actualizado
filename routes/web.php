@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
         Route::post('register', [RegisteredUserController::class, 'store']);
         Route::resources([
             'usuarios' => UserController::class,
+            'admin_plan_de_negocio' => PlanDeNegocioController::class,
         ]);
     });
 });

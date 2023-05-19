@@ -6,6 +6,7 @@ use App\Models\Plan_de_negocio;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class PlanDeNegocioController extends Controller
 {
@@ -14,9 +15,14 @@ class PlanDeNegocioController extends Controller
      */
     public function index()
     {
-        return view('dashboard', [
-            'planes_de_negocios' => auth()->user()->planes_de_negocios,
-        ]);
+        if (auth()->user()->rol == "admin"){
+            $planes = DB::table('plan_de_negocios')->get();
+            return view('admin.planes_de_negocio.index', compact('planes'));
+        }else{
+            return view('dashboard', [
+                'planes_de_negocios' => auth()->user()->planes_de_negocios,
+            ]);
+        }
     }
 
     /**
@@ -72,8 +78,10 @@ class PlanDeNegocioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Plan_de_negocio $plan_de_negocio)
+    public function destroy(string $id)
     {
-        //
+        Plan_de_negocio::destroy($id);
+
+        return back();
     }
 }
