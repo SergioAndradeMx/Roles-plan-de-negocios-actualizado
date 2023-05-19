@@ -5,24 +5,21 @@
                 {{ __('GESTIÓN DE USUARIOS') }}
             </h2>
             @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ml-4">Registrar usuario</a>
             @endif
         </div>
     </x-slot>
 
     <div class="flex flex-wrap mx-auto justify-center px-auto dark:text-gray-100 m-8">
-        <div class="flex my-2 relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="flex my-2 relative overflow-x-auto shadow-md">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Nombre del usuario
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Email
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Password
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Rol
@@ -51,28 +48,25 @@
                                     {{ $user->email }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $user->password }}
-                                </td>
-                                <td class="px-6 py-4">
                                     {{ $user->rol }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="inline-flex">
-                                        <a href="#" class="inline-flex items-center px-1.5 py-1.5 bg-blue-700 hover:bg-blue-800 text-white text-sm font-medium rounded-md">
+                                        <a href="#" class="inline-flex items-center px-1.5 py-1.5 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium rounded-md">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
                                         </a>
 
-                                        <form method="post" action="#">
+                                        <form method="post" action="{{ route('usuarios.destroy', [$user->id]) }}">
                                             @method('delete')
                                             @csrf
                                             <button type="submit"
-                                                onclick="return confirm('Aún no funciona');"
+                                                onclick="return confirm('El usuario se eliminará permanentemente, ¿Desea continuar?');"
                                                 class="inline-flex
                                                     items-center 
                                                     px-1.5
                                                     py-1.5
-                                                    bg-red-700
-                                                    hover:bg-red-800
+                                                    dark:bg-rose-900
+                                                    dark:hover:bg-rose-800
                                                     text-white
                                                     text-sm
                                                     font-medium

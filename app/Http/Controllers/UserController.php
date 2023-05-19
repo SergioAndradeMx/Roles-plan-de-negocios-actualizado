@@ -62,6 +62,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::destroy($id);
+        $users = DB::table('users')->paginate(5);
+
+        return back();
     }
 }
