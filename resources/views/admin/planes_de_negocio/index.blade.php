@@ -7,8 +7,69 @@
         </div>
     </x-slot>
 
-    <div class="flex flex-wrap mx-auto justify-center px-auto dark:text-gray-100 m-8">
-    <div class="flex my-2 relative overflow-x-auto shadow-md">
+    <div class="mx-auto justify-center dark:text-gray-100 p-8">
+        <!--Search-->
+        <div class="mb-2 w-full">
+            <div class="flex justify-between mb-4">
+                <div class="w-2/3">
+                    <form action="{{ route('admin_plan_de_negocio.index',[$planes]) }}" method="GET">
+                        <div class="flex space-x-8">
+                            <button class="rounded-xl relative z-[2] flex items-center rounded-r bg-primary dark:bg-gray-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                                    type="submit" id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
+                                Buscar entre las fechas
+                            </button>
+                            <div>
+                                <label class="pr-2">Primera fecha: </label>
+                                <input type="date" class="rounded-md form-control dark:text-gray-600" name="fdate">
+                            </div>
+                            <div>
+                                <label class="pr-2">Segunda fecha:</label>
+                                <input type="date" class="rounded-md form-control dark:text-gray-600" name="sdate">
+                            </div>
+                        </div>
+                    </form>
+                </diV>
+                <div class="w-1/3 ml-4">
+                    <form action="{{ route('admin_plan_de_negocio.index',[$planes]) }}" method="GET">
+                        <div class="relative mb-4 flex w-full flex-wrap items-stretch">
+                            <input type="search"
+                                name="search"
+                                class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-200 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-primary"
+                                placeholder="Buscar por nombre..."
+                                aria-label="Search"
+                                aria-describedby="button-addon1" />
+
+                            <!--Search button-->
+                            <button
+                                class="relative z-[2] flex items-center rounded-r bg-primary dark:bg-gray-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                                type="submit"
+                                id="button-addon1"
+                                data-te-ripple-init
+                                data-te-ripple-color="light">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    class="h-5 w-5">
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                                            clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <div>
+                    <a href="{{ route('admin_plan_de_negocio.index') }}" class="mb-3 inline-flex items-center px-4 py-2 mr-3 text-base font-medium text-gray-300 bg-white border border-gray-300 rounded-lg hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
+                    Ver todos
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="my-2 relative overflow-x-auto shadow-md">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -20,6 +81,9 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Fecha de creación
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Autor
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
                             Acción
@@ -46,6 +110,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $plan->created_at }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $plan->name }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="inline-flex">
@@ -81,11 +148,12 @@
                 </tbody>
             </table>
         </div>
-
-    </div>
-
-    <div class="m-6 grid justify-items-center">
-        <div class="w-1/4">
+        
+        <div class="m-6 grid justify-items-center">
+            <div class="w-1/4">
+                {{ $planes->links() }}
+            </div>
         </div>
+
     </div>
 </x-app-layout>

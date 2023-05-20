@@ -13,11 +13,31 @@ class PlanDeNegocioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->user()->rol == "admin"){
-            $planes = DB::table('plan_de_negocios')->get();
-            return view('admin.planes_de_negocio.index', compact('planes'));
+            if(request('search')){
+                $planes = DB::table('plan_de_negocios')
+                    ->join('users', 'plan_de_negocios.user_id', '=', 'users.id')
+                    ->select('plan_de_negocios.*', 'name')
+                    ->where('nombre', 'like', '%' . request('search') . '%')
+                    ->paginate(5);
+                return view('admin.planes_de_negocio.index', compact('planes'));
+            } else if( request('fdate') && request('sdate') ) {
+                $planes = DB::table('plan_de_negocios')
+                    ->join('users', 'plan_de_negocios.user_id', '=', 'users.id')
+                    ->select('plan_de_negocios.*', 'name')
+                    ->whereBetween('plan_de_negocios.created_at', [$request->fdate, $request->sdate])
+                    ->paginate(5);
+                    return view('admin.planes_de_negocio.index', compact('planes'));
+            } else {
+                $planes = DB::table('plan_de_negocios')
+                    ->join('users', 'plan_de_negocios.user_id', '=', 'users.id')
+                    ->select('plan_de_negocios.*', 'name')
+                    ->paginate(5);
+                return view('admin.planes_de_negocio.index', compact('planes'));
+            }
+            
         }else{
             return view('dashboard', [
                 'planes_de_negocios' => auth()->user()->planes_de_negocios,
