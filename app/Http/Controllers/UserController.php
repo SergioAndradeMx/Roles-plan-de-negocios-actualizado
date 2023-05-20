@@ -19,7 +19,7 @@ class UserController extends Controller
             ->paginate(5);
             return view('admin.usuarios.index', compact('users'));
 
-        } else if(request('tipo')){
+        } else if(request('tipo') != 'todos'){
             $users = DB::table('users')
             ->where('rol', 'like', '%' . request('tipo') . '%')
             ->paginate(5);
