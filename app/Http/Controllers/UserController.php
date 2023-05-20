@@ -11,10 +11,24 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = DB::table('users')->paginate(5);
-        return view('admin.usuarios.index', compact('users'));
+        if(request('search')){
+            $users = DB::table('users')
+            ->where('name', 'like', '%' . request('search') . '%')
+            ->paginate(5);
+            return view('admin.usuarios.index', compact('users'));
+
+        } else if(request('tipo')){
+            $users = DB::table('users')
+            ->where('rol', 'like', '%' . request('tipo') . '%')
+            ->paginate(5);
+            return view('admin.usuarios.index', compact('users'));
+
+        } else {
+            $users = DB::table('users')->paginate(5);
+            return view('admin.usuarios.index', compact('users'));
+        }
     }
 
     /**

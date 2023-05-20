@@ -7,35 +7,46 @@
         </div>
     </x-slot>
 
-    <div class="mx-auto justify-center dark:text-gray-100 p-8">
-        <!--Search-->
-        <div class="mb-2 w-full">
-            <div class="flex justify-between mb-4">
-                <div class="w-2/3">
-                    <form action="{{ route('admin_plan_de_negocio.index',[$planes]) }}" method="GET">
-                        <div class="flex space-x-8">
-                            <button class="rounded-xl relative z-[2] flex items-center rounded-r bg-primary dark:bg-gray-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
-                                    type="submit" id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
-                                Buscar entre las fechas
-                            </button>
-                            <div>
-                                <label class="pr-2">Primera fecha: </label>
-                                <input type="date" class="rounded-md form-control dark:text-gray-600" name="fdate">
-                            </div>
-                            <div>
-                                <label class="pr-2">Segunda fecha:</label>
-                                <input type="date" class="rounded-md form-control dark:text-gray-600" name="sdate">
-                            </div>
-                        </div>
-                    </form>
-                </diV>
-                <div class="w-1/3 ml-4">
+    <div class="mx-auto justify-center dark:text-gray-100 px-20 py-8">
+        <div class="mb-6 w-full">
+            <!--Search text-->
+            <div class="flex justify-end mb-2">
+
+                <div class="w-full ml-4">
                     <form action="{{ route('admin_plan_de_negocio.index',[$planes]) }}" method="GET">
                         <div class="relative mb-4 flex w-full flex-wrap items-stretch">
+
+                            <div class="w-1/2">
+                                <div>
+                                    <a href="{{ route('admin_plan_de_negocio.index') }}" class="mb-3 inline-flex items-center px-4 py-2 mr-3 text-base font-medium text-gray-300 bg-white border border-gray-300 rounded-lg hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    Ver todos
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!--Buscar por...-->
+                            <div class="mr-2">
+                                <div class="relative inline-flex self-center">
+                                    <svg class="text-white bg-gray-600 absolute top-0 right-0 mx-2 my-3 pointer-events-none p-2 rounded" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="26px" height="26px" viewBox="0 0 38 22" version="1.1">
+                                        <g id="ZahnhelferDE—Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g id="ZahnhelferDE–Icon&amp;Asset-Download" transform="translate(-539.000000, -199.000000)" fill="#ffffff" fill-rule="nonzero">
+                                                <g id="Icon-/-ArrowRight-Copy-2" transform="translate(538.000000, 183.521208)">
+                                                    <polygon id="Path-Copy" transform="translate(20.000000, 18.384776) rotate(135.000000) translate(-20.000000, -18.384776) " points="33 5.38477631 33 31.3847763 29 31.3847763 28.999 9.38379168 7 9.38477631 7 5.38477631"/>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                    <select name="tipo" class="text-base font-bold rounded border-2 border-gray-700 text-gray-600 h-auto w-auto py-3 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                                        <option value="nombre">Por nombre del negocio</option>
+                                        <option value="name">Por nombre del autor</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <input type="search"
                                 name="search"
                                 class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-200 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-primary"
-                                placeholder="Buscar por nombre..."
+                                placeholder="Buscar..."
                                 aria-label="Search"
                                 aria-describedby="button-addon1" />
 
@@ -57,17 +68,35 @@
                                             clip-rule="evenodd" />
                                 </svg>
                             </button>
+
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="flex justify-end">
-                <div>
-                    <a href="{{ route('admin_plan_de_negocio.index') }}" class="mb-3 inline-flex items-center px-4 py-2 mr-3 text-base font-medium text-gray-300 bg-white border border-gray-300 rounded-lg hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
-                    Ver todos
-                    </a>
-                </div>
+
+
+             <!--Search date-->
+             <div class="mb-4">
+                <div class="flex justify-end">
+                    <form action="{{ route('admin_plan_de_negocio.index',[$planes]) }}" method="GET">
+                        <div class="flex space-x-8">
+                            <button class="rounded-xl relative z-[2] flex items-center rounded-r bg-primary dark:bg-gray-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                                    type="submit" id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
+                                Buscar por fecha
+                            </button>
+                            <div>
+                                <label class="pr-2">Primera fecha: </label>
+                                <input type="date" class="rounded-md form-control dark:text-gray-600" name="fdate">
+                            </div>
+                            <div>
+                                <label class="pr-2">Segunda fecha:</label>
+                                <input type="date" class="rounded-md form-control dark:text-gray-600" name="sdate">
+                            </div>
+                        </div>
+                    </form>
+                </diV>
             </div>
+
         </div>
         <div class="my-2 relative overflow-x-auto shadow-md">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

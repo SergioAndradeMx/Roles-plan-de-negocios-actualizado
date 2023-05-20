@@ -15,19 +15,22 @@ class PlanDeNegocioController extends Controller
      */
     public function index(Request $request)
     {
+        $field = $request->input('tipo');
         if (auth()->user()->rol == "admin"){
+            
             if(request('search')){
                 $planes = DB::table('plan_de_negocios')
                     ->join('users', 'plan_de_negocios.user_id', '=', 'users.id')
                     ->select('plan_de_negocios.*', 'name')
-                    ->where('nombre', 'like', '%' . request('search') . '%')
+                    ->where($request->tipo, 'like', '%' . request('search') . '%')
                     ->paginate(5);
                 return view('admin.planes_de_negocio.index', compact('planes'));
             } else if( request('fdate') && request('sdate') ) {
                 $planes = DB::table('plan_de_negocios')
                     ->join('users', 'plan_de_negocios.user_id', '=', 'users.id')
                     ->select('plan_de_negocios.*', 'name')
-                    ->whereBetween('plan_de_negocios.created_at', [$request->fdate, $request->sdate])
+                    ->whereDate('plan_de_negocios.created_at', '>=', $request->fdate)
+                    ->whereDate('plan_de_negocios.created_at', '<=', $request->sdate)
                     ->paginate(5);
                     return view('admin.planes_de_negocio.index', compact('planes'));
             } else {
