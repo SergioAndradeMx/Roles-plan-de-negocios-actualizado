@@ -21,7 +21,7 @@ class PlanDeNegocioController extends Controller
             if(request('search')){
                 $planes = DB::table('plan_de_negocios')
                     ->join('users', 'plan_de_negocios.user_id', '=', 'users.id')
-                    ->select('plan_de_negocios.*', 'name', 'users.id')
+                    ->select('plan_de_negocios.*', 'name')
                     ->where($request->tipo, 'like', '%' . request('search') . '%')
                     ->paginate(5);
                 return view('admin.planes_de_negocio.index', compact('planes'));
