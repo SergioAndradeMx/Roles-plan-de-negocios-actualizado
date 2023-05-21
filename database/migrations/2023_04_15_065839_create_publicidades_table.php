@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('publicidades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios');
+            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios')->onDelete('cascade');
             $table->text('plan_promocion');
             $table->text('comercializacion');
             $table->text('plan_mercadotecnia');

@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('admin_plan_de_negocio.estudio', EstudioController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio.concepto', ConceptoController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio.conclusion', ConclusionController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
-        Route::resource('admin_plan_de_negocio.estudio.encuesta', EncuestaController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.estudio.encuesta', PollController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio.encuesta.pregunta', PreguntaController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio.encuesta.formulario', FormularioController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio.capturar_resultado', CapturarResultadoController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);

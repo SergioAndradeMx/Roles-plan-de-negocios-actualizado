@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('culturas_organizacionales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios');
+            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios')->onDelete('cascade');
             $table->text('mision');
             $table->text('vision');
             $table->text('objetivos');

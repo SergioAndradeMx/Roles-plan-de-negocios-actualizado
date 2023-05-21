@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('estructuras_legales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios');
+            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios')->onDelete('cascade');
             $table->string('tipo_persona');
             $table->text('constitucion_legal');
             $table->text('regimen_fiscal');

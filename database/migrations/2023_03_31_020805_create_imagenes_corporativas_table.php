@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('imagenes_corporativas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios');
+            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios')->onDelete('cascade');
             $table->string('nombre_corporativo');
             $table->text('justificacion_nombre');
             $table->text('logotipo');

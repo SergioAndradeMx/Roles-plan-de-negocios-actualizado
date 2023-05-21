@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('modelo_canvas', function (Blueprint $table) {
+        Schema::create('grupos_de_trabajos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios')->onDelete('cascade');
-            $table->string('cat_modelo');
-            $table->text('descripcion');
             $table->timestamps();
         });
     }
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('modelo_canvas');
+        Schema::dropIfExists('grupos_de_trabajos');
     }
 };
