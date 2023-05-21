@@ -2,6 +2,11 @@
     'plan_de_negocio' => ''
 ])
 <div class="">
+    <!--Verificar si el usuario autenticado es admin-->
+    @php ($admin = '')
+    @if ( auth()->user()->rol == 'admin')
+        @php ($admin = 'admin_')
+    @endif
     <div class="
         hidden
         w-50
@@ -19,7 +24,13 @@
                         <path fill-rule="evenodd" d="M7.28 7.72a.75.75 0 010 1.06l-2.47 2.47H21a.75.75 0 010 1.5H4.81l2.47 2.47a.75.75 0 11-1.06 1.06l-3.75-3.75a.75.75 0 010-1.06l3.75-3.75a.75.75 0 011.06 0z" clip-rule="evenodd" />
                     </svg>          
                 </a>
-                <span>CIIE</span>
+                <span>
+                    @if ($admin == 'admin_')
+                        <p class="bg-red-800 p-1">ERES ADMINISTRADOR</p>
+                    @else
+                        CIIE
+                    @endif
+                </span>
             </div>
             
             <!--DROPDOWN-->
@@ -71,19 +82,19 @@
                         style="display: none;"
                         class="left-0 mt-2 rounded-md m-2"
                         >
-                        <a href="{{ route('plan_de_negocio.generalidades.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($admin.'plan_de_negocio.generalidades.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Información general de la empresa
                         </a>
 
-                        <a href="{{ route('plan_de_negocio.foda.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($admin.'plan_de_negocio.foda.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Análisis foda
                         </a>
 
-                        <a href="{{ route('plan_de_negocio.modelo_canvas.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($admin.'plan_de_negocio.modelo_canvas.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Modelo canvas
                         </a>
 
-                        <a href="{{ route('plan_de_negocio.producto.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($admin.'plan_de_negocio.producto.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Producto y/o Servicio
                         </a>
                     </div>
@@ -136,11 +147,11 @@
                         style="display: none;"
                         class="left-0 mt-2 rounded-md m-2"
                         >
-                        <a href="{{ route('plan_de_negocio.cultura_organizacional.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($admin.'plan_de_negocio.cultura_organizacional.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Cultura organizacional
                         </a>
 
-                        <a href="{{ route('plan_de_negocio.estructura_legal.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($admin.'plan_de_negocio.estructura_legal.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Estructura legal
                         </a>
                     </div>
@@ -194,11 +205,11 @@
                         style="display: none;"
                         class="left-0 mt-2 rounded-md m-2"
                         >
-                        <a href="{{ route('plan_de_negocio.imagen_corporativa.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($admin.'plan_de_negocio.imagen_corporativa.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Imagen de la empresa
                         </a>
 
-                        <a href="{{ route('plan_de_negocio.publicidad.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($admin.'plan_de_negocio.publicidad.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Publicidad, promoción y mercadotecnia
                         </a>
                     </div>
@@ -210,7 +221,7 @@
                 class="relative"
                 >
                 <!-- Button -->
-                <a href="{{ route('plan_de_negocio.estudio.index', [$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-gray-200 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500 flex justify-center">
+                <a href="{{ route($admin.'plan_de_negocio.estudio.index', [$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-gray-200 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500 flex justify-center">
                     <p>Estudios de mercado</p>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
                 </a>

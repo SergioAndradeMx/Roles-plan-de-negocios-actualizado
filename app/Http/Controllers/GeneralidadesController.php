@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Generalidades;
 use App\Models\Plan_de_negocio;
 use Illuminate\Http\Request;
+use DB;
 
 class GeneralidadesController extends Controller
 {
@@ -13,8 +14,13 @@ class GeneralidadesController extends Controller
      */
     public function index(Plan_de_negocio $plan_de_negocio)
     {
-        $plan_de_negocio->load('generalidades');
-        return view('generalidades.index', compact('plan_de_negocio'));
+        if(auth()->user()->rol == "admin"){
+
+            return view('generalidades.index', compact('plan_de_negocio'));
+        }else{
+            $plan_de_negocio->load('generalidades');
+            return view('generalidades.index', compact('plan_de_negocio'));
+        }
     }
 
     /**
@@ -71,7 +77,7 @@ class GeneralidadesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Plan_de_negocio $plan_de_negocio, Generalidades $generalidades)
+    public function update(Request $request, Plan_de_negocio $plan_de_negocio, Generalidades $generalidades, string $plan_id='0')
     {
         $seccion= '';
         if ($request->input('antecedentes') != null){
@@ -88,9 +94,14 @@ class GeneralidadesController extends Controller
             'aspectos_innovadores' => 'nullable',
         ]);
 
-        $plan_de_negocio->generalidades->update($validated);
+        if(auth()->user()->rol == "admin"){
+            $plan_de_negocio->generalidades->update($validated);
+            return redirect()->route('admin_plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
+        }else{
 
-        return redirect()->route('plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
+            $plan_de_negocio->generalidades->update($validated);
+            return redirect()->route('plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
+        }
     }
 
     /**

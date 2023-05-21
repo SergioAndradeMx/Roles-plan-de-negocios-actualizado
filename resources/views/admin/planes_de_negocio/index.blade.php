@@ -8,15 +8,15 @@
     </x-slot>
 
     <div class="mx-auto justify-center dark:text-gray-100 px-20 py-8">
-        <div class="mb-6 w-full">
+        <div class="mb-6 w-full dark:bg-gray-800 rounded-xl p-4">
             <!--Search text-->
             <div class="flex justify-end mb-2">
 
-                <div class="w-full ml-4">
+                <div class="w-full">
                     <form action="{{ route('admin_plan_de_negocio.index',[$planes]) }}" method="GET">
                         <div class="relative mb-4 flex w-full flex-wrap items-stretch">
 
-                            <div class="w-1/2">
+                            <div class="w-1/3">
                                 <div>
                                     <a href="{{ route('admin_plan_de_negocio.index') }}" class="mb-3 inline-flex items-center px-4 py-2 mr-3 text-base font-medium text-gray-300 bg-white border border-gray-300 rounded-lg hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
                                     Ver todos
@@ -145,7 +145,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="inline-flex">
-                                        <a href="#" class="inline-flex items-center px-1.5 py-1.5 bg-gray-500 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium rounded-md">
+                                        <a href="{{ route('admin_plan_de_negocio.generalidades.index', [$plan->id]) }}" class="inline-flex items-center px-1.5 py-1.5 bg-gray-500 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium rounded-md">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
                                         </a>
 

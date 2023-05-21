@@ -50,11 +50,11 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => 'disciple'], function() {
         Route::resources([
             'plan_de_negocio' => PlanDeNegocioController::class,
-            'plan_de_negocio.foda' => FodaController::class,
             'plan_de_negocio.generalidades' => GeneralidadesController::class,
+            'plan_de_negocio.foda' => FodaController::class,
             'plan_de_negocio.modelo_canvas' => ModeloCanvasController::class,
-            'plan_de_negocio.imagen_corporativa' => ImagenCorporativaController::class,
             'plan_de_negocio.producto' => ProductoController::class,
+            'plan_de_negocio.imagen_corporativa' => ImagenCorporativaController::class,
             'plan_de_negocio.cultura_organizacional' => CulturaOrganizacionalController::class,
             'plan_de_negocio.estructura_legal' => EstructuraLegalController::class,
             'plan_de_negocio.publicidad' => PublicidadController::class,
@@ -71,10 +71,27 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => 'admin'], function() {
         Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
         Route::post('register', [RegisteredUserController::class, 'store']);
+
         Route::resources([
             'usuarios' => UserController::class,
-            'admin_plan_de_negocio' => PlanDeNegocioController::class,
+            'admin_plan_de_negocio' => PlanDeNegocioController::class
         ]);
+
+        Route::resource('admin_plan_de_negocio.generalidades', GeneralidadesController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.foda', FodaController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.modelo_canvas', ModeloCanvasController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.producto', ProductoController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.imagen_corporativa', ImagenCorporativaController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.cultura_organizacional', CulturaOrganizacionalController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);      
+        Route::resource('admin_plan_de_negocio.estructura_legal', EstructuraLegalController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.publicidad', PublicidadController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);     
+        Route::resource('admin_plan_de_negocio.estudio', EstudioController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.estudio.concepto', ConceptoController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.estudio.conclusion', ConclusionController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.estudio.encuesta', EncuestaController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.estudio.encuesta.pregunta', PreguntaController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.estudio.encuesta.formulario', FormularioController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('admin_plan_de_negocio.estudio.capturar_resultado', CapturarResultadoController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
     });
 });
 

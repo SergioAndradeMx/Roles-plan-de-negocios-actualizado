@@ -1,5 +1,4 @@
 <x-app-layout class="flex flex-nowrap">
-
     <x-sidebar :plan_de_negocio="$plan_de_negocio"></x-sidebar>
 
     <div class="w-full h-screen overflow-auto">
@@ -11,6 +10,12 @@
             @php $seccion='Antecedentes'; @endphp
         @else
             @php ($seccion = request()->get('seccion')) @endphp
+        @endif
+
+        @php $admin = ''; @endphp
+
+        @if ( auth()->user()->rol == 'admin')
+            @php $admin = 'admin_'; @endphp
         @endif
 
         <div class="mx-20 flex flex-wrap mb-8 space-y-6 grid justify-items-center" x-data="{seccion: @js($seccion) }">
@@ -41,10 +46,10 @@
             <div id="Antecedentes" class="w-[calc(100%-6rem)]" x-show="seccion == $el.id">
                 <!--Antecedentes-->
                 @if ($registro)
-                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route('plan_de_negocio.generalidades.update', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
+                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route($admin.'plan_de_negocio.generalidades.update', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
                         @method('PATCH')
                 @else
-                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route('plan_de_negocio.generalidades.store', [$plan_de_negocio]) }}">
+                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route($admin.'plan_de_negocio.generalidades.store', [$plan_de_negocio]) }}">
                 @endif
                     @csrf
                     <header class="flex w-full items-center justify-between p-4 dark:bg-gray-800 rounded-t-lg">
@@ -68,7 +73,7 @@
                     </div>
                 </form> 
                 @if ($registro && $registro->antecedentes) 
-                <form method="post" action="{{ route('plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades->antecedentes]) }}">
+                <form method="post" action="{{ route($admin.'plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades->antecedentes]) }}">
                     @method('delete')
                     @csrf
                     <div class="grid justify-items-center m-6">
@@ -82,10 +87,10 @@
             <div id="Producto" class="w-[calc(100%-6rem)]" x-show="seccion == $el.id">
                 <!--Descripcion de producto/servicio-->
                 @if ($registro)
-                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route('plan_de_negocio.generalidades.update', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
+                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route($admin.'plan_de_negocio.generalidades.update', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
                     @method('PATCH')
                 @else
-                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route('plan_de_negocio.generalidades.store', [$plan_de_negocio]) }}">
+                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route($admin.'plan_de_negocio.generalidades.store', [$plan_de_negocio]) }}">
                 @endif
                     @csrf
                     <header class="flex w-full items-center justify-between p-4 dark:bg-gray-800 rounded-t-lg">
@@ -109,7 +114,7 @@
                     </div>
                 </form> 
                 @if ($registro && $registro->descripcion_producto) 
-                <form method="post" action="{{ route('plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
+                <form method="post" action="{{ route($admin.'plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
                     @method('delete')
                     @csrf
                     <div class="grid justify-items-center m-6">
@@ -123,10 +128,10 @@
             <div id="Aspectos" class="w-[calc(100%-6rem)]" x-show="seccion == $el.id">
                 <!--Aspectos innovadores-->
                 @if ($registro)
-                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route('plan_de_negocio.generalidades.update', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
+                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route($admin.'plan_de_negocio.generalidades.update', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
                         @method('PATCH')
                 @else
-                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route('plan_de_negocio.generalidades.store', [$plan_de_negocio]) }}">
+                    <form method="POST" x-data="{ show: false }" class="w-full" action="{{ route($admin.'plan_de_negocio.generalidades.store', [$plan_de_negocio]) }}">
                 @endif
                     @csrf
                     <header class="flex w-full items-center justify-between p-4 dark:bg-gray-800 rounded-t-lg">
@@ -151,7 +156,7 @@
                     </div>
                 </form> 
                 @if ($registro && $registro->aspectos_innovadores) 
-                <form method="post" action="{{ route('plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
+                <form method="post" action="{{ route($admin.'plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
                     @method('delete')
                     @csrf
                     <div class="grid justify-items-center m-6">

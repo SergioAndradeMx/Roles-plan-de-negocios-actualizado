@@ -13,10 +13,10 @@
     <div class="mx-auto justify-center px-auto dark:text-gray-100 py-8 px-20">
 
         <!--Search text-->
-        <div class="flex justify-end">
-            <div class="w-1/2 ml-4">
+        <div class="flex justify-end dark:bg-gray-800 rounded-xl mb-4 px-4 pt-4 pb-1">
+            <div class="w-1/2">
                 <form action="{{ route('usuarios.index',[]) }}" method="GET">
-                    <div class="relative mb-4 flex w-full flex-wrap items-stretch">
+                    <div class="relative flex w-full flex-wrap items-stretch">
 
                         <!--Buscar por...-->
                         <div class="mr-2">
