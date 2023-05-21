@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->hasMany(Plan_de_negocio::class);
     }
 
+    public function grupos_de_trabajo():HasMany
+    {
+        return $this->hasMany(GruposDeTrabajo::class);
+    }
+
     public function getRedirectRoute()
     {
         return match((string)$this->rol) {

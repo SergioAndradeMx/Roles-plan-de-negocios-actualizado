@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class AdviserController extends Controller
 {
@@ -11,9 +12,10 @@ class AdviserController extends Controller
      */
     public function index()
     {
-        return view('asesor', [
-            'planes_de_negocios' => auth()->user()->planes_de_negocios,
-        ]);
+        $grupos_de_trabajo = DB::table('grupos_de_trabajos')->get();
+        //dd($grupos_de_trabajo);
+
+        return view('asesor', compact('grupos_de_trabajo'));
     }
 
     /**

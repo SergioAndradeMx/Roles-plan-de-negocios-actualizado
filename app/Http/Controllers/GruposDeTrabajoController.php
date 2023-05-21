@@ -20,7 +20,7 @@ class GruposDeTrabajoController extends Controller
      */
     public function create()
     {
-        //
+        dd("Aquí se crea el grupo de trabajo");
     }
 
     /**

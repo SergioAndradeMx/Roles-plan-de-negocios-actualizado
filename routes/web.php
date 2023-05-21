@@ -20,6 +20,7 @@ use App\Http\Controllers\CapturarResultadoController;
 use App\Http\Controllers\AdviserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GruposDeTrabajoController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -92,6 +93,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('admin_plan_de_negocio.estudio.encuesta.pregunta', PreguntaController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio.encuesta.formulario', FormularioController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio.capturar_resultado', CapturarResultadoController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
+    });
+
+    Route::group(['middleware' => 'adviser'], function() {
+        Route::resources([
+            'grupos_de_trabajo' => GruposDeTrabajoController::class,
+        ]);
     });
 });
 

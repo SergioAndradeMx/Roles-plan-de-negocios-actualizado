@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('grupos_de_trabajos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('nombre_grupo');
+            $table->text('descripcion');
+            $table->json('integrantes');
             $table->timestamps();
         });
     }
