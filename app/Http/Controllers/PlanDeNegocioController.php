@@ -41,6 +41,10 @@ class PlanDeNegocioController extends Controller
                 return view('admin.planes_de_negocio.index', compact('planes'));
             }
             
+        }else if(auth()->user()->rol == "asesor"){
+            $planes = Plan_de_negocio::where('user_id', '=', request('usuario'))->get();
+
+            return view('asesor.planes_de_negocio.index', compact('planes'));
         }else{
             return view('dashboard', [
                 'planes_de_negocios' => auth()->user()->planes_de_negocios,
@@ -71,7 +75,12 @@ class PlanDeNegocioController extends Controller
         $user->planes_de_negocios()->create($validated);
         $user->save();
 
-        return redirect()->route('dashboard');
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'dashboard');
     }
 
     /**

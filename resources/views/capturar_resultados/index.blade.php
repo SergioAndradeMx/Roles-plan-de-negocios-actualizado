@@ -9,6 +9,14 @@
             </div>
         </div>
 
+        @php $user_route = ''; @endphp
+
+        @if ( auth()->user()->rol == 'admin')
+            @php $user_route = 'admin_'; @endphp
+        @elseif ( auth()->user()->rol == 'asesor')
+            @php $user_route = 'asesor_'; @endphp
+        @endif
+
         <div class="mx-20 flex flex-wrap mb-8 space-y-6 grid justify-items-center">
             <div class="py-6 w-full">
                 <div class="bg-gray-800 overflow-hidden sm:rounded-lg w-full">
@@ -19,7 +27,7 @@
                             @endif
 
                             @foreach ($estudio->conceptos as $concepto)
-                                <form action="{{ route('plan_de_negocio.estudio.capturar_resultado.update',[$plan_de_negocio, $estudio, $concepto]) }}" method="POST">
+                                <form action="{{ route($user_route.'plan_de_negocio.estudio.capturar_resultado.update',[$plan_de_negocio, $estudio, $concepto]) }}" method="POST">
                                     @csrf
                                     @method('patch')
                                     <div x-data="{view: true, edit: false}" class="flex flex-col md:flex-row items-center my-8">

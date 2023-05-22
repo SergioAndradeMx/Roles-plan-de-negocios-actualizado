@@ -6,6 +6,14 @@
             <h1 class="dark:text-gray-100 my-6 text-2xl">Imagen corporativa</h1>
         </div>
 
+        @php $user_route = ''; @endphp
+
+        @if ( auth()->user()->rol == 'admin')
+            @php $user_route = 'admin_'; @endphp
+        @elseif ( auth()->user()->rol == 'asesor')
+            @php $user_route = 'asesor_'; @endphp
+        @endif
+
         <div class="mx-20 items-center justify-center">
             @if ($plan_de_negocio->imagenes_corporativas != null)
                 <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-full hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -27,7 +35,7 @@
                 </div>
 
                 <div class="flex justify-center">
-                    <a href="{{ route('plan_de_negocio.imagen_corporativa.edit', [$plan_de_negocio, $plan_de_negocio->imagenes_corporativas]) }}" class="my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-lg font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-blue-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-blue-700 dark:hover:text-white">
+                    <a href="{{ route($user_route.'plan_de_negocio.imagen_corporativa.edit', [$plan_de_negocio, $plan_de_negocio->imagenes_corporativas]) }}" class="my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-lg font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-blue-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-blue-700 dark:hover:text-white">
                         Actualizar
                     </a>
                 </div>
@@ -43,7 +51,7 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-center">
-                    <a href="{{ route('plan_de_negocio.imagen_corporativa.create', [$plan_de_negocio]) }}" class="my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-lg font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-blue-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-blue-700 dark:hover:text-white">
+                    <a href="{{ route($user_route.'plan_de_negocio.imagen_corporativa.create', [$plan_de_negocio]) }}" class="my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-lg font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-blue-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-blue-700 dark:hover:text-white">
                         Ingresar información
                     </a>
                 </div>

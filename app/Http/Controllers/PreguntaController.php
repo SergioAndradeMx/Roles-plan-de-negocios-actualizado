@@ -42,7 +42,12 @@ class PreguntaController extends Controller
         $pregunta = $encuestum->preguntas()->create($titulo);
         $pregunta->respuestas()->createMany($respuestas['respuestas']);
 
-        return redirect()->route('plan_de_negocio.estudio.encuesta.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.estudio.encuesta.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
     }
 
     /**

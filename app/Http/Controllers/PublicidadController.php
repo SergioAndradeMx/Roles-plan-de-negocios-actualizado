@@ -39,7 +39,12 @@ class PublicidadController extends Controller
 
         $publicidad = $plan_de_negocio->publicidades()->create($validated);
 
-        return redirect()->route('plan_de_negocio.publicidad.index', compact('plan_de_negocio'));
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.publicidad.index', compact('plan_de_negocio'));
     }
 
     /**
@@ -71,7 +76,12 @@ class PublicidadController extends Controller
 
         $publicidad->update($validated);
 
-        return redirect()->route('plan_de_negocio.publicidad.index', compact('plan_de_negocio'));
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.publicidad.index', compact('plan_de_negocio'));
     }
 
     /**

@@ -4,6 +4,7 @@
         <div class="flex items-center justify-center">
             <h1 class="dark:text-gray-100 py-6 text-2xl">Foda de la empresa</h1>
         </div>
+
         <div class="mx-20 grid gap-x-10 gap-y-10 grid-cols-2 grid-rows-2 dark:text-gray-300">
             
             <div class="border divide-y divide-gray-500 rounded-md border-neutral-200 dark:border-none">

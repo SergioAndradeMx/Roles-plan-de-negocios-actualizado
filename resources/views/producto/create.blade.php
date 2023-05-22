@@ -7,7 +7,15 @@
             <h1 class="dark:text-gray-100 py-6 text-2xl">Ingrese el producto/servicio nuevo</h1>
         </div>
 
-        <form method="POST" action="{{ route('plan_de_negocio.producto.store', [$plan_de_negocio]) }}">
+        @php $user_route = ''; @endphp
+
+        @if ( auth()->user()->rol == 'admin')
+            @php $user_route = 'admin_'; @endphp
+        @elseif ( auth()->user()->rol == 'asesor')
+            @php $user_route = 'asesor_'; @endphp
+        @endif
+
+        <form method="POST" action="{{ route($user_route.'plan_de_negocio.producto.store', [$plan_de_negocio]) }}">
             @csrf
             <div class="md:w-full py-4">
                 <div class="flex flex-wrap justify-center items-center my-2 md:flex-nowrap md:space-x-2 md:mb-4">
@@ -31,7 +39,7 @@
                 </div>
 
                 <div class="flex justify-center items-center"> 
-                    <a href="{{ route('plan_de_negocio.producto.index', [$plan_de_negocio]) }}" class="rounded bg-red-500 m-6 px-4 py-2 hover:bg-red-700 dark:text-white">Cancelar</a>
+                    <a href="{{ route($user_route.'plan_de_negocio.producto.index', [$plan_de_negocio]) }}" class="rounded bg-red-500 m-6 px-4 py-2 hover:bg-red-700 dark:text-white">Cancelar</a>
                     {{-- <input  type="submit" value="Crear"> --}}
                     <button class="rounded bg-blue-500 m-6 px-4 py-2 hover:bg-blue-700 dark:text-white">Crear</button> 
                 </div>

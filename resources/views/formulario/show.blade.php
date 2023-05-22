@@ -1,11 +1,18 @@
 <x-guest-layout>
+    @php $user_route = ''; @endphp
+
+    @if ( auth()->user()->rol == 'admin')
+        @php $user_route = 'admin_'; @endphp
+    @elseif ( auth()->user()->rol == 'asesor')
+        @php $user_route = 'asesor_'; @endphp
+    @endif
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <h1 class="mb-4 text-xl font-extrabold tracking-tight leading-none text-gray-900 md:text-xl lg:text-xl text-center">{{ $encuestum->titulo }}</h1>
                 <div class="p-6 bg-white border-b border-gray-200">
                     @php ($slug = $encuestum->titulo)
-                    <form action="{{ route('plan_de_negocio.estudio.encuesta.formulario.store', ['plan_de_negocio'=>$plan_de_negocio, 'estudio'=>$estudio, 'encuestum'=>$encuestum, $slug]) }}" method="POST">
+                    <form action="{{ route($user_route.'plan_de_negocio.estudio.encuesta.formulario.store', ['plan_de_negocio'=>$plan_de_negocio, 'estudio'=>$estudio, 'encuestum'=>$encuestum, $slug]) }}" method="POST">
                         @csrf
                         @foreach ($encuestum->preguntas as $key=>$pregunta)
                             <div class="mb-6">

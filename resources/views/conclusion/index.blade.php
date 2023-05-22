@@ -8,13 +8,21 @@
                 <h1 class="dark:text-gray-100 mt-6 text-2xl">Conclusion del estudio de mercado</h1>
             </div>
 
+            @php $user_route = ''; @endphp
+
+            @if ( auth()->user()->rol == 'admin')
+                @php $user_route = 'admin_'; @endphp
+            @elseif ( auth()->user()->rol == 'asesor')
+                @php $user_route = 'asesor_'; @endphp
+            @endif
+
             <div class="flex justify-center">
                 <a href="#" id="btn_editar">
                     <button class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white" name="check" id="check" value="1" onclick="javascript:showContent()">
                         Editar
                     </button>
                 </a>
-                <a href="{{ route('plan_de_negocio.estudio.conclusion.create',[$plan_de_negocio, $estudio]) }}" id="btn_crear" style="display: none">
+                <a href="{{ route($user_route.'plan_de_negocio.estudio.conclusion.create',[$plan_de_negocio, $estudio]) }}" id="btn_crear" style="display: none">
                     <button class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white" name="check" id="check" value="1">
                         Crear conclusion
                     </button>
@@ -49,7 +57,7 @@
 
                             <div id="edit" style="display: none;" class="">
                                 @if ($estudio->conclusion != null)
-                                    <form method="POST" action="{{ route('plan_de_negocio.estudio.conclusion.update', [$plan_de_negocio, $estudio, $estudio->conclusion]) }}">
+                                    <form method="POST" action="{{ route($user_route.'plan_de_negocio.estudio.conclusion.update', [$plan_de_negocio, $estudio, $estudio->conclusion]) }}">
                                         @method('PATCH')
                                         @csrf
                                         <div class="mb-6">

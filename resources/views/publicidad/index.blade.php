@@ -5,9 +5,18 @@
         <div class="mx-20 flex items-center justify-center">
             <h1 class="dark:text-gray-100 my-6 text-2xl">Publicidad, promocion y mercadotecnia</h1>
         </div>
+
+        @php $user_route = ''; @endphp
+
+        @if ( auth()->user()->rol == 'admin')
+            @php $user_route = 'admin_'; @endphp
+        @elseif ( auth()->user()->rol == 'asesor')
+            @php $user_route = 'asesor_'; @endphp
+        @endif
+
         <div class="mx-20 flex items-center justify-center my-6">
             @if ($plan_de_negocio->publicidades == null)
-                <form class="w-full" method="POST" enctype="multipart/form-data" action="{{ route('plan_de_negocio.publicidad.store', [$plan_de_negocio]) }}">
+                <form class="w-full" method="POST" enctype="multipart/form-data" action="{{ route($user_route.'plan_de_negocio.publicidad.store', [$plan_de_negocio]) }}">
                     @csrf
                     <div class="dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                     <div class="-mx-3 md:flex mb-6">
@@ -49,28 +58,25 @@
             @else
             <div class="flex flex-col w-full grid justify-items-center space-y-8">
                 <div class="w-[calc(100%-6rem)] block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center">Plan de promoción</h5>
+                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 border-gray-700">Plan de promoción</h5>
                     <p class="font-normal text-gray-700 dark:text-gray-400">{{ $plan_de_negocio->publicidades->plan_promocion }}</p>
                 </div>
                 <div class="w-[calc(100%-6rem)] block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center">Comercialización</h5>
+                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 border-gray-700">Comercialización</h5>
                     <p class="font-normal text-gray-700 dark:text-gray-400">{{ $plan_de_negocio->publicidades->comercializacion }}</p>
                 </div>
                 <div class="w-[calc(100%-6rem)] block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center">Plan de mercadotecnia</h5>
+                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 border-gray-700">Plan de mercadotecnia</h5>
                     <p class="font-normal text-gray-700 dark:text-gray-400">{{ $plan_de_negocio->publicidades->plan_mercadotecnia }}</p>
                 </div>
 
-                <a href="{{ route('plan_de_negocio.publicidad.edit', [$plan_de_negocio, $plan_de_negocio->publicidades]) }}" class="dark:bg-gray-700 dark:hover:bg-gray-800 text-white font-bold py-3 px-6 rounded">
+                <a href="{{ route($user_route.'plan_de_negocio.publicidad.edit', [$plan_de_negocio, $plan_de_negocio->publicidades]) }}" class="dark:bg-gray-700 dark:hover:bg-gray-800 text-white font-bold py-3 px-6 rounded">
                     Editar
                 </a>
             </div>
             @endif
 
         </div>
-
-
-
     </div>
 
 </x-app-layout>

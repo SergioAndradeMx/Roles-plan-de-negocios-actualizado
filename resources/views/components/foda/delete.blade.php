@@ -3,8 +3,16 @@
     'foda' => '',
 ])
 
+@php $user_route = ''; @endphp
+
+@if ( auth()->user()->rol == 'admin')
+    @php $user_route = 'admin_'; @endphp
+@elseif ( auth()->user()->rol == 'asesor')
+    @php $user_route = 'asesor_'; @endphp
+@endif
+
 <div class="flex">
-    <form class="flex items-center" action="{{ route('plan_de_negocio.foda.destroy', [$plan_de_negocio,$foda]) }}" method="POST">
+    <form class="flex items-center" action="{{ route($user_route.'plan_de_negocio.foda.destroy', [$plan_de_negocio,$foda]) }}" method="POST">
         @csrf
         @method('delete')
         <button :class="!open ? '' : 'hidden'" onclick="return confirm('¿Seguro que quieres borrar este registro?');">

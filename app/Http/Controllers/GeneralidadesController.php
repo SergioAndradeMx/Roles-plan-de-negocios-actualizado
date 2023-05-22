@@ -55,7 +55,12 @@ class GeneralidadesController extends Controller
 
         $plan_de_negocio->generalidades()->create($validated);
 
-        return redirect()->route('plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
     }
 
     /**
@@ -94,14 +99,13 @@ class GeneralidadesController extends Controller
             'aspectos_innovadores' => 'nullable',
         ]);
 
-        if(auth()->user()->rol == "admin"){
-            $plan_de_negocio->generalidades->update($validated);
-            return redirect()->route('admin_plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
-        }else{
-
-            $plan_de_negocio->generalidades->update($validated);
-            return redirect()->route('plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
         }
+
+        $plan_de_negocio->generalidades->update($validated);
+        return redirect()->route($user_route.'plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
     }
 
     /**
@@ -129,7 +133,11 @@ class GeneralidadesController extends Controller
             $aspectos->update();
         }
 
-        return redirect()->route('plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+        return redirect()->route($user_route.'plan_de_negocio.generalidades.index',compact('plan_de_negocio', 'seccion'));
 
     }
 }

@@ -36,7 +36,12 @@ class ConclusionController extends Controller
 
         $conclusion = $estudio->conclusion()->create($validated);
 
-        return redirect()->route('plan_de_negocio.estudio.conclusion.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.estudio.conclusion.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
     }
 
     /**
@@ -63,7 +68,12 @@ class ConclusionController extends Controller
         $conclusion = Conclusion::find($estudio->conclusion->id);
         $input = $request->all();
         $conclusion->update($input);
-        return redirect()->route('plan_de_negocio.estudio.conclusion.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
+
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+        return redirect()->route($user_route.'plan_de_negocio.estudio.conclusion.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
     }
 
     /**

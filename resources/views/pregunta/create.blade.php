@@ -6,8 +6,16 @@
             <h1 class="dark:text-gray-100 my-6 text-2xl">Estas creando una pregunta</h1>
         </div>
 
+        @php $user_route = ''; @endphp
+
+        @if ( auth()->user()->rol == 'admin')
+            @php $user_route = 'admin_'; @endphp
+        @elseif ( auth()->user()->rol == 'asesor')
+            @php $user_route = 'asesor_'; @endphp
+        @endif
+
         <div class="mx-20 flex flex-wrap mb-8 space-y-6 grid justify-items-center">
-            <form class="w-full" method="POST" action="{{ route('plan_de_negocio.estudio.encuesta.pregunta.store', [$plan_de_negocio, $estudio, $encuestum]) }}">
+            <form class="w-full" method="POST" action="{{ route($user_route.'plan_de_negocio.estudio.encuesta.pregunta.store', [$plan_de_negocio, $estudio, $encuestum]) }}">
                 @csrf
                 <div class="dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                     <div class="-mx-3 md:flex mb-6">
@@ -80,7 +88,7 @@
 
                     <div class="flex justify-center items-center">
                         <div class="">
-                            <a href="{{ route('plan_de_negocio.estudio.encuesta.index', [$plan_de_negocio, $estudio]) }}" class="m-4 bg-red-900 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-red-800 rounded-xl">
+                            <a href="{{ route($user_route.'plan_de_negocio.estudio.encuesta.index', [$plan_de_negocio, $estudio]) }}" class="m-4 bg-red-900 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-red-800 rounded-xl">
                                 Cancelar
                             </a>
 

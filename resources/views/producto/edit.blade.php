@@ -9,7 +9,15 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
         </div>
 
-        <form method="POST" action="{{ route('plan_de_negocio.producto.update', [$plan_de_negocio, $producto]) }}">
+        @php $user_route = ''; @endphp
+
+        @if ( auth()->user()->rol == 'admin')
+            @php $user_route = 'admin_'; @endphp
+        @elseif ( auth()->user()->rol == 'asesor')
+            @php $user_route = 'asesor_'; @endphp
+        @endif
+
+        <form method="POST" action="{{ route($user_route.'plan_de_negocio.producto.update', [$plan_de_negocio, $producto]) }}">
             @method('PATCH')
             @csrf
             <div class="md:w-full py-4">
@@ -34,7 +42,7 @@
                 </div>
 
                 <div class="flex justify-center items-center">
-                    <a href="{{ route('plan_de_negocio.producto.index', [$plan_de_negocio]) }}" class="rounded bg-red-500 m-6 px-4 py-2 hover:bg-red-700 dark:text-white">Cancelar</a>
+                    <a href="{{ route($user_route.'plan_de_negocio.producto.index', [$plan_de_negocio]) }}" class="rounded bg-red-500 m-6 px-4 py-2 hover:bg-red-700 dark:text-white">Cancelar</a>
                     {{-- <input  type="submit" value="Crear"> --}}
                     <button class="rounded bg-green-600 m-6 px-4 py-2 hover:bg-green-800 dark:text-white">Actualizar</button>
                 </div>

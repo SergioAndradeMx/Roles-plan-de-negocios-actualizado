@@ -50,8 +50,12 @@ class FodaController extends Controller
 
         $plan_de_negocio->fodas()->create($validated);
 
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
         return redirect()->route(
-            'plan_de_negocio.foda.index',
+            $user_route.'plan_de_negocio.foda.index',
             [
                 'plan_de_negocio' => $plan_de_negocio,
             ]
@@ -89,8 +93,12 @@ class FodaController extends Controller
         $foda->update($validated);
 
         // Redireccionamos de regreso a la pantalla inicial del foda
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
         return redirect()->route(
-            'plan_de_negocio.foda.index',
+            $user_route.'plan_de_negocio.foda.index',
             [
                 'plan_de_negocio' => $plan_de_negocio,
             ]
@@ -103,8 +111,12 @@ class FodaController extends Controller
     public function destroy(Plan_de_negocio $plan_de_negocio, Foda $foda)
     {
         $foda->delete();
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
         return redirect()->route(
-            'plan_de_negocio.foda.index',
+            $user_route.'plan_de_negocio.foda.index',
             [
                 'plan_de_negocio' => $plan_de_negocio,
             ]

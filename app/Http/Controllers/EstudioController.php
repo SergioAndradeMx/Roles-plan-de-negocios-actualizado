@@ -38,7 +38,12 @@ class EstudioController extends Controller
 
         $estudio = $plan_de_negocio->estudios()->create($validated);
 
-        return redirect()->route('plan_de_negocio.estudio.index', compact('plan_de_negocio'));
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.estudio.index', compact('plan_de_negocio'));
     }
 
     /**
@@ -71,7 +76,11 @@ class EstudioController extends Controller
 
         $estudio->update($validated);
 
-        return redirect()->route('plan_de_negocio.estudio.index', compact('plan_de_negocio', 'estudio'));
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+        return redirect()->route($user_route.'plan_de_negocio.estudio.index', compact('plan_de_negocio', 'estudio'));
     }
 
     /**

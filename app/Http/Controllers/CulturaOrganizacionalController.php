@@ -50,7 +50,11 @@ class CulturaOrganizacionalController extends Controller
 
         $plan_de_negocio->cultura_organizacional()->create($validated);
 
-        return redirect()->route('plan_de_negocio.cultura_organizacional.index', [
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+        return redirect()->route($user_route.'plan_de_negocio.cultura_organizacional.index', [
             "plan_de_negocio" => $plan_de_negocio,
         ]);
     }
@@ -86,7 +90,11 @@ class CulturaOrganizacionalController extends Controller
 
         $cultura_organizacional->update($validated);
 
-        return redirect()->route('plan_de_negocio.cultura_organizacional.index', [
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+        return redirect()->route($user_route.'plan_de_negocio.cultura_organizacional.index', [
             "plan_de_negocio" => $plan_de_negocio,
         ]);
     }

@@ -36,7 +36,12 @@ class ConceptoController extends Controller
 
         $estudio->conceptos()->create($validated);
 
-        return redirect()->route('plan_de_negocio.estudio.concepto.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.estudio.concepto.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
     }
 
     /**
@@ -66,7 +71,12 @@ class ConceptoController extends Controller
 
         $concepto->update($validated);
 
-        return redirect()->route('plan_de_negocio.estudio.concepto.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.estudio.concepto.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
     }
 
     /**

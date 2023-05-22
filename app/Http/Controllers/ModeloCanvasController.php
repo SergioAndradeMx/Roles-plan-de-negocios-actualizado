@@ -53,7 +53,12 @@ class ModeloCanvasController extends Controller
 
         $plan_de_negocio->modelos_canvas()->create($validated);
 
-        return redirect()->route('plan_de_negocio.modelo_canvas.index',
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.modelo_canvas.index',
         [
             'plan_de_negocio' => $plan_de_negocio,
         ]);
@@ -87,7 +92,12 @@ class ModeloCanvasController extends Controller
 
         $modelo_canva->update($validated);
 
-        return redirect()->route('plan_de_negocio.modelo_canvas.index',
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.modelo_canvas.index',
         [
             'plan_de_negocio' => $plan_de_negocio,
         ]);
@@ -100,7 +110,12 @@ class ModeloCanvasController extends Controller
     {
         $modelo_canva->delete();
 
-        return redirect()->route('plan_de_negocio.modelo_canvas.index',
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.modelo_canvas.index',
         [
             'plan_de_negocio' => $plan_de_negocio,
         ]);

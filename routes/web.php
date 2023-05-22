@@ -102,6 +102,24 @@ Route::middleware('auth')->group(function () {
         Route::patch('/grupos_de_trabajo/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'update'])->name('grupo.update');
         Route::patch('/grupos_de_trabajo/destroy/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'destroy'])->name('grupo.destroy');
         Route::get('/grupos_de_trabajo/busqueda/{grupo}/{usuario?}/{agregados?}', [GruposDeTrabajoController::class, 'index'])->name('grupo.index');
+
+        Route::get('/asesor_planes_de_negocio/{usuario}/todos', [PlanDeNegocioController::class, 'index'])->name('planes.index');
+
+        Route::resource('asesor_plan_de_negocio.generalidades', GeneralidadesController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.foda', FodaController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.modelo_canvas', ModeloCanvasController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.producto', ProductoController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.imagen_corporativa', ImagenCorporativaController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.cultura_organizacional', CulturaOrganizacionalController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);      
+        Route::resource('asesor_plan_de_negocio.estructura_legal', EstructuraLegalController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.publicidad', PublicidadController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);     
+        Route::resource('asesor_plan_de_negocio.estudio', EstudioController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.estudio.concepto', ConceptoController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.estudio.conclusion', ConclusionController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.estudio.encuesta', PollController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.estudio.encuesta.pregunta', PreguntaController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.estudio.encuesta.formulario', FormularioController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
+        Route::resource('asesor_plan_de_negocio.estudio.capturar_resultado', CapturarResultadoController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
     });
 });
 

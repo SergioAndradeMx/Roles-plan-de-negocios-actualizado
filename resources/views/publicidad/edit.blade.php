@@ -5,8 +5,17 @@
         <div class="mx-20 flex items-center justify-center">
             <h1 class="dark:text-gray-100 my-6 text-2xl">Publicidad, promocion y mercadotecnia</h1>
         </div>
+
+        @php $user_route = ''; @endphp
+
+        @if ( auth()->user()->rol == 'admin')
+            @php $user_route = 'admin_'; @endphp
+        @elseif ( auth()->user()->rol == 'asesor')
+            @php $user_route = 'asesor_'; @endphp
+        @endif
+
         <div class="mx-20 flex items-center justify-center my-6">
-            <form class="w-full" method="POST" enctype="multipart/form-data" action="{{ route('plan_de_negocio.publicidad.update', [$plan_de_negocio, $plan_de_negocio->publicidades]) }}">
+            <form class="w-full" method="POST" enctype="multipart/form-data" action="{{ route($user_route.'plan_de_negocio.publicidad.update', [$plan_de_negocio, $plan_de_negocio->publicidades]) }}">
                 @method('PATCH')    
                 @csrf
                 <div class="dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
@@ -39,7 +48,7 @@
 
                     <div class="flex justify-center items-center">
                         <div class="">
-                            <a href="{{ route('plan_de_negocio.publicidad.index', [$plan_de_negocio]) }}" class="rounded-xl bg-red-500 m-6 px-8 py-3 hover:bg-red-700 dark:text-white">Cancelar</a>
+                            <a href="{{ route($user_route.'plan_de_negocio.publicidad.index', [$plan_de_negocio]) }}" class="rounded-xl bg-red-500 m-6 px-8 py-3 hover:bg-red-700 dark:text-white">Cancelar</a>
                             <button class="m-2 dark:bg-green-600 text-white font-bold py-2 px-10 border-gray-500 dark:hover:bg-green-700 rounded-xl">
                                 Actualizar
                             </button>

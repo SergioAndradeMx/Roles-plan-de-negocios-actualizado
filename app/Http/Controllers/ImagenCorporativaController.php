@@ -51,7 +51,12 @@ class ImagenCorporativaController extends Controller
 
         $plan_de_negocio->imagenes_corporativas()->create($data);
 
-        return redirect()->route('plan_de_negocio.imagen_corporativa.index', compact('plan_de_negocio'));
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+
+        return redirect()->route($user_route.'plan_de_negocio.imagen_corporativa.index', compact('plan_de_negocio'));
     }
 
     /**
@@ -103,7 +108,12 @@ class ImagenCorporativaController extends Controller
         }
         
         $plan_de_negocio->imagenes_corporativas->update($data);
-        return redirect()->route('plan_de_negocio.imagen_corporativa.index', compact('plan_de_negocio'));
+
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }
+        return redirect()->route($user_route.'plan_de_negocio.imagen_corporativa.index', compact('plan_de_negocio'));
     }
 
     /**

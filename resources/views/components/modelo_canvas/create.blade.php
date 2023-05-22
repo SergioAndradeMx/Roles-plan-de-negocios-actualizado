@@ -2,8 +2,17 @@
     'plan_de_negocio',
 	'tipo'
 ])
+
+@php $user_route = ''; @endphp
+
+@if ( auth()->user()->rol == 'admin')
+    @php $user_route = 'admin_'; @endphp
+@elseif ( auth()->user()->rol == 'asesor')
+    @php $user_route = 'asesor_'; @endphp
+@endif
+
 <div :class="open ? '' : 'hidden'" class="w-full px-3 py-2 ">
-	<form action="{{ route('plan_de_negocio.modelo_canvas.store',[$plan_de_negocio]) }}" method="post">
+	<form action="{{ route($user_route.'plan_de_negocio.modelo_canvas.store',[$plan_de_negocio]) }}" method="post">
 		@csrf
 		<div class="flex h-fit w-full flex-nowrap items-center space-x-2">
 			<input type="text" hidden name="cat_modelo" value="{{$tipo}}">

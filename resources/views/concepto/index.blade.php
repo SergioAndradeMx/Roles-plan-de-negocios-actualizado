@@ -8,9 +8,17 @@
                 <h1 class="dark:text-gray-100 mt-6 text-2xl">Conceptos del estudio</h1>
             </div>
 
+            @php $user_route = ''; @endphp
+
+            @if ( auth()->user()->rol == 'admin')
+                @php $user_route = 'admin_'; @endphp
+            @elseif ( auth()->user()->rol == 'asesor')
+                @php $user_route = 'asesor_'; @endphp
+            @endif
+
             <div class="flex justify-center">
                 <a class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
-                    href="{{ route('plan_de_negocio.estudio.concepto.create', [$plan_de_negocio, $estudio]) }}">
+                    href="{{ route($user_route.'plan_de_negocio.estudio.concepto.create', [$plan_de_negocio, $estudio]) }}">
                     <span class="visible md:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -35,7 +43,7 @@
                                     @foreach ($estudio->conceptos as $concepto)
                                         <div x-data="{ view: true, edit: false }" class="mb-6 mr-6">
                                             <form
-                                                action="{{ route('plan_de_negocio.estudio.concepto.update', [$plan_de_negocio, $estudio, $concepto]) }}"
+                                                action="{{ route($user_route.'plan_de_negocio.estudio.concepto.update', [$plan_de_negocio, $estudio, $concepto]) }}"
                                                 method="post">
                                                 @csrf
                                                 @method('patch')

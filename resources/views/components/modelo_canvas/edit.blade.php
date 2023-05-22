@@ -3,8 +3,16 @@
     "canva_item"
 ])
 
+@php $user_route = ''; @endphp
+
+@if ( auth()->user()->rol == 'admin')
+    @php $user_route = 'admin_'; @endphp
+@elseif ( auth()->user()->rol == 'asesor')
+    @php $user_route = 'asesor_'; @endphp
+@endif
+
 <div :class="open ? '' : 'hidden'" class="w-full px-3 py-2 ">
-    <form action="{{ route('plan_de_negocio.modelo_canvas.update',[$plan_de_negocio,$canva_item]) }}" method="post">
+    <form action="{{ route($user_route.'plan_de_negocio.modelo_canvas.update',[$plan_de_negocio,$canva_item]) }}" method="post">
         @csrf
         @method('patch')
         <div class="flex h-fit w-full flex-nowrap items-center space-x-2">

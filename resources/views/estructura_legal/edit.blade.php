@@ -17,8 +17,16 @@
             $input_regimen = $plan_de_negocio->estructura_legal->regimen_fiscal;
         @endphp
 
+        @php $user_route = ''; @endphp
+
+        @if ( auth()->user()->rol == 'admin')
+            @php $user_route = 'admin_'; @endphp
+        @elseif ( auth()->user()->rol == 'asesor')
+            @php $user_route = 'asesor_'; @endphp
+        @endif
+
         <div class="mx-20 flex flex-col items-center justify-center">
-            <form method="POST" action="{{ route('plan_de_negocio.estructura_legal.update', [$plan_de_negocio, $estructura_legal]) }}">
+            <form method="POST" action="{{ route($user_route.'plan_de_negocio.estructura_legal.update', [$plan_de_negocio, $estructura_legal]) }}">
                 @method('PATCH')
                 @csrf
                 <div x-data="{ options: ['Física', 'Moral'], selected: @js($persona) }">
@@ -158,7 +166,7 @@
                 </div>
 
                 <div class="flex justify-center items-center">
-                    <a href="{{ route('plan_de_negocio.estructura_legal.index', [$plan_de_negocio]) }}" class="rounded bg-red-500 m-6 px-4 py-2 hover:bg-red-700 dark:text-white">Cancelar</a>
+                    <a href="{{ route($user_route.'plan_de_negocio.estructura_legal.index', [$plan_de_negocio]) }}" class="rounded bg-red-500 m-6 px-4 py-2 hover:bg-red-700 dark:text-white">Cancelar</a>
                     {{-- <input  type="submit" value="Crear"> --}}
                     <button class="rounded bg-green-600 m-6 px-4 py-2 hover:bg-green-800 dark:text-white">Actualizar</button>
                 </div>
