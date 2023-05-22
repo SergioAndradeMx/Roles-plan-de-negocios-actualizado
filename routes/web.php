@@ -20,6 +20,7 @@ use App\Http\Controllers\CapturarResultadoController;
 use App\Http\Controllers\AdviserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsuarioAGrupoController;
 use App\Http\Controllers\GruposDeTrabajoController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
@@ -96,9 +97,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['middleware' => 'adviser'], function() {
-        Route::resources([
-            'grupos_de_trabajo' => GruposDeTrabajoController::class,
-        ]);
+        Route::resource('grupos_de_trabajo', GruposDeTrabajoController::class)->except(['update', 'destroy', 'show', 'edit']);
+        Route::get('/grupos_de_trabajo/show/{grupo}/{usuario?}', [GruposDeTrabajoController::class, 'show'])->name('grupo.show');
+        Route::patch('/grupos_de_trabajo/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'update'])->name('grupo.update');
+        Route::patch('/grupos_de_trabajo/destroy/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'destroy'])->name('grupo.destroy');
+        Route::get('/grupos_de_trabajo/busqueda/{grupo}/{usuario?}/{agregados?}', [GruposDeTrabajoController::class, 'index'])->name('grupo.index');
     });
 });
 

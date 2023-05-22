@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\GruposDeTrabajo;
 use DB;
 
 class AdviserController extends Controller
@@ -12,10 +13,19 @@ class AdviserController extends Controller
      */
     public function index()
     {
-        $grupos_de_trabajo = DB::table('grupos_de_trabajos')->get();
-        //dd($grupos_de_trabajo);
+        $grupos = auth()->user()->grupos_de_trabajo;
 
-        return view('asesor', compact('grupos_de_trabajo'));
+        $array_usuarios = array();
+        foreach ($grupos as $grupo){
+            array_push($array_usuarios, json_decode($grupo->integrantes));
+        }
+        //dd($array_usuarios);
+
+
+    
+        //  dd();
+
+        return view('asesor', compact('grupos'));
     }
 
     /**

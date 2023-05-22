@@ -1,0 +1,117 @@
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex items-center justify-between dark:text-gray-100">
+            <div class="w-full border-b-2 border-gray-800 mx-8">
+                <p class="text-2xl font-bold text-center p-4">{{ $grupo->nombre_grupo }}</p>
+            </div>
+        </div>
+    </x-slot>
+
+    <div class="mx-auto justify-center px-auto dark:text-gray-100 px-20 py-10 mt-10">
+        
+        <diV class="flex justify-center">
+            <div class="w-1/2">
+                <form action="{{ route('grupo.index', [$grupo]) }}" method="GET">
+                    <div class="relative mb-4 flex w-full flex-wrap items-stretch">     
+                        <div class="mr-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c0c0c0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                        </div>                   
+                        <input type="search"
+                            name="search"
+                            class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-200 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-primary"
+                            placeholder="Buscar por correo..."
+                            aria-label="Search"
+                            aria-describedby="button-addon1" />
+
+                        <!--Search button-->
+                        <button
+                            class="relative z-[2] flex items-center rounded-r bg-primary dark:bg-gray-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                            type="submit"
+                            id="button-addon1"
+                            data-te-ripple-init
+                            data-te-ripple-color="light">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                class="h-5 w-5">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                                        clip-rule="evenodd" />
+                            </svg>
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="flex my-2 relative overflow-x-auto">
+            @if (!isset($usuarios))
+                <div class="dark:transparent w-full">
+                    <div class="text-center bh-red px-6 py-8 text-lg text-gray-900 whitespace-nowrap dark:text-gray-400">
+                        <div class="">
+                            Busca un usuario por su correo y añadelo!
+                        </div>
+                    </div>
+                </div>
+            @else
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">  
+                <thead class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Nombre del integrante
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Email
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Acción
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach ($usuarios as $usuario)
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $usuario->name }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ $usuario->id }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="inline-flex">
+                                        <form method="post" action="{{ route('grupo.update', [$grupo, $usuario->id]) }}">
+                                            @method('PATCH')
+                                            @csrf
+                                            <button type="submit"
+                                                onclick="return confirm('El usuario agregará a tu grupo, ¿Desea continuar?');"
+                                                class="inline-flex
+                                                    items-center 
+                                                    px-1.5
+                                                    py-1.5
+                                                    dark:bg-blue-800
+                                                    dark:hover:bg-blue-700
+                                                    text-white
+                                                    text-sm
+                                                    font-medium
+                                                    bg-red-700
+                                                    hover:bg-red-600
+                                                    rounded-md ml-2">
+                                                    <p class="mr-1">Añadir</p>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</x-app-layout>

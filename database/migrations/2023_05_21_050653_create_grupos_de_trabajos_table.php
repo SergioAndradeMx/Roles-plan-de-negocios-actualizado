@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nombre_grupo');
             $table->text('descripcion');
-            $table->json('integrantes');
+            $table->json('integrantes')->default('[]');
             $table->timestamps();
         });
     }
