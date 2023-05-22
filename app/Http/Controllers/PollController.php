@@ -40,6 +40,8 @@ class PollController extends Controller
         $user_route = auth()->user()->rol;
         if($user_route == 'admin' || $user_route == 'asesor'){
             $user_route = $user_route.'_';
+        }else{
+            $user_route = '';
         }
 
         return redirect()->route($user_route.'plan_de_negocio.estudio.encuesta.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
@@ -80,6 +82,8 @@ class PollController extends Controller
         $user_route = auth()->user()->rol;
         if($user_route == 'admin' || $user_route == 'asesor'){
             $user_route = $user_route.'_';
+        }else{
+            $user_route = '';
         }
         return redirect()->route($user_route.'plan_de_negocio.estudio.encuesta.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
     }

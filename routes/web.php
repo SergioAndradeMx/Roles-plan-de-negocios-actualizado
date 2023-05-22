@@ -73,10 +73,18 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => 'admin'], function() {
         Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
         Route::post('register', [RegisteredUserController::class, 'store']);
+        Route::get('/admin_grupos_de_trabajo/todos', [GruposDeTrabajoController::class, 'index'])->name('grupos_admin');
+        Route::get('/admin_grupos_de_trabajo/{grupo}', [GruposDeTrabajoController::class, 'show'])->name('grupo_show_admin');
+        Route::get('/admin_grupos_de_trabajo/busqueda/{grupo}/{usuario?}/{agregados?}', [GruposDeTrabajoController::class, 'busqueda'])->name('grupo_busqueda_admin.index');
+        Route::patch('/admin_grupos_de_trabajo/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'update'])->name('grupo_admin.update');
+        Route::patch('/admin_grupos_de_trabajo/destroy/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'destroy'])->name('grupo_admin.destroy'); //eliminar usuarios del grupo
+        Route::delete('/admin_grupos_de_trabajo/destroy/{grupo}', [GruposDeTrabajoController::class, 'complete_destroy'])->name('grupo_complete_destroy'); //eliminar el grupo
+
+        Route::get('/admin_planes_de_negocio/{usuario}/todos', [PlanDeNegocioController::class, 'admin_planes_x_usuario'])->name('planes_admin.index');
 
         Route::resources([
             'usuarios' => UserController::class,
-            'admin_plan_de_negocio' => PlanDeNegocioController::class
+            'admin_plan_de_negocio' => PlanDeNegocioController::class,
         ]);
 
         Route::resource('admin_plan_de_negocio.generalidades', GeneralidadesController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);

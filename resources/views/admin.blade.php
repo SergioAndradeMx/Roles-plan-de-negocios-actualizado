@@ -57,7 +57,7 @@
         </a>
 
         <!--     tercera card -->
-        <a href="#" class="
+        <a href="{{ route('grupos_admin') }}" class="
             w-72
             h-80
             mb-6
@@ -73,10 +73,10 @@
             hover:bg-gray-100">
             <div class="content-center grid justify-items-center h-full pb-2">
                 <div class="rounded-full p-6 dark:bg-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#c5c5c5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#c5c5c5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
                 </div>
-                <p class="pt-4 text-center text-gray-500 dark:text-gray-200 text-2xl leading-5 mt-1">Extra</p>
-                <p class="mt-4 text-center text-gray-600 dark:text-gray-400 text-sm leading-5 mt-1 border-t-2 border-gray-400 pt-4 dark:border-t-2 dark:border-gray-500 pt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p class="pt-4 text-center text-gray-500 dark:text-gray-200 text-2xl leading-5 mt-1">Grupos de trabajo</p>
+                <p class="mt-4 text-center text-gray-600 dark:text-gray-400 text-sm leading-5 mt-1 border-t-2 border-gray-400 pt-4 dark:border-t-2 dark:border-gray-500 pt-4">Aquí puedes editar los grupos de trabajo existentes</p>
             </div>
         </a>
 

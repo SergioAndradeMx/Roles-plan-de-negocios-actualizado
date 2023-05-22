@@ -13,19 +13,37 @@ class GruposDeTrabajoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(GruposDeTrabajo $gruposDeTrabajo)
+    public function index(Request $request, GruposDeTrabajo $gruposDeTrabajo)
     {
         $grupo = GruposDeTrabajo::find(request('grupo'));
-        $array_usuarios = json_decode($grupo->integrantes);
 
-        if(request('search')){
-            $usuarios = DB::table('users')->where('email', 'like', '%' . request('search') . '%')->get();
+        if(auth()->user()->rol == 'asesor'){
+            $array_usuarios = json_decode($grupo->integrantes);
 
-            //dd($agregar_usuario);
+            if(request('search')){
+                $usuarios = DB::table('users')->where('email', 'like', '%' . request('search') . '%')->get();
 
-            return view('asesor.grupos_de_trabajo.index', compact('grupo', 'usuarios', 'array_usuarios'));
+                //dd($agregar_usuario);
+
+                return view('asesor.grupos_de_trabajo.index', compact('grupo', 'usuarios', 'array_usuarios'));
+            }else{
+                return view('asesor.grupos_de_trabajo.index', compact('grupo'));
+            }
         }else{
-            return view('asesor.grupos_de_trabajo.index', compact('grupo'));
+            if(request('search')){
+                $grupos = GruposDeTrabajo::join('users', 'grupos_de_trabajos.user_id', '=', 'users.id')
+                    ->select('grupos_de_trabajos.id', 'user_id', 'nombre_grupo', 'descripcion', 'integrantes', 'name')
+                    ->where($request->tipo, 'like', '%' . request('search') . '%')
+                    ->paginate(5);
+
+                return view('admin.grupos_de_trabajo.index', compact('grupos'));
+
+            }else{
+                $grupos = GruposDeTrabajo::join('users', 'grupos_de_trabajos.user_id', '=', 'users.id')
+                    ->select('grupos_de_trabajos.id', 'user_id', 'nombre_grupo', 'descripcion', 'integrantes', 'name')->paginate(5);
+
+                return view('admin.grupos_de_trabajo.index', compact('grupos'));
+            }
         }
     }
 
@@ -35,6 +53,25 @@ class GruposDeTrabajoController extends Controller
     public function create()
     {
         return view('asesor.grupos_de_trabajo.create');
+    }
+
+    public function busqueda(GruposDeTrabajo $gruposDeTrabajo)
+    {
+        $grupo = GruposDeTrabajo::find(request('grupo'));
+        //dd($grupo);
+
+        //dd("estas buscando");
+        $array_usuarios = json_decode($grupo->integrantes);
+
+        if(request('search')){
+            $usuarios = DB::table('users')->where('email', 'like', '%' . request('search') . '%')->get();
+
+            //dd("estas buscando");
+
+            return view('admin.grupos_de_trabajo.busqueda', compact('grupo', 'usuarios', 'array_usuarios'));
+        }else{
+            return view('admin.grupos_de_trabajo.busqueda', compact('grupo'));
+        }
     }
 
     /**
@@ -64,8 +101,12 @@ class GruposDeTrabajoController extends Controller
         $array_usuarios = json_decode($grupo->integrantes);
 
         $users = User::whereIn('id', $array_usuarios)->get();
-        
-        return view('asesor.grupos_de_trabajo.show', compact('grupo','users'));
+
+        if(auth()->user()->rol == 'asesor'){
+            return view('asesor.grupos_de_trabajo.show', compact('grupo','users'));
+        }else{
+            return view('admin.grupos_de_trabajo.show', compact('grupo','users'));          
+        }
     }
 
     /**
@@ -73,7 +114,7 @@ class GruposDeTrabajoController extends Controller
      */
     public function edit(GruposDeTrabajo $gruposDeTrabajo)
     {
-        dd("si");
+        //dd(request('grupo'));
     }
 
     /**
@@ -99,9 +140,15 @@ class GruposDeTrabajoController extends Controller
             $grupo->save();
         }
         
-        return redirect()->route('grupo.show', [
-            "grupo" => $grupo
-        ]);
+        if(auth()->user()->rol == 'asesor'){
+            return redirect()->route('grupo.show', [
+                "grupo" => $grupo
+            ]);
+        }else{
+            return redirect()->route('grupo_show_admin', [
+                "grupo" => $grupo
+            ]);
+        }
     }
 
     /**
@@ -123,5 +170,14 @@ class GruposDeTrabajoController extends Controller
         $grupo->save();
         return back();
         
+    }
+
+    public function complete_destroy(GruposDeTrabajo $gruposDeTrabajo)
+    {
+        
+        $grupo_id = request('grupo');
+
+        GruposDeTrabajo::destroy($grupo_id);
+        return back(); 
     }
 }

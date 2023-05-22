@@ -31,7 +31,7 @@
                     dark:bg-gray-700
                     hover:bg-gray-200
                     dark:hover:bg-gray-800"
-                    href="{{ route('asesor_plan_de_negocio.generalidades.index', [$plan_de_negocio]) }}"
+                    href="{{ route('admin_plan_de_negocio.generalidades.index', [$plan_de_negocio]) }}"
                     >
                     <div class="px-6 py-4">
                         <div class="font-bold text-xl mb-2 border-b border-gray-500 pb-2">{{ $plan_de_negocio->nombre }}</div>
