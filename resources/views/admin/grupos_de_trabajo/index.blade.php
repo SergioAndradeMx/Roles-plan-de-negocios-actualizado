@@ -10,14 +10,14 @@
     <div class="mx-auto justify-center px-auto dark:text-gray-100 py-8 px-20">
 
         <!--Search text-->
-        <div class="flex justify-end mb-4 bg-gray-800 pt-4 px-4 rounded-xl">
+        <div class="flex justify-end mb-4 bg-white dark:bg-gray-800 pt-4 px-4 rounded-xl">
             <div class="w-full">
                 <form action="#" method="GET">
                     <div class="relative mb-4 flex w-full flex-wrap items-stretch">
 
                         <div class="w-1/3">
                             <div>
-                                <a href="{{ route('grupos_admin') }}" class="mb-3 inline-flex items-center px-4 py-2 mr-3 text-base font-medium text-gray-300 bg-white border border-gray-300 rounded-lg hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
+                                <a href="{{ route('grupos_admin') }}" class="mb-3 inline-flex items-center px-4 py-2 mr-3 text-base font-medium text-white bg-blue-500 border border-gray-300 rounded-lg hover:bg-blue-400 hover:text-white dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Ver todos
                                 </a>
                             </div>
@@ -44,14 +44,14 @@
                         
                         <input type="search"
                             name="search"
-                            class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-200 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-primary"
+                            class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l-xl border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-200 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-400 dark:focus:border-primary"
                             placeholder="Buscar..."
                             aria-label="Search"
                             aria-describedby="button-addon1" />
 
                         <!--Search button-->
                         <button
-                            class="relative z-[2] flex items-center rounded-r bg-primary dark:bg-gray-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                            class="relative z-[2] flex items-center rounded-r bg-blue-500 dark:bg-gray-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
                             type="submit"
                             id="button-addon1"
                             data-te-ripple-init
@@ -74,7 +74,7 @@
 
         <div class="flex my-2 relative overflow-x-auto shadow-md">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-base text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Nombre del grupo
