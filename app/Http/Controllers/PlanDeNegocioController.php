@@ -121,7 +121,8 @@ class PlanDeNegocioController extends Controller
 
     public function admin_planes_x_usuario()
     {
+        $integrante = User::where('id', '=', request('usuario'))->get()[0];
         $planes = Plan_de_negocio::where('user_id', '=', request('usuario'))->get();
-        return view('admin.planes_de_negocio.planes_x_usuario', compact('planes'));
+        return view('admin.planes_de_negocio.planes_x_usuario', compact('planes', 'integrante'));
     }
 }

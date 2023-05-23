@@ -2,7 +2,7 @@
     'tipo' => ''
 ])
 
-<div x-data="{ open: false }"  class="w-full py-2 bg-gray-200 dark:bg-gray-700 space-x-2 rounded-t-md">
+<div x-data="{ open: false }"  class="w-full py-2 bg-slate-700 text-white font-bold dark:bg-gray-700 space-x-2 rounded-t-md">
     <div class="flex items-center">
         <span class="mx-auto">{{ $tipo }}</span>
         <button @click="open = !open" class="mr-2">
@@ -16,7 +16,7 @@
             @csrf
             <input type="hidden" name="tipo" value="{{ $tipo }}">
             <label for="descripcion">
-                <input :value="open && ''" class="rounded text-base dark:text-gray-700" type="text" name="descripcion" id="descripcion">
+                <input :value="open && ''" class="rounded text-base text-gray-600 dark:text-gray-700" type="text" name="descripcion" id="descripcion">
             </label>
             <button>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">

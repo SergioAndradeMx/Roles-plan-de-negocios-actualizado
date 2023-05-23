@@ -15,6 +15,9 @@
         min-h-screen
         p-4
         md:flex
+        bg-slate-800
+        text-white
+        border-none
         dark:bg-gray-800
         dark:text-gray-100"
         >
@@ -28,7 +31,7 @@
                 </a>
                 <span>
                     @if ($user_route == 'admin_')
-                        <p class="bg-red-800 p-1">ADMINISTRADOR</p>
+                        <p class="bg-red-800 text-white rounded-xl p-2">ADMINISTRADOR</p>
                     @elseif ($user_route == 'asesor_')
                         <p class="bg-blue-800 p-1">ASESOR</p>
                     @else
@@ -65,15 +68,16 @@
                         :aria-expanded="open"
                         :aria-controls="$id('dropdown-button')"
                         type="button"
-                        class="flex w-full justify-center items-center gap-2 p-4 my-1 rounded-md
-                        hover:bg-gray-200 hover:dark:bg-gray-700"
+                        class="flex w-full justify-between items-center gap-2 p-4 my-1 rounded-md
+                        hover:bg-slate-700 hover:dark:bg-gray-700"
                         >
-                        Generalidades
+                        <div class="flex items-center">
+                            <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <p class="text-left">Generalidades</p>
+                        </div>
 
                         <!-- Heroicon: chevron-down -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
 
                     <!-- Panel -->
@@ -86,19 +90,19 @@
                         style="display: none;"
                         class="left-0 mt-2 rounded-md m-2"
                         >
-                        <a href="{{ route($user_route.'plan_de_negocio.generalidades.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($user_route.'plan_de_negocio.generalidades.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-700 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Información general de la empresa
                         </a>
 
-                        <a href="{{ route($user_route.'plan_de_negocio.foda.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($user_route.'plan_de_negocio.foda.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-700 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Análisis foda
                         </a>
 
-                        <a href="{{ route($user_route.'plan_de_negocio.modelo_canvas.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($user_route.'plan_de_negocio.modelo_canvas.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-700 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Modelo canvas
                         </a>
 
-                        <a href="{{ route($user_route.'plan_de_negocio.producto.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($user_route.'plan_de_negocio.producto.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-700 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Producto y/o Servicio
                         </a>
                     </div>
@@ -130,15 +134,18 @@
                         :aria-expanded="open"
                         :aria-controls="$id('dropdown-button')"
                         type="button"
-                        class="flex w-full justify-center items-center gap-2 p-4 my-1 rounded-md
-                        hover:bg-gray-200 hover:dark:bg-gray-700"
+                        class="flex w-full justify-between items-center gap-2 p-4 my-1 rounded-md
+                        hover:bg-slate-700 hover:dark:bg-gray-700"
                         >
-                        Administración de recursos
+                        <div class="flex items-center">
+                            <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                            <p class="text-left">Administración de recursos</p>
+                        </div>
 
                         <!-- Heroicon: chevron-down -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
                     </button>
 
                     <!-- Panel -->
@@ -151,11 +158,11 @@
                         style="display: none;"
                         class="left-0 mt-2 rounded-md m-2"
                         >
-                        <a href="{{ route($user_route.'plan_de_negocio.cultura_organizacional.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($user_route.'plan_de_negocio.cultura_organizacional.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-700 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Cultura organizacional
                         </a>
 
-                        <a href="{{ route($user_route.'plan_de_negocio.estructura_legal.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($user_route.'plan_de_negocio.estructura_legal.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-700 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Estructura legal
                         </a>
                     </div>
@@ -189,14 +196,17 @@
                         :aria-controls="$id('dropdown-button')"
                         type="button"
                         class="flex w-full justify-center items-center gap-2 p-4 my-1 rounded-md
-                        hover:bg-gray-200 hover:dark:bg-gray-700"
+                        hover:bg-slate-700 hover:dark:bg-gray-700"
                         >
-                        Imagen corporativa y marketing
+                        <div class="flex items-center">
+                            <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                            <p class="text-left">Imagen corporativa y marketing</p>
+                        </div>
 
                         <!-- Heroicon: chevron-down -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>    
                     </button>
 
                     <!-- Panel -->
@@ -209,11 +219,11 @@
                         style="display: none;"
                         class="left-0 mt-2 rounded-md m-2"
                         >
-                        <a href="{{ route($user_route.'plan_de_negocio.imagen_corporativa.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($user_route.'plan_de_negocio.imagen_corporativa.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-700 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Imagen de la empresa
                         </a>
 
-                        <a href="{{ route($user_route.'plan_de_negocio.publicidad.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-gray-200 hover:dark:bg-gray-700 disabled:text-gray-500">
+                        <a href="{{ route($user_route.'plan_de_negocio.publicidad.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-700 hover:dark:bg-gray-700 disabled:text-gray-500">
                             Publicidad, promoción y mercadotecnia
                         </a>
                     </div>
@@ -222,12 +232,17 @@
             <!---->
             <!--ESTUDIOS DE MERCADO-->
             <div
-                class="relative"
+                class="flex justify-between"
                 >
                 <!-- Button -->
-                <a href="{{ route($user_route.'plan_de_negocio.estudio.index', [$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-gray-200 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500 flex justify-center">
-                    <p>Estudios de mercado</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                <a href="{{ route($user_route.'plan_de_negocio.estudio.index', [$plan_de_negocio]) }}" class="flex items-center justify-between gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-slate-700 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500 flex mt-4">
+                    <div class="flex">
+                        <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 3v5h5M16 13H8M16 17H8M10 9H8"/></svg>
+                        <p class="text-left">Estudios de mercado</p>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
                 </a>
             </div>
         </aside>
