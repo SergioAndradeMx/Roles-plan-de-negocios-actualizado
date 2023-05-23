@@ -3,7 +3,7 @@
     <x-sidebar :plan_de_negocio="$plan_de_negocio"></x-sidebar>
     <div class="w-full">
         <div class="flex items-center justify-center">
-            <h1 class="dark:text-gray-100 py-6 text-2xl mr-5">
+            <h1 class="dark:text-gray-100 text-slate-700 font-bold py-6 text-2xl mr-5">
                 Actualiza los datos del producto/servicio
             </h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
