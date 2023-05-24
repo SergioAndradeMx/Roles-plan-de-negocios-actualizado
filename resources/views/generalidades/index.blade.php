@@ -25,19 +25,19 @@
             <div class="md:justify-strech md:grid-flow-col md:grid sm:flex sm:flex-row w-full rounded-xl dark:bg-gray-800 bg-slate-200 p-2 mb-6">
                 <div>
                     <input id="1" class="peer hidden" name="option" type="radio" value="Antecedentes" x-model="seccion">
-                    <label for="1" class="text-gray-700 dark:text-gray-300 font-bold block cursor-pointer select-none rounded-xl p-2 text-center dark:peer-checked:bg-slate-700 peer-checked:bg-slate-500 peer-checked:font-bold peer-checked:text-white">
+                    <label for="1" class="text-gray-700 dark:text-gray-300 font-bold block cursor-pointer select-none rounded-xl p-2 text-center dark:peer-checked:bg-slate-700 peer-checked:bg-cyan-700 peer-checked:font-bold peer-checked:text-white">
                         Antecedentes</label>  
                 </div>
                     
                 <div>
                     <input id="2" class="peer hidden" name="option" type="radio" value="Producto"  x-model="seccion">
-                    <label for="2" class="text-gray-700 dark:text-gray-300 font-bold block cursor-pointer select-none rounded-xl p-2 text-center dark:peer-checked:bg-slate-700 peer-checked:bg-slate-500 peer-checked:font-bold peer-checked:text-white">
+                    <label for="2" class="text-gray-700 dark:text-gray-300 font-bold block cursor-pointer select-none rounded-xl p-2 text-center dark:peer-checked:bg-slate-700 peer-checked:bg-cyan-700 peer-checked:font-bold peer-checked:text-white">
                         Producto y/o servicio</label>
                 </div>
                     
                 <div>
                     <input id="3" class="peer hidden" name="option" type="radio" value="Aspectos" x-model="seccion">
-                    <label for="3" class="text-gray-700 dark:text-gray-300 font-bold block cursor-pointer select-none rounded-xl p-2 text-center dark:peer-checked:bg-slate-700 peer-checked:bg-slate-500 peer-checked:font-bold peer-checked:text-white">
+                    <label for="3" class="text-gray-700 dark:text-gray-300 font-bold block cursor-pointer select-none rounded-xl p-2 text-center dark:peer-checked:bg-slate-700 peer-checked:bg-cyan-700 peer-checked:font-bold peer-checked:text-white">
                         Aspectos innovadores</label>
                 </div>
             </div>

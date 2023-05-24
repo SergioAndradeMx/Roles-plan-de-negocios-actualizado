@@ -11,14 +11,12 @@
     @php $user_route = 'asesor_'; @endphp
 @endif
 
-<div class="flex">
+<div class="flex ml-2">
     <form class="flex items-center" action="{{ route($user_route.'plan_de_negocio.foda.destroy', [$plan_de_negocio,$foda]) }}" method="POST">
         @csrf
         @method('delete')
         <button :class="!open ? '' : 'hidden'" onclick="return confirm('¿Seguro que quieres borrar este registro?');">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 24" fill="currentColor" class="w-5 h-5">
-                <path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM9 11V17H11V11H9ZM13 11V17H15V11H13ZM9 4V6H15V4H9Z" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#607e81" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
         </button>
     </form>
 </div>
