@@ -48,13 +48,16 @@
                     href="{{ route('grupo.show', [$grupo]) }}"
                     >
                     <div class="">
-                        <div class="flex items-center justify-between font-bold text-xl mb-2 dark:border-none dark:bg-gray-800 bg-pink-700 text-white px-6 py-3 dark:pb-2">
+                        <div class="flex items-center justify-between font-bold text-xl mb-2 dark:border-none dark:bg-transparent bg-pink-700 text-white px-6 py-3 dark:pb-2">
                             {{ $grupo->nombre_grupo }}
-                            <svg class="ml-4" xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#ebebeb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         </div>
-                        <p class="mx-6 text-base dark:border-t-4 dark:border-gray-600 pt-2">{{ $grupo->descripcion }}</p>
-                        
-                        <div class="flex justify-between mx-6 my-4 text-base text-right mt-6 border-t-2 border-gray-300 dark:border-none pt-2">
+                        <p class="mx-6 text-base dark:border-t-2 dark:border-gray-600 pt-2">{{ $grupo->descripcion }}</p>
+                        <div class="mx-6 my-2 text-base dark:border-t-4 dark:border-gray-600 bg-transparent-600 w-auto inline-block rounded-lg font-bold text-pink-800 border-2 border-pink-800 dark:text-gray-300 dark:border-gray-500 py-1 px-2">
+                            <p>Integrantes: {{count(json_decode($grupo->integrantes)) }}</p>
+                        </div>
+
+                        <div class="flex justify-between mx-6 my-4 text-base text-right mt-2 border-t-2 border-gray-300 dark:border-none pt-2">
                             <form method="post" action="{{ route('grupo_destroy', [$grupo->id]) }}">
                                 @method('delete')
                                 @csrf
@@ -64,6 +67,7 @@
                                         items-center 
                                         px-1.5
                                         py-1.5
+                                        dark:bg-gray-500
                                         bg-pink-500
                                         hover:bg-pink-600
                                         text-white

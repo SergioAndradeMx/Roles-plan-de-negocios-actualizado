@@ -21,7 +21,7 @@ class GruposDeTrabajoController extends Controller
             $array_usuarios = json_decode($grupo->integrantes);
 
             if(request('search')){
-                $usuarios = DB::table('users')->where([['rol','!=','admin'],['email', 'like', '%' . request('search') . '%']])->get();
+                $usuarios = DB::table('users')->where([['rol','!=','admin'],['rol','!=','asesor'],['email', 'like', '%' . request('search') . '%']])->get();
 
                 //dd($agregar_usuario);
 
@@ -64,7 +64,7 @@ class GruposDeTrabajoController extends Controller
         $array_usuarios = json_decode($grupo->integrantes);
 
         if(request('search')){
-            $usuarios = DB::table('users')->where([['rol','!=','admin'],['email', 'like', '%' . request('search') . '%']])->get();
+            $usuarios = DB::table('users')->where([['rol','!=','admin'],['rol','!=','asesor'],['email', 'like', '%' . request('search') . '%']])->get();
 
             //dd("estas buscando");
 

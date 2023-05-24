@@ -46,7 +46,7 @@
                     <a class="
                         w-full
                         bg-white
-                        rounded-xl
+                        rounded-lg
                         overflow-hidden 
                         shadow-lg
                         mx-4
@@ -58,11 +58,11 @@
                         href="{{ route($user_route.'plan_de_negocio.estudio.show', [$plan_de_negocio, $estudio]) }}"
                         >
                         <div class="">
-                            <div class="flex items-center justify-between font-bold text-xl mb-2 dark:border-none dark:bg-gray-800 bg-cyan-700 text-white px-6 py-3 dark:pb-2">
+                            <div class="flex items-center justify-between font-bold text-xl mb-2 dark:border-none dark:bg-transparent bg-cyan-700 text-white px-6 py-3 dark:pb-2">
                                 {{ $estudio->nombre }}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 3v5h5M16 13H8M16 17H8M10 9H8"/></svg>
                             </div>
-                            <p class="mx-6 text-base dark:border-t-4 dark:border-gray-600 pt-2">{{ $estudio->objetivo }}</p>
+                            <p class="mx-6 text-base dark:border-t-2 dark:border-gray-600 pt-2">{{ $estudio->objetivo }}</p>
                             
                             <div class="flex justify-between mx-6 my-4 text-base text-right mt-6 border-t-2 border-gray-300 dark:border-none pt-2">
                                 <form method="post" action="{{ route($user_route.'plan_de_negocio.estudio.destroy', [$plan_de_negocio, $estudio]) }}">

@@ -48,27 +48,29 @@
                         </div>
                     </div>    
                 @else
-                    @foreach ($encuestum->preguntas as $pregunta )
+                    @foreach ($encuestum->preguntas as $preguntum )
                         <div class="mb-6">
                             <div class="flex flex-col md:flex-row justify-between">
                                 <div>
-                                    <h1 class="text-gray-800 dark:text-gray-300 mb-4 mr-2 font-semibold text-xl">{{ $pregunta->pregunta }}</h1>
+                                    <h1 class="text-gray-800 dark:text-gray-300 mb-4 mr-2 font-semibold text-xl">{{ $preguntum->pregunta }}</h1>
                                 </div>
                                 <div class="flex flex-row mb-6">
                                     <div>
-                                        <a href="{{ route($user_route.'plan_de_negocio.estudio.encuesta.pregunta.edit',[$plan_de_negocio, $estudio, $encuestum, $pregunta]) }}" class="bg-blue-100 hover:bg-blue-200 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Editar</a>
+                                        <a href="{{ route($user_route.'plan_de_negocio.estudio.encuesta.pregunta.edit',[$plan_de_negocio, $estudio, $encuestum, $preguntum]) }}" class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium mr-2 p-1.5 rounded">Editar</a>
                                     </div>
                                     <div>
-                                        <form class="eliminar" action="{{ route($user_route.'plan_de_negocio.estudio.encuesta.pregunta.destroy',[$plan_de_negocio, $estudio, $encuestum, $pregunta]) }}" method="POST">
+                                        <form class="eliminar" action="{{ route($user_route.'plan_de_negocio.estudio.encuesta.pregunta.destroy',[$plan_de_negocio, $estudio, $encuestum, $preguntum]) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" id="btn_eliminar" class="bg-blue-100 hover:bg-blue-200 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Eliminar</button>
+                                            <button onclick="return confirm('¿Seguro que quieres borrar esta pregunta?');" type="submit" id="btn_eliminar" class="flex bg-red-600 hover:bg-red-700 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">
+                                                <p class="text-white p-0.5 text-sm">Eliminar</p>
+                                            </button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                             <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 sm:flex">
-                                @foreach ($pregunta->respuestas as $respuesta )
+                                @foreach ($preguntum->respuestas as $respuesta )
                                     <li class="w-full dark:bg-gray-300 rounded border-b border-gray-500 text-center sm:border-b-0 sm:border-r py-2">
                                         {{ $respuesta->respuesta }}
                                     </li>

@@ -49,7 +49,8 @@ class PreguntaController extends Controller
             $user_route = '';
         }
 
-        return redirect()->route($user_route.'plan_de_negocio.estudio.encuesta.index', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
+        $encuesta = $encuestum;
+        return redirect()->route($user_route.'plan_de_negocio.estudio.encuesta.show', [$plan_de_negocio, $estudio, $encuesta]);
     }
 
     /**
@@ -63,24 +64,52 @@ class PreguntaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pregunta $pregunta)
+    public function edit(Plan_de_negocio $plan_de_negocio, Estudio $estudio, Poll $encuestum, Pregunta $preguntum)
     {
-        //
+        return view('pregunta.edit', compact('plan_de_negocio', 'estudio', 'encuestum', 'preguntum'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pregunta $pregunta)
+    public function update(Request $request, Plan_de_negocio $plan_de_negocio, Estudio $estudio, Poll $encuestum, Pregunta $preguntum)
     {
-        //
+        
+        //dd($preguntum);
+
+        $input = $request->input('pregunta');
+        //dd($input);
+        $preguntum->update($input);
+
+        //dd($preguntum->resp);
+        
+        $i = 0;
+        foreach ($preguntum->respuestas as $respuesta){
+            $input_respuesta = $request->input("respuestas.{$i}");
+
+            $respuesta->update($input_respuesta);
+            $i++;
+        }
+
+        $user_route = auth()->user()->rol;
+        if($user_route == 'admin' || $user_route == 'asesor'){
+            $user_route = $user_route.'_';
+        }else{
+            $user_route = '';
+        }
+
+        $encuesta = $encuestum;
+        return redirect()->route($user_route.'plan_de_negocio.estudio.encuesta.show', [
+                $plan_de_negocio, $estudio, $encuesta
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pregunta $pregunta)
+    public function destroy(Plan_de_negocio $plan_de_negocio, Estudio $estudio, Poll $encuestum, Pregunta $preguntum)
     {
-        //
+        Pregunta::destroy($preguntum->id);
+        return back(); 
     }
 }
