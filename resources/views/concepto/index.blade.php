@@ -17,7 +17,7 @@
             @endif
 
             <div class="flex justify-center">
-                <a class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
+                <a class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-white bg-blue-600 hover:bg-blue-500 border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
                     href="{{ route($user_route.'plan_de_negocio.estudio.concepto.create', [$plan_de_negocio, $estudio]) }}">
                     <span class="visible md:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -36,7 +36,16 @@
                         <div class="p-6 dark:bg-gray-900">
                             <div class="mb-6 grid divide-y divide-gray-700 grid-flow-row auto-rows-min md:auto-rows-max dark:bg-gray-800 rounded-xl pl-10 pr-6 pb-4 pt-8">
                                 @if (sizeof($estudio->conceptos) == 0)
-                                    <p class="text-center text-gray-300 pr-4 pb-4">Aún no tienes conceptos agregados</p>
+                                <div class="dark:transparent w-full h-100 flex justify-center">
+                                    <div class="m-10 px-6 py-4 text-2xl text-gray-900 dark:text-gray-400">
+                                        <div class="flex justify-center mb-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#c0c0c0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
+                                        </div>
+                                        <p class="text-center dark:text-gray-300 text-gray-400 font-bold w-full">  
+                                            Agrega un nuevos conceptos al estudio +
+                                        </p>
+                                    </div>
+                                </div>
                                 @endif
 
                                 @if ($estudio->conceptos != null)

@@ -48,7 +48,7 @@
 
                         <div class="flex justify-center items-center">
                             <div class="">
-                                <button class="m-2 dark:bg-gray-600 text-white font-bold py-2 px-10 border-gray-500 dark:hover:bg-gray-700 rounded-xl">
+                                <button class="m-2 dark:bg-gray-600 text-white bg-blue-600 hover:bg-blue-500 font-bold py-2 px-10 border-gray-500 dark:hover:bg-gray-700 rounded-xl">
                                     Guardar
                                 </button>
                             </div>
@@ -58,19 +58,19 @@
             @else
             <div class="flex flex-col w-full grid justify-items-center space-y-8">
                 <div class="w-[calc(100%-6rem)] block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 border-gray-700">Plan de promoción</h5>
+                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 dark:border-gray-700">Plan de promoción</h5>
                     <p class="font-normal text-gray-700 dark:text-gray-400">{{ $plan_de_negocio->publicidades->plan_promocion }}</p>
                 </div>
                 <div class="w-[calc(100%-6rem)] block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 border-gray-700">Comercialización</h5>
+                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 dark:border-gray-700">Comercialización</h5>
                     <p class="font-normal text-gray-700 dark:text-gray-400">{{ $plan_de_negocio->publicidades->comercializacion }}</p>
                 </div>
                 <div class="w-[calc(100%-6rem)] block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 border-gray-700">Plan de mercadotecnia</h5>
+                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 dark:border-gray-700">Plan de mercadotecnia</h5>
                     <p class="font-normal text-gray-700 dark:text-gray-400">{{ $plan_de_negocio->publicidades->plan_mercadotecnia }}</p>
                 </div>
 
-                <a href="{{ route($user_route.'plan_de_negocio.publicidad.edit', [$plan_de_negocio, $plan_de_negocio->publicidades]) }}" class="dark:bg-gray-700 dark:hover:bg-gray-800 text-white font-bold py-3 px-6 rounded">
+                <a href="{{ route($user_route.'plan_de_negocio.publicidad.edit', [$plan_de_negocio, $plan_de_negocio->publicidades]) }}" class="bg-blue-600 hover:bg-blue-500 dark:bg-gray-700 dark:hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-xl">
                     Editar
                 </a>
             </div>

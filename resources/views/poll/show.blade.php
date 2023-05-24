@@ -17,7 +17,7 @@
             @endif
 
             <div class="flex justify-center">
-                <a class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
+                <a class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-white bg-blue-600 border border-gray-300 rounded-lg hover:bg-blue-500 hover:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
                     href="{{ route($user_route.'plan_de_negocio.estudio.encuesta.pregunta.create', [$plan_de_negocio, $estudio, $encuestum]) }}">
                     <span class="visible md:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -27,23 +27,32 @@
                     <p class="hidden md:flex ">Crear una pregunta</p>
                 </a>
                 @php ($slug = $encuestum->titulo)
-                <a class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
+                <a class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-white bg-blue-600 hover:bg-blue-500 border border-gray-300 rounded-lg hover:bg-gray-100 hover:white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
                     href="{{ route($user_route.'plan_de_negocio.estudio.encuesta.formulario.show', [$plan_de_negocio, $estudio, $encuestum, $slug]) }}">
                     <p class="hidden md:flex ">Contestar encuesta</p>
                 </a>
             </div>
         </div>
 
-        <div class="mx-20 flex flex-wrap mb-8 space-y-6 grid">
-            <div class="p-6 bg-gray-800 mt-2 pt-8" id="contenedor">
+        <div class="mx-20 flex flex-wrap mb-8 space-y-6 dark:bg-gray-800 bg-white grid">
+            <div class="p-6 mt-2 pt-8" id="contenedor">
                 @if (sizeof($encuestum->preguntas) == 0)
-                    <p class="items-center text-gray-300 pr-4 pb-4 text-center">Aún no tienes preguntas en esta encuesta</p>
+                    <div class="dark:transparent w-full h-100 flex justify-center">
+                        <div class="m-10 px-6 py-4 text-2xl text-gray-900 dark:text-gray-400">
+                            <div class="flex justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#c0c0c0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            </div>
+                            <p class="text-center dark:text-gray-300 text-gray-400 font-bold w-full">  
+                                Agrega una nueva pregunta a la encuesta +
+                            </p>
+                        </div>
+                    </div>    
                 @else
                     @foreach ($encuestum->preguntas as $pregunta )
                         <div class="mb-6">
                             <div class="flex flex-col md:flex-row justify-between">
                                 <div>
-                                    <h1 class="text-gray-300 mb-4 mr-2 font-semibold text-xl">{{ $pregunta->pregunta }}</h1>
+                                    <h1 class="text-gray-800 dark:text-gray-300 mb-4 mr-2 font-semibold text-xl">{{ $pregunta->pregunta }}</h1>
                                 </div>
                                 <div class="flex flex-row mb-6">
                                     <div>

@@ -35,7 +35,7 @@
                             <a href="{{ route($user_route.'plan_de_negocio.estudio.concepto.index', [$plan_de_negocio, $estudio]) }}" class="m-4 bg-red-900 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-red-800 rounded-xl">
                                 Cancelar
                             </a>
-                            <button class="m-4 dark:bg-blue-800 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-blue-700 rounded-xl">
+                            <button class="bg-blue-600 hover:bg-blue-500 m-4 dark:bg-blue-800 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-blue-700 rounded-xl">
                                 Guardar
                             </button>
                         </div>

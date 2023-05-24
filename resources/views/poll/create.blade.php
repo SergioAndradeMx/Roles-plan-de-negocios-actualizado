@@ -42,7 +42,7 @@
                                 Cancelar
                             </a>
 
-                            <button class="m-4 dark:bg-blue-800 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-blue-700 rounded-xl">
+                            <button class="m-4 dark:bg-blue-800 text-white bg-blue-600 hover:bg-blue-500 font-bold py-4 px-10 border-gray-500 dark:hover:bg-blue-700 rounded-xl">
                                 Guardar
                             </button>
                         </div>

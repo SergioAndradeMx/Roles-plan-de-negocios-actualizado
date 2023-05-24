@@ -43,7 +43,7 @@
                                 rounded py-3
                                 px-4
                                 mb-3 mt-4">
-                            <label class="tracking-wide dark:text-gray-200 text-md font-bold mb-2" for="logotipo">(Para conservar la misma imagen deje en blanco)</label>
+                            <label class="tracking-wide dark:text-gray-200 text-md font-bold mb-2" for="logotipo"><p class="text-pink-600">(Para conservar la misma imagen deje en blanco)</p></label>
                         </div>
                     </div>
 
@@ -88,7 +88,7 @@
                                 Cancelar
                             </a>
 
-                            <button class="m-4 dark:bg-green-800 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-green-700 rounded-xl">
+                            <button class="m-4 dark:bg-green-800 text-white font-bold py-4 px-10 bg-green-600 hover:bg-green-500 border-gray-500 dark:hover:bg-green-700 rounded-xl">
                                 Actualizar
                             </button>
                         </div>
