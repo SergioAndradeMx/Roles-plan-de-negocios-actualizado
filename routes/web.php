@@ -109,6 +109,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/grupos_de_trabajo/show/{grupo}/{usuario?}', [GruposDeTrabajoController::class, 'show'])->name('grupo.show');
         Route::patch('/grupos_de_trabajo/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'update'])->name('grupo.update');
         Route::patch('/grupos_de_trabajo/destroy/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'destroy'])->name('grupo.destroy');
+        Route::delete('/asesor_grupos_de_trabajo/destroy/{grupo}', [GruposDeTrabajoController::class, 'complete_destroy'])->name('grupo_destroy'); //eliminar el grupo
         Route::get('/grupos_de_trabajo/busqueda/{grupo}/{usuario?}/{agregados?}', [GruposDeTrabajoController::class, 'index'])->name('grupo.index');
 
         Route::get('/asesor_planes_de_negocio/{usuario}/todos', [PlanDeNegocioController::class, 'index'])->name('planes.index');

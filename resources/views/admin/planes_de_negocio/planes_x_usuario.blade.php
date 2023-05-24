@@ -35,7 +35,7 @@
                     href="{{ route('admin_plan_de_negocio.generalidades.index', [$plan_de_negocio]) }}"
                     >
                     <div class="">
-                        <div class="flex items-center justify-between font-bold text-xl mb-2 dark:border-none dark:bg-gray-800 bg-slate-800 text-white px-6 py-3 dark:pb-2">
+                        <div class="flex items-center justify-between font-bold text-xl mb-2 dark:border-none dark:bg-gray-800 bg-cyan-700 text-white px-6 py-3 dark:pb-2">
                             {{ $plan_de_negocio->nombre }}
                             <svg class="ml-4" xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                         </div>

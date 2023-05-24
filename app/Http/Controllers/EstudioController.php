@@ -90,8 +90,9 @@ class EstudioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Estudio $estudio)
+    public function destroy(Plan_de_negocio $plan_de_negocio, Estudio $estudio)
     {
-        //
+        Estudio::destroy($estudio->id);
+        return back(); 
     }
 }

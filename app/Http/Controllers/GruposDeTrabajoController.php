@@ -174,7 +174,6 @@ class GruposDeTrabajoController extends Controller
 
     public function complete_destroy(GruposDeTrabajo $gruposDeTrabajo)
     {
-        
         $grupo_id = request('grupo');
 
         GruposDeTrabajo::destroy($grupo_id);

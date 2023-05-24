@@ -61,7 +61,7 @@
                                 Cancelar
                             </a>
 
-                            <button class="m-4 dark:bg-blue-800 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-blue-700 rounded-xl">
+                            <button class="bg-green-600 m-4 dark:bg-blue-800 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-blue-700 rounded-xl">
                                 Actualizar
                             </button>
                         </div>

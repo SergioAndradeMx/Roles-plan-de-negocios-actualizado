@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between dark:text-gray-100">
-            <div class="w-full border-b-2 border-gray-800 mx-8">
+            <div class="w-full border-b-2 dark:border-gray-800 border-gray-300 mx-8">
                 <p class="text-2xl font-bold text-center p-4">{{ $grupo->nombre_grupo }}</p>
             </div>
         </div>
     </x-slot>
 
-    <div class="mx-auto justify-center px-auto dark:text-gray-100 px-20 py-10 mt-10">
+    <div class="justify-center dark:text-gray-100 bg-white dark:bg-gray-800 mx-40 my-20 p-8">
         
         <diV class="flex justify-center">
             <div class="w-1/2">
@@ -22,7 +22,7 @@
 
                         <!--Search button-->
                         <button
-                            class="relative z-[2] flex items-center rounded-r bg-primary dark:bg-blue-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                            class="relative z-[2] flex items-center rounded-r bg-blue-500 dark:bg-blue-600 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
                             type="submit"
                             id="button-addon1"
                             data-te-ripple-init
@@ -47,7 +47,7 @@
         <div class="flex my-2 relative overflow-x-auto">
             @if (!isset($usuarios))
                 <div class="dark:transparent w-full flex justify-center">
-                    <div class="text-center bh-red px-6 py-8 text-lg text-gray-900 whitespace-nowrap dark:text-gray-400">
+                    <div class="text-center bh-red px-6 text-lg text-gray-900 whitespace-nowrap dark:text-gray-400">
                         <p class="text-2xl">
                             Busca un usuario por su correo y añadelo!
                         </p>
@@ -58,7 +58,7 @@
                 </div>
             @else
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">  
-                <thead class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-base text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Nombre del integrante

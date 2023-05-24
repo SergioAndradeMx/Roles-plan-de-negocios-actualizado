@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Asesor') }}
             </h2>
-            <a class="flex flex-nowrap md:rounded-md dark:md:bg-gray-700 md:p-2" href="{{ route('grupos_de_trabajo.create')}}">
+            <a class="flex flex-nowrap md:rounded-md bg-slate-700 text-white dark:md:bg-gray-700 md:p-2" href="{{ route('grupos_de_trabajo.create')}}">
                 <span class="visible md:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -16,7 +16,7 @@
     </x-slot>
 
     <div class="flex flex-wrap mx-auto justify-center px-auto dark:text-gray-100 m-4">
-        <div class="w-full border-b-2 border-gray-800 mx-8">
+        <div class="w-full border-b-2 dark:border-gray-800 border-gray-300 mx-8">
             <p class="text-2xl font-bold text-center p-4">Tus grupos de trabajo</p>
         </div>
         @if (sizeof($grupos) == 0)
@@ -35,21 +35,46 @@
             @foreach ($grupos as $grupo)
                 <a class="
                     w-full
-                    rounded 
+                    bg-white
+                    rounded-xl
                     overflow-hidden 
                     shadow-lg
                     mx-4
-                    mt-6
+                    my-2
                     md:w-1/4
-                    dark:bg-gray-700
-                    hover:bg-gray-200
-                    dark:hover:bg-gray-800"
+                    dark:bg-gray-800
+                    hover:bg-gray-50
+                    dark:hover:bg-gray-700"
                     href="{{ route('grupo.show', [$grupo]) }}"
                     >
-                    <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2 border-b border-gray-500 pb-2">{{ $grupo->nombre_grupo }}</div>
-                        <p class="text-base">{{ $grupo->descripcion }}</p>
-                        <p class="text-base text-right mt-6">{{ $grupo->created_at->format('d/m/Y') }}</p>
+                    <div class="">
+                        <div class="flex items-center justify-between font-bold text-xl mb-2 dark:border-none dark:bg-gray-800 bg-pink-700 text-white px-6 py-3 dark:pb-2">
+                            {{ $grupo->nombre_grupo }}
+                            <svg class="ml-4" xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        </div>
+                        <p class="mx-6 text-base dark:border-t-4 dark:border-gray-600 pt-2">{{ $grupo->descripcion }}</p>
+                        
+                        <div class="flex justify-between mx-6 my-4 text-base text-right mt-6 border-t-2 border-gray-300 dark:border-none pt-2">
+                            <form method="post" action="{{ route('grupo_destroy', [$grupo->id]) }}">
+                                @method('delete')
+                                @csrf
+                                <button type="submit"
+                                    onclick="return confirm('¿Seguro que quieres borrar este plan de negocio?');"
+                                    class="inline-flex
+                                        items-center 
+                                        px-1.5
+                                        py-1.5
+                                        bg-pink-500
+                                        hover:bg-pink-600
+                                        text-white
+                                        text-sm
+                                        font-medium
+                                        rounded-md ml-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                </button>
+                            </form>
+                            <p class="">{{ $grupo->created_at->format('d/m/Y') }}</p>
+                        </div>
                     </div>
                 </a>
             @endforeach
