@@ -52,7 +52,7 @@
 
                     <div class="flex justify-center items-center">
                         <div class="">
-                            <a href="{{ route($user_route.'plan_de_negocio.estudio.encuesta.index', [$plan_de_negocio, $estudio]) }}" class="m-4 bg-red-900 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-red-800 rounded-xl">
+                            <a href="{{ route($user_route.'plan_de_negocio.estudio.encuesta.show', [$plan_de_negocio, $estudio, $encuestum]) }}" class="m-4 bg-red-900 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-red-800 rounded-xl">
                                 Cancelar
                             </a>
 

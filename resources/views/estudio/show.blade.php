@@ -56,11 +56,7 @@
                     </div>
 
                     <div class="flex justify-center items-center">
-                        <div class="">
-                            <a href="{{ route($user_route.'plan_de_negocio.estudio.index', [$plan_de_negocio]) }}" class="m-4 bg-red-900 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-red-800 rounded-xl">
-                                Cancelar
-                            </a>
-
+                        <div class=""> 
                             <button class="bg-green-600 m-4 dark:bg-blue-800 text-white font-bold py-4 px-10 border-gray-500 dark:hover:bg-blue-700 rounded-xl">
                                 Actualizar
                             </button>

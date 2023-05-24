@@ -86,8 +86,9 @@ class ConceptoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Concepto $concepto)
+    public function destroy(Plan_de_negocio $plan_de_negocio, Estudio $estudio, Concepto $concepto)
     {
-        //
+        Concepto::destroy($concepto->id);
+        return back();
     }
 }

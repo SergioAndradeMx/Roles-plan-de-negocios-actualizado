@@ -17,7 +17,7 @@
             @endif
 
             <div class="flex justify-center">
-                <a class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-white bg-blue-600 hover:bg-blue-500 border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
+                <a class="float-right my-6 mb-4 inline-flex items-center px-4 py-2 mr-3 text-md font-medium text-white bg-blue-600 hover:bg-blue-500 border border-gray-300 rounded-lg hover:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
                     href="{{ route($user_route.'plan_de_negocio.estudio.concepto.create', [$plan_de_negocio, $estudio]) }}">
                     <span class="visible md:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -71,8 +71,17 @@
                                                                 </a>
                                                         </div>
                                                     </div>
-                                                    <div x-show="view">
-                                                        <a @click=" edit= true, view= false" class="hover:bg-gray-100 hover:text-sky-700 dark:text-sky-400 ">
+                                                    <div x-show="view" class="flex">
+                                                        <form method="post" action="{{ route('plan_de_negocio.estudio.concepto.destroy', [$plan_de_negocio, $estudio, $concepto]) }}">
+                                                            @method('delete')
+                                                            @csrf
+                                                            <button type="submit"
+                                                                onclick="return confirm('¿Seguro que quieres borrar este plan de negocio?');"
+                                                                class="mr-2 hover:text-red-700">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                            </button>
+                                                        </form>
+                                                        <a @click=" edit= true, view= false" class="hover:bg-gray-50 hover:text-sky-700 dark:text-sky-400 ">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                                             </svg>

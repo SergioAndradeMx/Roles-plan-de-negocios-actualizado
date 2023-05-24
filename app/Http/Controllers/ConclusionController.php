@@ -83,8 +83,9 @@ class ConclusionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Conclusion $conclusion)
+    public function destroy(Plan_de_negocio $plan_de_negocio, Estudio $estudio, Conclusion $conclusion)
     {
-        //
+        Conclusion::destroy($conclusion->id);
+        return back();
     }
 }
