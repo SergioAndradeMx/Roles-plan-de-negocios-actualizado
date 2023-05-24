@@ -3,7 +3,7 @@
     <x-sidebar :plan_de_negocio="$plan_de_negocio"></x-sidebar>
     <div class="w-full h-screen overflow-auto">
         <div class="mx-20 flex items-center justify-center">
-            <h1 class="dark:text-gray-100 my-6 text-2xl">Publicidad, promocion y mercadotecnia</h1>
+            <h1 class="dark:text-gray-100 my-6 text-2xl">Publicidad, promoción y mercadotecnia</h1>
         </div>
 
         @php $user_route = ''; @endphp
@@ -69,10 +69,30 @@
                     <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white text-center pb-2 border-b-4 dark:border-gray-700">Plan de mercadotecnia</h5>
                     <p class="font-normal text-gray-700 dark:text-gray-400">{{ $plan_de_negocio->publicidades->plan_mercadotecnia }}</p>
                 </div>
-
-                <a href="{{ route($user_route.'plan_de_negocio.publicidad.edit', [$plan_de_negocio, $plan_de_negocio->publicidades]) }}" class="bg-blue-600 hover:bg-blue-500 dark:bg-gray-700 dark:hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-xl">
-                    Editar
-                </a>
+                
+                <div class="flex">
+                    <a href="{{ route($user_route.'plan_de_negocio.publicidad.edit', [$plan_de_negocio, $plan_de_negocio->publicidades]) }}" class="bg-blue-600 hover:bg-blue-500 dark:bg-gray-700 dark:hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-xl">
+                        Editar
+                    </a>
+                    <form method="post" action="{{ route($user_route.'plan_de_negocio.publicidad.destroy', [$plan_de_negocio, $plan_de_negocio->publicidades]) }}">
+                        @method('delete')
+                        @csrf
+                        <button type="submit"
+                            onclick="return confirm('¿Seguro que quieres borrar los datos de la publicidad?');"
+                            class="inline-flex
+                                items-center 
+                                px-4
+                                py-3
+                                bg-red-600
+                                hover:bg-red-700
+                                text-white
+                                text-base
+                                font-medium
+                                rounded-xl ml-2">
+                                Borrar datos
+                        </button>
+                    </form>
+                </div>
             </div>
             @endif
 

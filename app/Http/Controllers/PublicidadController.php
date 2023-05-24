@@ -91,8 +91,9 @@ class PublicidadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Publicidad $publicidad)
+    public function destroy(Plan_de_negocio $plan_de_negocio, Publicidad $publicidad)
     {
-        //
+        Publicidad::destroy($publicidad->id);
+        return back();
     }
 }

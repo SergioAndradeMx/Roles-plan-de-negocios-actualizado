@@ -3,7 +3,7 @@
     <x-sidebar :plan_de_negocio="$plan_de_negocio"></x-sidebar>
     <div class="w-full h-screen overflow-auto">
         <div class="mx-20 flex items-center justify-center">
-            <h1 class="dark:text-gray-100 my-6 text-2xl">Publicidad, promocion y mercadotecnia</h1>
+            <h1 class="dark:text-gray-100 my-6 text-2xl">Publicidad, promoción y mercadotecnia</h1>
         </div>
 
         @php $user_route = ''; @endphp
