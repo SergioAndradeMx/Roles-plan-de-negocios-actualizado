@@ -104,6 +104,12 @@ class ImagenCorporativaController extends Controller
             $destinationPath = 'images/logotipos/';
             $filename = time(). '-' . $file->getClientOriginalName();
             $uploadSuccess = $request->file('logotipo')->move($destinationPath, $filename);
+
+            $image_path = public_path().'/'.$imagen_corporativa->logotipo;
+            if (@getimagesize($image_path)){
+                unlink($image_path);
+            }
+
             $data['logotipo'] = $destinationPath . $filename;
         }else{
             $data['logotipo'] = $imagen_corporativa->logotipo;
@@ -123,8 +129,13 @@ class ImagenCorporativaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Imagen_corporativa $imagen_corporativa)
+    public function destroy(Plan_de_negocio $plan_de_negocio, Imagen_corporativa $imagen_corporativa)
     {
-        //
+        $image_path = public_path().'/'.$imagen_corporativa->logotipo;
+        if (@getimagesize($image_path)){
+            unlink($image_path);
+        }
+        Imagen_corporativa::destroy($imagen_corporativa->id);
+        return back();
     }
 }
