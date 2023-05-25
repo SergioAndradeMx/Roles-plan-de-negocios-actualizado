@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-form-layout>
     @php $user_route = ''; @endphp
 
     @if ( auth()->user()->rol == 'admin')
@@ -6,10 +6,10 @@
     @elseif ( auth()->user()->rol == 'asesor')
         @php $user_route = 'asesor_'; @endphp
     @endif
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-12 mx-40">
+        <div class="min-w-7xl sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <h1 class="mb-4 text-xl font-extrabold tracking-tight leading-none text-gray-900 md:text-xl lg:text-xl text-center">{{ $encuestum->titulo }}</h1>
+                <h1 class="mb-4 text-xl font-extrabold tracking-tight leading-none text-gray-200 font-bold bg-cyan-700 md:text-2xl lg:text-2xl text-center">Encuesta: {{ $encuestum->titulo }}</h1>
                 <div class="p-6 bg-white border-b border-gray-200">
                     @php ($slug = $encuestum->titulo)
                     <form action="{{ route($user_route.'plan_de_negocio.estudio.encuesta.formulario.store', ['plan_de_negocio'=>$plan_de_negocio, 'estudio'=>$estudio, 'encuestum'=>$encuestum, $slug]) }}" method="POST">
@@ -60,12 +60,10 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Enviar respuestas</button>
+                        <button type="submit" class="float-right mt-2 mb-8 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Enviar respuestas</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
-</x-guest-layout>
+</x-form-layout>

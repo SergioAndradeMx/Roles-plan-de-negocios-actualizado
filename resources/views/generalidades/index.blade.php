@@ -78,11 +78,13 @@
                 <form method="post" action="{{ route($user_route.'plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades->antecedentes]) }}">
                     @method('delete')
                     @csrf
+
                     <div class="grid justify-items-center m-6">
                         <button name="action" value="antecedentes" type="submit" onclick="return confirm('¿Seguro que quieres borrar este registro?');" class="inline-flex items-center px-2.5 py-2.5 bg-red-700 hover:bg-red-800 text-white text-md font-medium rounded-md ml-2">
                             Eliminar <svg class = "ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                         </button>
                     </div>
+                    
                 </form>@endif
             </div>
 
@@ -98,7 +100,7 @@
                     <header class="flex w-full items-center justify-between p-4 dark:bg-gray-800 rounded-t-lg bg-slate-300">
                         <span class="dark:text-gray-50 text-slate-800 font-bold">Descripción general del producto y/o servicio</span>
                         <div class="flex inline-flex">
-                            <input x-show="show" type="submit" value="Guardar" class="cursor-pointer mr-4 text-white flex items-center space-x-2 rounded p-2 dark:bg-green-600 dark:hover:bg-green-900">
+                            <input x-show="show" type="submit" value="Guardar" class="cursor-pointer mr-4 text-white flex items-center space-x-2 rounded p-2 bg-green-600 dark:bg-green-600 dark:hover:bg-green-900">
                             <div @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }" class="cursor-pointer text-white flex items-center space-x-2 rounded p-2 bg-gray-600 dark:hover:bg-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
                             </div>
@@ -119,11 +121,13 @@
                 <form method="post" action="{{ route($user_route.'plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
                     @method('delete')
                     @csrf
+
                     <div class="grid justify-items-center m-6">
                         <button name="action" value="producto" type="submit" onclick="return confirm('¿Seguro que quieres borrar este registro?');" class="inline-flex items-center px-2.5 py-2.5 bg-red-700 hover:bg-red-800 text-white text-md font-medium rounded-md ml-2">
                             Eliminar <svg class = "ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                         </button>
                     </div>
+
                 </form>@endif
             </div>
 
@@ -139,7 +143,7 @@
                     <header class="flex w-full items-center justify-between p-4 dark:bg-gray-800 rounded-t-lg bg-slate-300">
                         <span class="dark:text-gray-50 text-slate-800 font-bold">Aspectos innovadores</span>
                         <div class="flex inline-flex">
-                            <input x-show="show" type="submit" value="Guardar" class="cursor-pointer mr-4 text-white flex items-center space-x-2 rounded p-2 dark:bg-green-600 dark:hover:bg-green-900">
+                            <input x-show="show" type="submit" value="Guardar" class="cursor-pointer mr-4 text-white flex items-center space-x-2 rounded p-2 bg-green-600 dark:bg-green-600 dark:hover:bg-green-900">
                             <div @click="show = !show" :aria-expanded="show ? 'true' : 'false'" :class="{ 'active': show }" class="cursor-pointer text-white flex items-center space-x-2 rounded p-2 bg-gray-600 dark:hover:bg-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
                             </div>
@@ -161,11 +165,13 @@
                 <form method="post" action="{{ route($user_route.'plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
                     @method('delete')
                     @csrf
+
                     <div class="grid justify-items-center m-6">
                         <button name="action" value="aspectos" type="submit" onclick="return confirm('¿Seguro que quieres borrar este registro?');" class="inline-flex items-center px-2.5 py-2.5 bg-red-700 hover:bg-red-800 text-white text-md font-medium rounded-md ml-2">
                             Eliminar <svg class = "ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                         </button>
                     </div>
+
                 </form>@endif
             </div>
         </div>

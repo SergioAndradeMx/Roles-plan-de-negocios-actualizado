@@ -41,7 +41,7 @@ class FormularioController extends Controller
         $formulario = $encuestum->formularios()->create($datos['formulario']);
         $formulario->respuestas()->createMany($datos['elecciones']);
 
-        return 'Gracias por contestar la encuesta';
+        return view('formulario.success');
         //return redirect()->route('plan_de_negocio.estudio.encuesta.index', compact('plan_de_negocio', 'estudio'));
     }
 
