@@ -79,13 +79,13 @@ Route::middleware('auth')->group(function () {
         Route::patch('/admin_grupos_de_trabajo/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'update'])->name('grupo_admin.update');
         Route::patch('/admin_grupos_de_trabajo/destroy/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'destroy'])->name('grupo_admin.destroy'); //eliminar usuarios del grupo
         Route::delete('/admin_grupos_de_trabajo/destroy/{grupo}', [GruposDeTrabajoController::class, 'complete_destroy'])->name('grupo_complete_destroy'); //eliminar el grupo
-
+        Route::get('/admin_grupos_de_trabajo/edit/{grupo}', [GruposDeTrabajoController::class, 'edit'])->name('grupo_admin.edit');
+        Route::patch('/admin_grupos_de_trabajo_update/{grupo}', [GruposDeTrabajoController::class, 'details_update'])->name('grupo_detalles_admin');
         Route::get('/admin_planes_de_negocio/{usuario}/todos', [PlanDeNegocioController::class, 'admin_planes_x_usuario'])->name('planes_admin.index');
 
-        Route::resources([
-            'usuarios' => UserController::class,
-            'admin_plan_de_negocio' => PlanDeNegocioController::class,
-        ]);
+        Route::resource('usuarios', UserController::class);
+        Route::resource('admin_plan_de_negocio', PlanDeNegocioController::class)->except(['update']);
+        Route::patch('/admin_plan_de_negocio_update/{plan_de_negocio}', [PlanDeNegocioController::class, 'update'])->name('admin_plan_de_negocio.update');
 
         Route::resource('admin_plan_de_negocio.generalidades', GeneralidadesController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.foda', FodaController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
@@ -111,9 +111,12 @@ Route::middleware('auth')->group(function () {
         Route::patch('/grupos_de_trabajo/destroy/{grupo}/{usuario}', [GruposDeTrabajoController::class, 'destroy'])->name('grupo.destroy');
         Route::delete('/asesor_grupos_de_trabajo/destroy/{grupo}', [GruposDeTrabajoController::class, 'complete_destroy'])->name('grupo_destroy'); //eliminar el grupo
         Route::get('/grupos_de_trabajo/busqueda/{grupo}/{usuario?}/{agregados?}', [GruposDeTrabajoController::class, 'index'])->name('grupo.index');
+        Route::get('/grupos_de_trabajo/edit/{grupo}', [GruposDeTrabajoController::class, 'edit'])->name('grupo.edit');
+        Route::patch('/grupos_de_trabajo_update/{grupo}', [GruposDeTrabajoController::class, 'details_update'])->name('grupo_detalles');
 
         Route::get('/asesor_planes_de_negocio/{usuario}/todos', [PlanDeNegocioController::class, 'index'])->name('planes.index');
 
+        Route::resource('asesor_plan_de_negocio', PlanDeNegocioController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('asesor_plan_de_negocio.generalidades', GeneralidadesController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('asesor_plan_de_negocio.foda', FodaController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('asesor_plan_de_negocio.modelo_canvas', ModeloCanvasController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);

@@ -145,8 +145,12 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="inline-flex">
-                                        <a href="{{ route('admin_plan_de_negocio.generalidades.index', [$plan->id]) }}" class="inline-flex items-center px-1.5 py-1.5 bg-gray-500 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium rounded-md">
+                                        <a href="{{ route('admin_plan_de_negocio.edit', [$plan->id]) }}" class="inline-flex items-center px-1.5 py-1.5 bg-sky-600 hover:bg-sky-500 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium rounded-md">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                                        </a>
+
+                                        <a href="{{ route('admin_plan_de_negocio.generalidades.index', [$plan->id]) }}" class="ml-2 inline-flex items-center px-1.5 py-1.5 bg-cyan-500 hover:bg-cyan-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-white text-sm font-medium rounded-md">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
                                         </a>
 
                                         <form method="post" action="{{ route('admin_plan_de_negocio.destroy', [$plan->id]) }}">

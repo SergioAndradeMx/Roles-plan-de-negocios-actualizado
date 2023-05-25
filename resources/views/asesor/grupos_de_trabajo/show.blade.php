@@ -1,9 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between dark:text-gray-100">
-            <div class="w-full border-b-2 dark:border-gray-800 border-gray-300 mx-8">
                 <p class="text-2xl font-bold text-center p-4">{{ $grupo->nombre_grupo }}</p>
-            </div>
+            <a class="flex flex-nowrap md:rounded-md bg-slate-700 text-white dark:md:bg-gray-700 md:p-2" href="{{ route('grupo.edit', [$grupo])}}">          
+                <p class="hidden md:flex ">Editar</p>
+            </a>
         </div>
     </x-slot>
 

@@ -51,24 +51,31 @@
                         <p class="mx-6 text-base dark:border-t-2 dark:border-gray-600 pt-2">{{ $plan_de_negocio->descripcion }}</p>
 
                         <div class="flex justify-between mx-6 my-4 text-base text-right mt-6 border-t-2 border-gray-300 dark:border-none pt-2">
-                            <form method="post" action="{{ route('plan_de_negocio.destroy', [$plan_de_negocio]) }}">
-                                @method('delete')
-                                @csrf
-                                <button type="submit"
-                                    onclick="return confirm('¿Seguro que quieres borrar este plan de negocio?');"
-                                    class="inline-flex
-                                        items-center 
-                                        px-1.5
-                                        py-1.5
-                                        bg-cyan-600
-                                        hover:bg-cyan-700
-                                        text-white
-                                        text-sm
-                                        font-medium
-                                        rounded-md ml-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                </button>
-                            </form>
+                            <div class="flex">
+                                <form method="post" action="{{ route('plan_de_negocio.destroy', [$plan_de_negocio]) }}">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="submit"
+                                        onclick="return confirm('¿Seguro que quieres borrar este plan de negocio?');"
+                                        class="inline-flex
+                                            items-center 
+                                            px-1.5
+                                            py-1.5
+                                            bg-cyan-600
+                                            hover:bg-cyan-700
+                                            text-white
+                                            text-sm
+                                            font-medium
+                                            rounded-md ml-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                    </button>
+                                </form>
+                                <form action="{{ route('plan_de_negocio.edit', [$plan_de_negocio]) }}">
+                                    <button class="inline-flex items-center px-1.5 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-md ml-2" type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                                    </button>
+                                </form>
+                            </div>
                             <p class="">{{ $plan_de_negocio->created_at->format('d/m/Y') }}</p>
                         </div>
                     </div>

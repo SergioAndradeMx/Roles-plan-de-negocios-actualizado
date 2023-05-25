@@ -82,10 +82,12 @@ class GruposDeTrabajoController extends Controller
         $validated = $request->validate([
             'nombre_grupo' => 'required',
             'descripcion' => 'required',
+            'integrantes' => 'required',
         ]);
 
         $user = Auth::user();
 
+        //dd($request, $validated);
         $user->grupos_de_trabajo()->create($validated);
         $user->save();
 
@@ -114,7 +116,13 @@ class GruposDeTrabajoController extends Controller
      */
     public function edit(GruposDeTrabajo $gruposDeTrabajo)
     {
-        //dd(request('grupo'));
+        $grupo = GruposDeTrabajo::find(request('grupo'));
+
+        if(auth()->user()->rol == 'asesor'){
+            return view('asesor.grupos_de_trabajo.edit', compact('grupo'));
+        }else{
+            return view('admin.grupos_de_trabajo.edit', compact('grupo'));
+        }
     }
 
     /**
@@ -140,6 +148,26 @@ class GruposDeTrabajoController extends Controller
             $grupo->save();
         }
         
+        if(auth()->user()->rol == 'asesor'){
+            return redirect()->route('grupo.show', [
+                "grupo" => $grupo
+            ]);
+        }else{
+            return redirect()->route('grupo_show_admin', [
+                "grupo" => $grupo
+            ]);
+        }
+    }
+
+    public function details_update(Request $request, GruposDeTrabajo $grupo)
+    {
+        $validated = $request->validate([
+            'nombre_grupo' => 'required',
+            'descripcion' => 'required',
+        ]);
+
+        $grupo->update($validated);
+
         if(auth()->user()->rol == 'asesor'){
             return redirect()->route('grupo.show', [
                 "grupo" => $grupo

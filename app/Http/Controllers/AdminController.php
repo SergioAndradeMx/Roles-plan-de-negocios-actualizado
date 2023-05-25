@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Plan_de_negocio;
 use DB;
 
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $negocios = DB::table('plan_de_negocios')->get();
+        $negocios = Plan_de_negocio::all();
         return view('admin', compact('negocios'));
     }
 

@@ -13,7 +13,7 @@
                 <div class="m-10 px-6 py-8 text-2xl text-gray-900 dark:text-gray-400">
                     <div class="flex justify-center mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#c0c0c0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21H4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2h5l2 3h9a2 2 0 0 1 2 2v2M21.12 15.88l-4.24 4.24M16.88 15.88l4.24 4.24"/></svg>                    </div>
-                    <p class="text-center w-full">  
+                    <p class="text-center text-gray-500 w-full">  
                         Usuario sin planes de negocio
                     </p>
                 </div>
@@ -40,7 +40,16 @@
                             <svg class="ml-4" xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                         </div>
                         <p class="mx-6 text-base dark:border-t-2 dark:border-gray-600 pt-2">{{ $plan_de_negocio->descripcion }}</p>
-                        <p class="mx-6 my-4 text-base text-right mt-6 border-t-2 border-gray-300 dark:border-none pt-2">{{ $plan_de_negocio->created_at->format('d/m/Y') }}</p>
+                        <div class="flex justify-between mx-6 my-4 text-base text-right mt-6 border-t-2 border-gray-300 dark:border-none pt-2">
+                            <div>
+                                <form action="{{ route('asesor_plan_de_negocio.edit', [$plan_de_negocio]) }}">
+                                    <button class="inline-flex items-center px-1.5 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-md ml-2" type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                                    </button>
+                                </form>
+                            </div>
+                            <p class="">{{ $plan_de_negocio->created_at->format('d/m/Y') }}</p>
+                        </div>
                     </div>
                 </a>
             @endforeach

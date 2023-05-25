@@ -96,9 +96,17 @@ class PlanDeNegocioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Plan_de_negocio $plan_de_negocio)
+    public function edit(Plan_de_negocio $plan_de_negocio, string $plan='0')
     {
-        //
+        if(auth()->user()->rol == 'asesor'){
+            return view('asesor.planes_de_negocio.edit', compact('plan_de_negocio'));
+        }else if(auth()->user()->rol == 'admin') {
+            $plan_de_negocio = Plan_de_negocio::find($plan);
+            //dd($plan_de_negocio);
+            return view('admin.planes_de_negocio.edit', compact('plan_de_negocio'));
+        }else{
+            return view('plan_de_negocio.edit', compact('plan_de_negocio'));
+        }
     }
 
     /**
@@ -106,7 +114,21 @@ class PlanDeNegocioController extends Controller
      */
     public function update(Request $request, Plan_de_negocio $plan_de_negocio)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+        ]);
+
+        $plan_de_negocio->update($validated);
+
+
+        if(auth()->user()->rol == 'asesor'){
+            return redirect()->route('planes.index', [$plan_de_negocio->user_id]);
+        }else if(auth()->user()->rol == 'admin'){
+            return redirect()->route('admin_plan_de_negocio.index');
+        }else{
+            return redirect()->route('admin_plan_de_negocio.index');
+        }
     }
 
     /**
