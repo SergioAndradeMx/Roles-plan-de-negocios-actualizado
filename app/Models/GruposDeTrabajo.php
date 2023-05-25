@@ -10,6 +10,9 @@ class GruposDeTrabajo extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $attributes = [
+        'integrantes' => [],
+    ];
     protected $table = 'grupos_de_trabajos';
 
     public function user():BelongsTo
