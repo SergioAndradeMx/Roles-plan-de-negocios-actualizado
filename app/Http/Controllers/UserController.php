@@ -76,7 +76,18 @@ class UserController extends Controller
             'rol' => 'required',
         ]);
 
-        $user->update($validated);
+        $user = User::find($id);
+
+        if (User::where([['email', '=', $request->email], ['email', '!=', $user->email]])->exists()) {
+            return redirect()
+                ->back()
+                ->withErrors($validated)
+                ->withInput()
+                ->with('msg', 'El email ya esta registrado');
+        }
+
+        $user->update($request->only(['name', 'email', 'rol']));
+
         return redirect()->route('usuarios.index');
     }
 
