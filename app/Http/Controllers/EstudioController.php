@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Estudio;
 use App\Models\Plan_de_negocio;
 use Illuminate\Http\Request;
+use PDF;
 
 class EstudioController extends Controller
 {
@@ -94,5 +95,11 @@ class EstudioController extends Controller
     {
         Estudio::destroy($estudio->id);
         return back(); 
+    }
+
+    public function pdf(Plan_de_negocio $plan_de_negocio, Estudio $estudio)
+    {
+        $pdf = PDF::loadview('estudio.pdf', ['plan_de_negocio' => $plan_de_negocio, 'estudio' => $estudio]);
+        return $pdf->stream();
     }
 }
