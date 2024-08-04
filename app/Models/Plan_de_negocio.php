@@ -44,17 +44,17 @@ class Plan_de_negocio extends Model
         return $this->hasOne(Estructura_legal::class);
     }
 
-    public function cultura_organizacional():HasOne 
+    public function cultura_organizacional():HasOne
     {
         return $this->hasOne(Cultura_organizacional::class);
     }
 
-    public function imagenes_corporativas():HasOne 
+    public function imagenes_corporativas():HasOne
     {
         return $this->hasOne(Imagen_corporativa::class);
     }
 
-    public function publicidades():HasOne 
+    public function publicidades():HasOne
     {
         return $this->hasOne(Publicidad::class);
     }
@@ -63,4 +63,10 @@ class Plan_de_negocio extends Model
     {
         return $this->hasMany(Estudio::class);
     }
+
+    public function estudioFinanciero()
+    {
+        return $this->hasOne(EstudioFinanciero::class)->select('id');
+    }
+
 }

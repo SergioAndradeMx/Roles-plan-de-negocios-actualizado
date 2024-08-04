@@ -21,13 +21,13 @@
         dark:bg-gray-800
         dark:text-gray-100"
         >
-    
+
         <aside class="h-full space-y-2 text-base font-normal">
             <div class="flex flex-nowrap space-x-2">
                 <a href="{{ route('dashboard') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                         <path fill-rule="evenodd" d="M7.28 7.72a.75.75 0 010 1.06l-2.47 2.47H21a.75.75 0 010 1.5H4.81l2.47 2.47a.75.75 0 11-1.06 1.06l-3.75-3.75a.75.75 0 010-1.06l3.75-3.75a.75.75 0 011.06 0z" clip-rule="evenodd" />
-                    </svg>          
+                    </svg>
                 </a>
                 <span>
                     @if ($user_route == 'admin_')
@@ -39,7 +39,7 @@
                     @endif
                 </span>
             </div>
-            
+
             <!--DROPDOWN-->
             <div class="flex flex-col divide-y divide-gray-600">
                 <div
@@ -206,7 +206,7 @@
                         <!-- Heroicon: chevron-down -->
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                        </div>    
+                        </div>
                     </button>
 
                     <!-- Panel -->
@@ -239,6 +239,22 @@
                     <div class="flex">
                         <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 3v5h5M16 13H8M16 17H8M10 9H8"/></svg>
                         <p class="text-left">Estudios de mercado</p>
+                    </div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                </a>
+            </div>
+
+            {{-- TODO: PLAN FINANCIERO --}}
+            <div
+                class="flex justify-between"
+                >
+                <!-- Button -->
+                <a href="{{ route($user_route.'plan_de_negocio.costo_fijo.index', [$plan_de_negocio]) }}" class="flex items-center justify-between gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-slate-800 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500 flex mt-4">
+                    <div class="flex">
+                        <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 3v5h5M16 13H8M16 17H8M10 9H8"/></svg>
+                        <p class="text-left">Plan Financiero</p>
                     </div>
                     <div class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>

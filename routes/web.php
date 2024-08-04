@@ -1,29 +1,37 @@
 <?php
 
-use App\Http\Controllers\CulturaOrganizacionalController;
-use App\Http\Controllers\EstructuraLegalController;
-use App\Http\Controllers\FodaController;
-use App\Http\Controllers\GeneralidadesController;
-use App\Http\Controllers\ImagenCorporativaController;
-use App\Http\Controllers\ModeloCanvasController;
-use App\Http\Controllers\PlanDeNegocioController;
-use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\PublicidadController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\EstudioController;
-use App\Http\Controllers\ConceptoController;
-use App\Http\Controllers\ConclusionController;
-use App\Http\Controllers\PollController;
-use App\Http\Controllers\PreguntaController;
-use App\Http\Controllers\FormularioController;
-use App\Http\Controllers\CapturarResultadoController;
-use App\Http\Controllers\AdviserController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UsuarioAGrupoController;
-use App\Http\Controllers\GruposDeTrabajoController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FodaController;
+use App\Http\Controllers\PollController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdviserController;
+use App\Http\Controllers\EstudioController;
+use App\Http\Controllers\IngresoController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ConceptoController;
+use App\Http\Controllers\PreguntaController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CostoFijoController;
+use App\Http\Controllers\ConclusionController;
+use App\Http\Controllers\FormularioController;
+use App\Http\Controllers\PublicidadController;
+use App\Http\Controllers\ConservadorController;
+use App\Http\Controllers\estadisticasController;
+use App\Http\Controllers\ModeloCanvasController;
+use App\Http\Controllers\GeneralidadesController;
+use App\Http\Controllers\plan_financiero_mensual;
+use App\Http\Controllers\PlanDeNegocioController;
+use App\Http\Controllers\UsuarioAGrupoController;
+use App\Http\Controllers\CostosVariableController;
+use App\Http\Controllers\OptimistaAnualController;
+use App\Http\Controllers\PesimistaAnualController;
+use App\Http\Controllers\EstructuraLegalController;
+use App\Http\Controllers\GruposDeTrabajoController;
+use App\Http\Controllers\CapturarResultadoController;
+use App\Http\Controllers\ImagenCorporativaController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CulturaOrganizacionalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +76,13 @@ Route::middleware('auth')->group(function () {
             'plan_de_negocio.estudio.encuesta.pregunta' => PreguntaController::class,
             'plan_de_negocio.estudio.encuesta.formulario' => FormularioController::class,
             'plan_de_negocio.estudio.capturar_resultado' => CapturarResultadoController::class,
+            'plan_de_negocio.costo_fijo' => CostoFijoController::class,
+            'plan_de_negocio.costo_variable' => CostosVariableController::class,
+            'plan_de_negocio.ingresos' => IngresoController::class,
+            'plan_de_negocio.estadisticas' => estadisticasController::class,
+            'plan_de_negocio.proyeccionConservador' => ConservadorController::class,
+            'plan_de_negocio.proyeccionPesimista' => PesimistaAnualController::class,
+            'plan_de_negocio.proyeccionOptimista' => OptimistaAnualController::class
         ]);
     });
 
@@ -93,9 +108,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('admin_plan_de_negocio.modelo_canvas', ModeloCanvasController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.producto', ProductoController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.imagen_corporativa', ImagenCorporativaController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
-        Route::resource('admin_plan_de_negocio.cultura_organizacional', CulturaOrganizacionalController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);      
+        Route::resource('admin_plan_de_negocio.cultura_organizacional', CulturaOrganizacionalController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estructura_legal', EstructuraLegalController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
-        Route::resource('admin_plan_de_negocio.publicidad', PublicidadController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);     
+        Route::resource('admin_plan_de_negocio.publicidad', PublicidadController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio', EstudioController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio.concepto', ConceptoController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('admin_plan_de_negocio.estudio.conclusion', ConclusionController::class)->parameters(['admin_plan_de_negocio' => 'plan_de_negocio']);
@@ -123,9 +138,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('asesor_plan_de_negocio.modelo_canvas', ModeloCanvasController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('asesor_plan_de_negocio.producto', ProductoController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('asesor_plan_de_negocio.imagen_corporativa', ImagenCorporativaController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
-        Route::resource('asesor_plan_de_negocio.cultura_organizacional', CulturaOrganizacionalController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);      
+        Route::resource('asesor_plan_de_negocio.cultura_organizacional', CulturaOrganizacionalController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('asesor_plan_de_negocio.estructura_legal', EstructuraLegalController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
-        Route::resource('asesor_plan_de_negocio.publicidad', PublicidadController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);     
+        Route::resource('asesor_plan_de_negocio.publicidad', PublicidadController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('asesor_plan_de_negocio.estudio', EstudioController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('asesor_plan_de_negocio.estudio.concepto', ConceptoController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);
         Route::resource('asesor_plan_de_negocio.estudio.conclusion', ConclusionController::class)->parameters(['asesor_plan_de_negocio' => 'plan_de_negocio']);

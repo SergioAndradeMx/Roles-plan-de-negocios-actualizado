@@ -1,11 +1,12 @@
 <x-app-layout class="flex flex-nowrap">
+
     <x-sidebar :plan_de_negocio="$plan_de_negocio"></x-sidebar>
 
     <div class="w-full h-screen overflow-auto">
         <div class="flex items-center justify-center">
             <h1 class="dark:text-gray-100 text-slate-800 py-6 text-2xl font-bold">Información general del negocio</h1>
         </div>
- 
+
         @if (request()->get('seccion') == null)
             @php $seccion='Antecedentes'; @endphp
         @else
@@ -26,15 +27,15 @@
                 <div>
                     <input id="1" class="peer hidden" name="option" type="radio" value="Antecedentes" x-model="seccion">
                     <label for="1" class="text-gray-700 dark:text-gray-300 font-bold block cursor-pointer select-none rounded-xl p-2 text-center dark:peer-checked:bg-slate-700 peer-checked:bg-cyan-700 peer-checked:font-bold peer-checked:text-white">
-                        Antecedentes</label>  
+                        Antecedentes</label>
                 </div>
-                    
+
                 <div>
                     <input id="2" class="peer hidden" name="option" type="radio" value="Producto"  x-model="seccion">
                     <label for="2" class="text-gray-700 dark:text-gray-300 font-bold block cursor-pointer select-none rounded-xl p-2 text-center dark:peer-checked:bg-slate-700 peer-checked:bg-cyan-700 peer-checked:font-bold peer-checked:text-white">
                         Producto y/o servicio</label>
                 </div>
-                    
+
                 <div>
                     <input id="3" class="peer hidden" name="option" type="radio" value="Aspectos" x-model="seccion">
                     <label for="3" class="text-gray-700 dark:text-gray-300 font-bold block cursor-pointer select-none rounded-xl p-2 text-center dark:peer-checked:bg-slate-700 peer-checked:bg-cyan-700 peer-checked:font-bold peer-checked:text-white">
@@ -67,14 +68,14 @@
                         <div class="h-fit w-full space-y-1 divide-y-2 p-4">
                             @if($registro) <div x-show="!show" class="text-gray-700 dark:text-gray-50">{{ $plan_de_negocio->generalidades->antecedentes }}</div>
                                 <textarea x-show="show" name="antecedentes" id="antecedentes" class="rounded border-gray-400 bg-white caret-black focus:border-blue-700 dark:focus:border-blue-700 w-full"
-                                >{{ $plan_de_negocio->generalidades->antecedentes }}</textarea> 
+                                >{{ $plan_de_negocio->generalidades->antecedentes }}</textarea>
                             @else
-                            <textarea x-show="show" name="antecedentes" id="antecedentes" class="rounded bg-white border-gray-400 caret-black focus:border-blue-700 dark:focus:border-blue-700 w-full"></textarea> 
+                            <textarea x-show="show" name="antecedentes" id="antecedentes" class="rounded bg-white border-gray-400 caret-black focus:border-blue-700 dark:focus:border-blue-700 w-full"></textarea>
                             @endif
                         </div>
                     </div>
-                </form> 
-                @if ($registro && $registro->antecedentes) 
+                </form>
+                @if ($registro && $registro->antecedentes)
                 <form method="post" action="{{ route($user_route.'plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades->antecedentes]) }}">
                     @method('delete')
                     @csrf
@@ -84,7 +85,7 @@
                             Eliminar <svg class = "ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                         </button>
                     </div>
-                    
+
                 </form>@endif
             </div>
 
@@ -112,12 +113,12 @@
                                 <textarea x-show="show" name="descripcion_producto" id="descripcion_producto" class="rounded bg-white border-gray-400 caret-black focus:border-blue-700 dark:focus:border-blue-700 w-full"
                                 >{{ $plan_de_negocio->generalidades->descripcion_producto }}</textarea>
                             @else
-                                <textarea x-show="show" name="descripcion_producto" id="descripcion_producto" class="rounded bg-white border-gray-400 caret-black focus:border-blue-700 dark:focus:border-blue-700 w-full"></textarea> 
+                                <textarea x-show="show" name="descripcion_producto" id="descripcion_producto" class="rounded bg-white border-gray-400 caret-black focus:border-blue-700 dark:focus:border-blue-700 w-full"></textarea>
                             @endif
                         </div>
                     </div>
-                </form> 
-                @if ($registro && $registro->descripcion_producto) 
+                </form>
+                @if ($registro && $registro->descripcion_producto)
                 <form method="post" action="{{ route($user_route.'plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
                     @method('delete')
                     @csrf
@@ -160,8 +161,8 @@
                             @endif
                         </div>
                     </div>
-                </form> 
-                @if ($registro && $registro->aspectos_innovadores) 
+                </form>
+                @if ($registro && $registro->aspectos_innovadores)
                 <form method="post" action="{{ route($user_route.'plan_de_negocio.generalidades.destroy', [$plan_de_negocio, $plan_de_negocio->generalidades]) }}">
                     @method('delete')
                     @csrf
