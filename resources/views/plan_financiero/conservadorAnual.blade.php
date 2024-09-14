@@ -281,7 +281,7 @@
         </div>
         <div class="flex  justify-center">
             <button id="miBoton"
-                class="w-1/2  bg-green-500 hover:bg-green-700 text-white font-bold py-1 mb-5 rounded">
+                class="w-1/4  bg-green-500 hover:bg-green-700 text-white font-bold py-1 mb-3 rounded">
                 Guardar cambios
             </button>
         </div>
