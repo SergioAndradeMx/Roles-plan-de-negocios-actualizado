@@ -105,7 +105,7 @@
                 </svg>
                 <p class="text-base p-2">Proyección anual Pesimista</p>
             </a>
-            <a href="{{ route('plan_de_negocio.proyeccionPesimista.index', $plan_de_negocio) }}"class="flex items-center justify-center rounded-lg font-bold bg-gray-400 hover:bg-green-500">
+            <a href="{{ route('plan_de_negocio.proyeccionPesimistaCincoAnios.index', $plan_de_negocio) }}"class="flex items-center justify-center rounded-lg font-bold bg-gray-400 hover:bg-green-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="text-black ">
                     <path stroke-linecap="round" stroke-linejoin="round"

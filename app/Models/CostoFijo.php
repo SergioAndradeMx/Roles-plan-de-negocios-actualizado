@@ -23,6 +23,6 @@ class CostoFijo extends Model
 
     public function costos_fijos_anuales()
     {
-        return $this->hasOne(CostosFijosAnuales::class, 'Id_costo_fijo');
+        return $this->hasMany(CostosFijosAnuales::class, 'Id_costo_fijo');
     }
 }

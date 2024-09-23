@@ -20,7 +20,7 @@ class EstudioFinanciero extends Model
     {
         return $this->belongsTo(Plan_de_negocio::class);
     }
-
+    // TODO: Relaciones mensuales.
     public function costosFijos()
     {
         return $this->hasMany(CostoFijo::class);

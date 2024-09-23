@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ConceptoController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\cincoAniosPesimista;
 use App\Http\Controllers\CostoFijoController;
 use App\Http\Controllers\ConclusionController;
 use App\Http\Controllers\FormularioController;
@@ -20,7 +21,6 @@ use App\Http\Controllers\ConservadorController;
 use App\Http\Controllers\estadisticasController;
 use App\Http\Controllers\ModeloCanvasController;
 use App\Http\Controllers\GeneralidadesController;
-use App\Http\Controllers\plan_financiero_mensual;
 use App\Http\Controllers\PlanDeNegocioController;
 use App\Http\Controllers\UsuarioAGrupoController;
 use App\Http\Controllers\CostosVariableController;
@@ -82,7 +82,8 @@ Route::middleware('auth')->group(function () {
             'plan_de_negocio.estadisticas' => estadisticasController::class,
             'plan_de_negocio.proyeccionConservador' => ConservadorController::class,
             'plan_de_negocio.proyeccionPesimista' => PesimistaAnualController::class,
-            'plan_de_negocio.proyeccionOptimista' => OptimistaAnualController::class
+            'plan_de_negocio.proyeccionOptimista' => OptimistaAnualController::class,
+            'plan_de_negocio.proyeccionPesimistaCincoAnios' => cincoAniosPesimista::class
         ]);
     });
 
