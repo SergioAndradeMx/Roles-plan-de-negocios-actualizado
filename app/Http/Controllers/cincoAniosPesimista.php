@@ -45,7 +45,7 @@ class cincoAniosPesimista extends Controller
                     ->orderBy('Id_costo_fijo')
                     ->orderBy('mes')
                     ->get();
-                    dd($costosFijosAnuales);
+                    // dd($costosFijosAnuales);
                 // * Obtengo los Costos Variables Pesimistas
                 $costosVariablesAnuales = $estudio->variables_pesimistas()
                     ->orderBy('Id_costo_variable')

@@ -85,15 +85,11 @@ class OptimistaAnualController extends Controller
     {
         // Busco el estudio.
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
-        if (count($estudio->costos_fijos_anuales) > 0 && count($estudio->variables_optimista) > 0
-        && count($estudio->ingresos_optimista) > 0) {
-            // * Borrar los que ya estan.
-            // Borrar los costos fijos
-            // CostosFijosAnuales::where('Id_estudio_financiero', $estudio->id)->delete();
-            $estudio->costos_fijos_anuales()->delete();
-            $estudio->variables_optimista()->delete();
-            $estudio->ingresos_optimista()->delete();
-        }
+        // Borrar los costos fijos
+        $estudio->costos_fijos_anuales()->delete();
+        $estudio->variables_optimista()->delete();
+        $estudio->ingresos_optimista()->delete();
+
         // Crea los nuevos datos.
         // Obtiene todos los costos fijos.
         $costos_fijos_anuales = $request->input('costos_Fijos');

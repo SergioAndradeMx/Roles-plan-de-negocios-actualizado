@@ -90,16 +90,12 @@ class PesimistaAnualController extends Controller
     {
         // Busco el estudio.
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
-        // Primero preguntar si existen en las tablas relacionados con pesimista los va a borrar.
-        if (count($estudio->costos_fijos_anuales) > 0 && count($estudio->variables_pesimistas) > 0 && count($estudio->ingresos_pesimistas) > 0) {
-            // Borrar los costos fijos
-            // CostosFijosAnuales::where('Id_estudio_financiero', $estudio->id)->delete();
-            $estudio->costos_fijos_anuales()->delete();
-            // Borrar los variables pesimistas
-            $estudio->variables_pesimistas()->delete();
-            // Borrar los ingresos pesimistas.
-            $estudio->ingresos_pesimistas()->delete();
-        }
+        // Borrar los costos fijos pesimistas
+        $estudio->costos_fijos_anuales()->delete();
+        // Borrar los variables pesimistas
+        $estudio->variables_pesimistas()->delete();
+        // Borrar los ingresos pesimistas.
+        $estudio->ingresos_pesimistas()->delete();
         // Obtiene todos los costos fijos.
         $costos_fijos_anuales = $request->input('costos_Fijos');
         // Obtener todos los costos variables
