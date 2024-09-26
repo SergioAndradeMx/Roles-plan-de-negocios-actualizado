@@ -96,7 +96,8 @@ class ConservadorController extends Controller
             count($estudio->costos_fijos_anuales) > 0 && count($estudio->costos_variables_anuales) > 0 && count($estudio->ingresos_anuales)
         ) {
             // * Eliminacion de costosFijosAnuales
-            CostosFijosAnuales::where('Id_estudio_financiero', $estudio->id)->delete();
+            // CostosFijosAnuales::where('Id_estudio_financiero', $estudio->id)->delete();
+            $estudio->costos_fijos_anuales()->delete();
             // $estudio->costos_fijos_anuales()->delete();
             // * Eliminacion de CostosVariables
             $estudio->costos_variables_anuales()->delete();

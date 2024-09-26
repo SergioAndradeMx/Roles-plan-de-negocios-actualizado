@@ -93,8 +93,8 @@ class PesimistaAnualController extends Controller
         // Primero preguntar si existen en las tablas relacionados con pesimista los va a borrar.
         if (count($estudio->costos_fijos_anuales) > 0 && count($estudio->variables_pesimistas) > 0 && count($estudio->ingresos_pesimistas) > 0) {
             // Borrar los costos fijos
-            CostosFijosAnuales::where('Id_estudio_financiero', $estudio->id)->delete();
-            //$estudio->costos_fijos_anuales()->delete();
+            // CostosFijosAnuales::where('Id_estudio_financiero', $estudio->id)->delete();
+            $estudio->costos_fijos_anuales()->delete();
             // Borrar los variables pesimistas
             $estudio->variables_pesimistas()->delete();
             // Borrar los ingresos pesimistas.

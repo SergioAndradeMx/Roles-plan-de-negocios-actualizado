@@ -89,7 +89,8 @@ class OptimistaAnualController extends Controller
         && count($estudio->ingresos_optimista) > 0) {
             // * Borrar los que ya estan.
             // Borrar los costos fijos
-            CostosFijosAnuales::where('Id_estudio_financiero', $estudio->id)->delete();
+            // CostosFijosAnuales::where('Id_estudio_financiero', $estudio->id)->delete();
+            $estudio->costos_fijos_anuales()->delete();
             $estudio->variables_optimista()->delete();
             $estudio->ingresos_optimista()->delete();
         }

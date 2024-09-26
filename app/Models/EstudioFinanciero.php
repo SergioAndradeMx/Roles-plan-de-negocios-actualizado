@@ -70,4 +70,13 @@ class EstudioFinanciero extends Model
     public function ingresos_optimista(){
         return $this->hasMany(IngresosAnualesOptimista::class,'Id_estudio_financiero');
     }
+
+    /**
+     * TODO: Proyección cinco años pesimista.
+     * 
+     * * Relación de cinco años pesimista variables
+     */
+    public function ingresos_pesimista_cincoAnios(){
+        return $this->hasMany(ingresosCincoAniosPesimista::class,'Id_estudio_financiero');
+    }
 }

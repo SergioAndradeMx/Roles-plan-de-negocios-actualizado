@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/proyeccionPesimista.js'])
-    <title>Proyección cinco anios pesimista</title>
+    <title>Proyección cinco años pesimista</title>
 </head>
 
 <body>
@@ -63,12 +63,32 @@
                 </thead>
                 {{-- TODO: Cuerpo de los costos fijos --}}
                 <tbody>
-
+                    {{-- Pregunto si existen los costos fijos --}}
+                    @if (count($costosFijos) > 0)
+                        {{-- !!! FALTA AGREGAR LOS COSTOS FIJOS. !!! --}}
+                        {{-- De lo contrario agregan los costos anuales --}}
+                    @else
+                        @foreach ($arrayFijo as $id => $itemFijo)
+                            @foreach ($itemFijo as $nombre => $montoFijo)
+                                <tr>
+                                    <td class="border " data-id="{{ $id }}">{{ $nombre }}</td>
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <td class="border ">
+                                            <input type="text"
+                                                class="w-full border rounded-sm text-xs px-0 text-right"
+                                                value="{{ $montoFijo }}">
+                                        </td>
+                                    @endfor
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    @endif
                 </tbody>
                 {{-- TODO: Utilidades de los costos Fijos por año --}}
                 <thead>
                     <tr id="costosFijos">
-                        <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black" width="7.5%">
+                        <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"
+                            width="7.5%">
                             Total de costos fijos:
                         </th>
                         <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"></th>
@@ -99,12 +119,34 @@
                 </thead>
                 {{-- TODO: Cuerpo de los costos variables --}}
                 <tbody>
+                    {{-- Pregunto si exiten costos variables --}}
+                    @if (count($costosVariables) > 0)
+                    {{-- !!! FALTA AGREGAR LOS CINCO ANIOS !!! --}}
+                    
+                    {{-- De lo contrario se agregan los de los anuales --}}
+                    @else
+                        @foreach ($arrayVariable as $id => $itemVariable)
+                            @foreach ($itemVariable as $nombre => $montoVariable)
+                                <tr>
+                                    <td class="border " data-id="{{ $id }}">{{ $nombre }}</td>
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <td class="border ">
+                                            <input type="text"
+                                                class="w-full border rounded-sm text-xs px-0 text-right"
+                                                value="{{ $montoVariable }}">
+                                        </td>
+                                    @endfor
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    @endif
 
                 </tbody>
                 {{-- TODO: Utilidades de los costos Fijos por año --}}
                 <thead>
                     <tr id="costosVariables">
-                        <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black" width="7.5%">
+                        <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"
+                            width="7.5%">
                             Total de costos variables:
                         </th>
                         <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"></th>
@@ -133,10 +175,34 @@
                         <th class="border border-gray-500 dark:bg-gray-800  text-white" width="7.5%">año 5</th>
                     </tr>
                 </thead>
+                {{-- TODO: Cuerpo de ingresos. --}}
+                <tbody>
+                    {{-- Pregunto si hay ingresos --}}
+                    @if (count($ingresos) > 0)
+                        {{-- !!! FALTA AGREGAR LOS INGRESOS !!! --}}
+                        {{-- De lo contrario se agregaran los valores calculados anuales --}}
+                    @else
+                        @foreach ($arrayIngresos as $id => $itemIngreso)
+                            @foreach ($itemIngreso as $nombre => $montoIngreso)
+                                <tr>
+                                    <td class="border " data-id="{{ $id }}">{{ $nombre }}</td>
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <td class="border ">
+                                            <input type="text"
+                                                class="w-full border rounded-sm text-xs px-0 text-right"
+                                                value="{{ $montoIngreso }}">
+                                        </td>
+                                    @endfor
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    @endif
+                </tbody>
                 {{-- TODO: Utilidades de los costos Fijos por año --}}
                 <thead>
                     <tr id="ingresos">
-                        <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black" width="7.5%">
+                        <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"
+                            width="7.5%">
                             Total de costos variables:
                         </th>
                         <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"></th>
@@ -146,24 +212,24 @@
                         <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"></th>
                     </tr>
                 </thead>
-                {{--TODO:  Utilidades totales --}}
+                {{-- TODO:  Utilidades totales --}}
                 <thead>
                     <tr id="utilidades">
-                        <th class="border text-center text-xs border-gray-500 dark:bg-red-300  text-black" width="7.5%">
+                        <th class="border text-center text-xs border-gray-500 dark:bg-red-300  text-black"
+                            width="7.5%">
                             Total utilidades: </th>
-                            <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
-                            <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
-                            <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
-                            <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
-                            <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"></th>
                     </tr>
                 </thead>
             </table>
         </div>
         {{-- TODO: Boton para guardar --}}
         <div class="flex justify-center py-3">
-            <button id="miBoton"
-                class="w-1/4  bg-green-500 hover:bg-green-700 text-white font-bold py-1  rounded">
+            <button id="miBoton" class="w-1/4  bg-green-500 hover:bg-green-700 text-white font-bold py-1  rounded">
                 Guardar cambios
             </button>
         </div>
