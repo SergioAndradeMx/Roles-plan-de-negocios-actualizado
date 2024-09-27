@@ -72,11 +72,21 @@ class EstudioFinanciero extends Model
     }
 
     /**
-     * TODO: Proyección cinco años pesimista.
-     * 
-     * * Relación de cinco años pesimista variables
+     * TODO: Proyecciones cinco años.
+     *
+     * * Relación de cinco años pesimista ingresos
      */
     public function ingresos_pesimista_cincoAnios(){
         return $this->hasMany(ingresosCincoAniosPesimista::class,'Id_estudio_financiero');
+    }
+
+    // * Relación de cinco años fijos
+    public function fijos_cincoAnios(){
+        return $this->hasMany(costosFijosCincoAnios::class, 'Id_estudio_financiero');
+    }
+
+    // * Relación de cinco años variables pesimista
+    public function variables_pesimista_cincoAnios(){
+        return $this->hasMany(costosVariablesCincoAniosPesimistas::class, 'Id_estudio_financiero');
     }
 }
