@@ -147,6 +147,14 @@ class cincoAniosPesimista extends Controller
     public function store(Request $request)
     {
         //
+
+        // TODO: Forma mas sencilla de crear o actualizar.
+        // $fijo = costosFijosCincoAnios::updateOrCreate(
+        //     . ['id' => 0],
+        //     . ['Id_estudio_financiero' => 7,
+        //     . 'Id_costo_fijo' => 7,
+        //     . 'anio' => 1,
+        //     . 'monto_conservador' => 200]);
     }
 
     /**

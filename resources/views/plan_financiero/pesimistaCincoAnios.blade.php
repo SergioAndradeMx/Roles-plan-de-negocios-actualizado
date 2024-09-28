@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/proyeccionPesimista.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js' , 'resources/js/proyeccionPesimistaCincoAnios.js'])
     <title>Proyección cinco años pesimista</title>
 </head>
 
@@ -41,7 +41,7 @@
         <hr class="my-2 h-0.5  border-t-0 w-full bg-neutral-100 dark:bg-white m-0 p-0" />
         {{-- Contenedor de la tabla --}}
         <div class=" px-2 py-3 mx-2  bg-white">
-            <table class="w-full px-10 table-auto ">
+            <table class="w-full px-10 table-auto" id="miTabla" dato='{{ $plan_de_negocio->id }}'>
                 {{-- TODO: Parte costos fijos --}}
                 <thead>
                     <tr>
@@ -71,9 +71,9 @@
                         @foreach ($arrayFijo as $id => $itemFijo)
                             @foreach ($itemFijo as $nombre => $montoFijo)
                                 <tr>
-                                    <td class="border " data-id="{{ $id }}">{{ $nombre }}</td>
+                                    <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 5; $i++)
-                                        <td class="border ">
+                                        <td class="border " id_actual="0">
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $montoFijo }}">
@@ -122,13 +122,13 @@
                     {{-- Pregunto si exiten costos variables --}}
                     @if (count($costosVariables) > 0)
                     {{-- !!! FALTA AGREGAR LOS CINCO ANIOS !!! --}}
-                    
+
                     {{-- De lo contrario se agregan los de los anuales --}}
                     @else
                         @foreach ($arrayVariable as $id => $itemVariable)
                             @foreach ($itemVariable as $nombre => $montoVariable)
                                 <tr>
-                                    <td class="border " data-id="{{ $id }}">{{ $nombre }}</td>
+                                    <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 5; $i++)
                                         <td class="border ">
                                             <input type="text"
@@ -144,7 +144,7 @@
                 </tbody>
                 {{-- TODO: Utilidades de los costos Fijos por año --}}
                 <thead>
-                    <tr id="costosVariables">
+                    <tr id="costosVariable">
                         <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"
                             width="7.5%">
                             Total de costos variables:
@@ -185,7 +185,7 @@
                         @foreach ($arrayIngresos as $id => $itemIngreso)
                             @foreach ($itemIngreso as $nombre => $montoIngreso)
                                 <tr>
-                                    <td class="border " data-id="{{ $id }}">{{ $nombre }}</td>
+                                    <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 5; $i++)
                                         <td class="border ">
                                             <input type="text"
@@ -203,7 +203,7 @@
                     <tr id="ingresos">
                         <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"
                             width="7.5%">
-                            Total de costos variables:
+                            Total de ingresos:
                         </th>
                         <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"></th>
                         <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"></th>

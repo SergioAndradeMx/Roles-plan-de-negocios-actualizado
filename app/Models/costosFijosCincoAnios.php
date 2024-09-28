@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class costosFijosCincoAnios extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id',  
+        'Id_estudio_financiero',
+        'Id_costo_fijo',
+        'anio',
+        'monto_conservador',
+    ];
 }
