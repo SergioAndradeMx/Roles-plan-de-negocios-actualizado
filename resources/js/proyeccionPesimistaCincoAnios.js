@@ -41,10 +41,10 @@ document.addEventListener("DOMContentLoaded", function () {
     asignaciónResultadoFila(columnaResultado, diccionarioIngreso);
 
     // * Llamamos función que calculara las utilidades y asignarlo en la columna correspondiente
-    resultadoFinal();
+    resultadoUtilidades();
 
     // TODO: Función para calcular el resultado de las utilidades y asignarlo en la columna correspondiente
-    function resultadoFinal() {
+    function resultadoUtilidades() {
         // Obtenemos la filas de fijos, variables, ingresos y utilidades
         let f_resultado_fijo = document.getElementById("costosFijos");
         let f_resultado_variable = document.getElementById("costosVariable");
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let vIngreso = columnasIngreso[index].textContent.substring(1);
 
             // Asignación de la columna correspondiente
-            columnasUtilidades[index].innerHTML = "$" + ( parseFloat(vIngreso) - (parseFloat(vFijo) +  parseFloat(vVariable)))
+            columnasUtilidades[index].innerHTML = "$" + (parseFloat(vIngreso) - (parseFloat(vFijo) + parseFloat(vVariable))).toFixed(2);
         } // FIN DEL FOR
     } // Fin de la función
 
@@ -88,8 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let index = 1; index < columnas.length; index++) {
                 // Obtenemos el input de la columna.
                 let input = columnas[index].querySelector('input');
-                // ! Agregar el evento de los inputs.
-                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                // Creación de evento para el input
+                agregarEventInputs(input);
                 // Obtenemos el id al cual pertenece
                 let id_actual = columnas[index].getAttribute('id_actual');
                 // Se lo asignamos al diccionario
@@ -101,23 +101,105 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /**
      * TODO: Función que asignara los valores en cada columna de la fila de resultado
-     * @param {*} filaResultado
+     * @param {*} columnasFila
      * @param {*} estructuraBody
      */
-    function asignaciónResultadoFila(filaResultado, estructuraBody) {
+    function asignaciónResultadoFila(columnasFila, estructuraBody) {
         // Obtengo las llaves del diccionario
         let claves = Object.keys(estructuraBody);
         // Recorro 5 veces por los cinco años que son.
-        for (let index = 0; index < 5; index++) {
+        for (let indexColumna = 0; indexColumna < 5; indexColumna++) {
             // Creo una variable el cual obtendrá la suma total del resultado
             let sumaResultado = 0;
             // For que recorre por filas
             for (let index = 0; index < claves.length; index++) {
                 // Hace la sumatoria de la columna correspondiente
-                sumaResultado += estructuraBody[claves[index]][index][1];
+                sumaResultado += estructuraBody[claves[index]][indexColumna][1];
             }   // Fin del for filas.
             // Escribe el valor de la columna correspondiente
-            filaResultado[index + 1].innerHTML = '$' + sumaResultado.toFixed(2);
+            columnasFila[indexColumna + 1].innerHTML = '$' + sumaResultado.toFixed(2);
         } // Fin del for de columnas.
     } // Fin de la función asignar valores en la fila resultado
+
+    /**
+     * TODO: Función asignación de evento de inputs
+     * @param {*} input
+     */
+    function agregarEventInputs(input) {
+        input.addEventListener("blur", function () {
+            // Obtenemos el body.
+            let parentTbody = input.closest('tbody');
+            // Saber cual body es
+            let bodyEs = parentTbody.getAttribute('id');
+            // Obtener la columna de la tabla
+            let columnaTd = input.closest('td');
+            // Obtener la fila de la tabla
+            let filaTr = columnaTd.closest('tr');
+            // Obtener la posición del input que se dejo de escribir.
+            let columnaPosición = columnaTd.cellIndex;
+            // Obtener a cual pertenece
+            let id_pertenece = filaTr.querySelector('td[id_pertenece]').getAttribute('id_pertenece')
+            // Variable para saber cual diccionario se va a usar.
+            let diccionario;
+            // Variable para saber cual fila es.
+            let filaResultado;
+            // If para saber cual diccionario usaremos.
+            if (bodyEs === "fijo") {
+                // Si el body es el fijo entonces se usar el diccionario fijo
+                diccionario = diccionarioFijo;
+                // Obtenemos la fila de resultado correspondiente.
+                filaResultado = document.getElementById("costosFijos");
+            } else if (bodyEs === "variable") {
+                // Si el body es el fijo entonces se usar el diccionario variable
+                diccionario = diccionarioVariable;
+                // Obtenemos la fila de resultado correspondiente.
+                filaResultado = document.getElementById("costosVariable");
+            } else {
+                // Si el body es el fijo entonces se usar el diccionario ingreso
+                diccionario = diccionarioIngreso;
+                // Obtenemos la fila de resultado correspondiente.
+                filaResultado = document.getElementById("ingresos");
+            }
+            // Obtengo las columnas de la fila de resultado correspondiente
+            columnaResultado = filaResultado.children;
+            // Si no esta vació entonces
+            if (input.value.trim()) {
+                // Creación de expresión regular.
+                let regex = /^[-+]?\d*\.?\d+$/;
+                // Si cumple con un valor decimal manda hacer lo demás
+                if (regex.test(input.value)) {
+                    // Le asignamos el valor del input.
+                    diccionario[id_pertenece][columnaPosición - 1][1] = parseFloat(input.value);
+                    // Llamamos para que calcule la fila de resultado correspondiente.
+                    asignaciónResultadoFila(columnaResultado, diccionario);
+                    // Llamamos función para que calcula las utilidades.
+                    resultadoUtilidades();
+                    // De lo contrario mandar error.
+                } else {
+                    // Le asignamos el valor 0
+                    input.value = 0;
+                    // Le asignamos el valor 0
+                    diccionario[id_pertenece][columnaPosición - 1][1] = 0;
+                    // Llamamos para que calcule la fila de resultado correspondiente.
+                    asignaciónResultadoFila(columnaResultado, diccionario);
+                    // Llamamos función para que calcula las utilidades.
+                    resultadoUtilidades();
+                    // ! FALTA LLAMAR AL MENSAJE DE ERROR.
+                }
+                // De lo contrario pondrá un cero al input
+            } else {
+                // Le asignamos el valor 0
+                input.value = 0;
+                // Le asignamos el valor 0
+                diccionario[id_pertenece][columnaPosición - 1][1] = 0;
+                // Llamamos para que calcule la fila de resultado correspondiente.
+                asignaciónResultadoFila(columnaResultado, diccionario);
+                // Llamamos función para que calcula las utilidades.
+                resultadoUtilidades();
+                // ! FALTA LLAMAR AL MENSAJE DE ERROR.
+            } // Fin de la condiciones
+        })
+    } //  Fin de la función
+
+    // ! Crear evento para botón cuando mande a guardar.
 });

@@ -62,7 +62,7 @@
                     </tr>
                 </thead>
                 {{-- TODO: Cuerpo de los costos fijos --}}
-                <tbody>
+                <tbody id="fijo">
                     {{-- Pregunto si existen los costos fijos --}}
                     @if (count($costosFijos) > 0)
                         {{-- !!! FALTA AGREGAR LOS COSTOS FIJOS. !!! --}}
@@ -118,7 +118,7 @@
                     </tr>
                 </thead>
                 {{-- TODO: Cuerpo de los costos variables --}}
-                <tbody>
+                <tbody id="variable">
                     {{-- Pregunto si exiten costos variables --}}
                     @if (count($costosVariables) > 0)
                     {{-- !!! FALTA AGREGAR LOS CINCO ANIOS !!! --}}
@@ -176,7 +176,7 @@
                     </tr>
                 </thead>
                 {{-- TODO: Cuerpo de ingresos. --}}
-                <tbody>
+                <tbody id="ingreso">
                     {{-- Pregunto si hay ingresos --}}
                     @if (count($ingresos) > 0)
                         {{-- !!! FALTA AGREGAR LOS INGRESOS !!! --}}
