@@ -1,3 +1,4 @@
+import { toastDiv , newToastDiv , newMessageP} from './mensajes.js';
 // TODO: Se ejecutara después de que cargue el html
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -184,7 +185,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     asignaciónResultadoFila(columnaResultado, diccionario);
                     // Llamamos función para que calcula las utilidades.
                     resultadoUtilidades();
-                    // ! FALTA LLAMAR AL MENSAJE DE ERROR.
+                    newMessageP.textContent = "Solo se permiten números enteros o decimales.";
+                    newToastDiv.style.display = 'block';
                 }
                 // De lo contrario pondrá un cero al input
             } else {
@@ -196,7 +198,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 asignaciónResultadoFila(columnaResultado, diccionario);
                 // Llamamos función para que calcula las utilidades.
                 resultadoUtilidades();
-                // ! FALTA LLAMAR AL MENSAJE DE ERROR.
+                newMessageP.textContent = "No se permiten espacios y no dejar celda vacía";
+                newToastDiv.style.display = 'block';
             } // Fin de la condiciones
         })
     } //  Fin de la función
@@ -218,9 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify(objeto)
         }).then(response => {
             if (response.ok) {
-                // ! FALTA MOSTRAR MENSAJE DE CORRECTO.
-                // ! FALTA REFRESCAR LA PAGINA.
-                // Refrescar de nuevo la pantalla.
+                toastDiv.style.display = 'block';
                 console.log('Todo correcto');
             } else {
                 throw new Error("Error en la solicitud");
