@@ -218,6 +218,8 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify(objeto)
         }).then(response => {
             if (response.ok) {
+                // ! FALTA MOSTRAR MENSAJE DE CORRECTO.
+                // ! FALTA REFRESCAR LA PAGINA.
                 // Refrescar de nuevo la pantalla.
                 console.log('Todo correcto');
             } else {

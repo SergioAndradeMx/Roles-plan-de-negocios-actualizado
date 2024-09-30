@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js' , 'resources/js/proyeccionPesimistaCincoAnios.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/proyeccionPesimistaCincoAnios.js'])
     <title>Proyección cinco años pesimista</title>
 </head>
 
@@ -65,7 +65,21 @@
                 <tbody id="fijo">
                     {{-- Pregunto si existen los costos fijos --}}
                     @if (count($costosFijos) > 0)
-                        {{-- !!! FALTA AGREGAR LOS COSTOS FIJOS. !!! --}}
+                        {{-- Se agregan los costos fijos de cinco años --}}
+                        @foreach ($costosFijos as $idPertenece => $itemsFijos)
+                            @foreach ($itemsFijos as $nombrePertenece => $valoresFijos)
+                                <tr>
+                                    <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
+                                    @foreach ($valoresFijos as $item)
+                                        <td class="border" id_actual={{ $item[0] }}>
+                                            <input type="text"
+                                                class="w-full border rounded-sm text-xs px-0 text-right"
+                                                value="{{ $item[1] }}">
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            @endforeach
+                        @endforeach
                         {{-- De lo contrario agregan los costos anuales --}}
                     @else
                         @foreach ($arrayFijo as $id => $itemFijo)
@@ -121,9 +135,22 @@
                 <tbody id="variable">
                     {{-- Pregunto si exiten costos variables --}}
                     @if (count($costosVariables) > 0)
-                    {{-- !!! FALTA AGREGAR LOS CINCO ANIOS !!! --}}
-
-                    {{-- De lo contrario se agregan los de los anuales --}}
+                        {{-- Se agregan los costos VARIABLES de cinco años --}}
+                        @foreach ($costosVariables as $idPertenece => $itemsVariables)
+                            @foreach ($itemsVariables as $nombrePertenece => $valoresVariables)
+                                <tr>
+                                    <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
+                                    @foreach ($valoresVariables as $item)
+                                        <td class="border" id_actual={{ $item[0] }}>
+                                            <input type="text"
+                                                class="w-full border rounded-sm text-xs px-0 text-right"
+                                                value="{{ $item[1] }}">
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            @endforeach
+                        @endforeach
+                        {{-- De lo contrario se agregan los de los anuales --}}
                     @else
                         @foreach ($arrayVariable as $id => $itemVariable)
                             @foreach ($itemVariable as $nombre => $montoVariable)
@@ -179,7 +206,21 @@
                 <tbody id="ingreso">
                     {{-- Pregunto si hay ingresos --}}
                     @if (count($ingresos) > 0)
-                        {{-- !!! FALTA AGREGAR LOS INGRESOS !!! --}}
+                        {{-- Se agregan los ingresos de cinco años --}}
+                        @foreach ($ingresos as $idPertenece => $itemsIngresos)
+                            @foreach ($itemsIngresos as $nombrePertenece => $valoresIngresos)
+                                <tr>
+                                    <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
+                                    @foreach ($valoresIngresos as $item)
+                                        <td class="border" id_actual={{ $item[0] }}>
+                                            <input type="text"
+                                                class="w-full border rounded-sm text-xs px-0 text-right"
+                                                value="{{ $item[1] }}">
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            @endforeach
+                        @endforeach
                         {{-- De lo contrario se agregaran los valores calculados anuales --}}
                     @else
                         @foreach ($arrayIngresos as $id => $itemIngreso)
