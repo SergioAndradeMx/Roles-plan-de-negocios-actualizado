@@ -73,7 +73,7 @@
                                 <tr>
                                     <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 5; $i++)
-                                        <td class="border " id_actual="0">
+                                        <td class="border" id_actual="0">
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $montoFijo }}">
@@ -130,7 +130,7 @@
                                 <tr>
                                     <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 5; $i++)
-                                        <td class="border ">
+                                        <td class="border" id_actual="0">
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $montoVariable }}">
@@ -187,7 +187,7 @@
                                 <tr>
                                     <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 5; $i++)
-                                        <td class="border ">
+                                        <td class="border" id_actual="0">
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $montoIngreso }}">

@@ -201,5 +201,31 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     } //  Fin de la función
 
-    // ! Crear evento para botón cuando mande a guardar.
+    /**
+     * TODO: Evento del botón guardar.
+     * * Manda la estructura a guardar en la base de datos.
+     */
+    document.getElementById('miBoton').addEventListener('click', function () {
+        let objeto = [ diccionarioFijo, diccionarioVariable, diccionarioIngreso];
+        console.log(JSON.stringify(objeto));
+        fetch("/plan_de_negocio/" + document.getElementById("miTabla").getAttribute("dato") +
+            "/proyeccionPesimistaCincoAnios", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+            },
+            body: JSON.stringify(objeto)
+        }).then(response => {
+            if (response.ok) {
+                // Refrescar de nuevo la pantalla.
+                console.log('Todo correcto');
+            } else {
+                throw new Error("Error en la solicitud");
+            }
+        }).catch(error => {
+            console.error("error: ", error);
+        })
+    });
+
 });

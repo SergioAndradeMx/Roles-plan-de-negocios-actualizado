@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CostoFijo;
-use App\Models\CostosVariable;
-use App\Models\EstudioFinanciero;
 use App\Models\Ingreso;
-use App\Models\Plan_de_negocio;
+use App\Models\CostoFijo;
 use Illuminate\Http\Request;
+use App\Models\CostosVariable;
+use App\Models\Plan_de_negocio;
+use App\Models\EstudioFinanciero;
+use App\Models\costosFijosCincoAnios;
+use App\Models\costosVariablesCincoAniosPesimistas;
+use App\Models\ingresosCincoAniosPesimista;
 
 class cincoAniosPesimista extends Controller
 {
@@ -16,6 +19,10 @@ class cincoAniosPesimista extends Controller
      */
     public function index(Plan_de_negocio $plan_de_negocio)
     {
+        // $jsonString = '[{"8":[["0",2400],["0",2400],["0",2400],["0",2400],["0",2400]],"9":[["0",36],["0",36],["0",36],["0",36],["0",36]]},{"7":[["0",48],["0",48],["0",48],["0",48],["0",48]]},{"8":[["0",12],["0",12],["0",12],["0",12],["0",12]]}]';
+        // $data = json_decode($jsonString, true);
+        // $costosFijos = $data[0];
+        // dd($costosFijos);
         // Buscamos a cual estudio pertenece.
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
         // Arreglos que me van a servir para crear la estructura de datos cuando no exista datos de cinco años.
@@ -144,17 +151,59 @@ class cincoAniosPesimista extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
-        //
+        // Busco el estudio.
+        $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
+        $estructuraConvertida = json_decode($request->getContent(), true);
+        $costosFijos = $estructuraConvertida[0];
+        $costosVariables = $estructuraConvertida[1];
+        $ingresos = $estructuraConvertida[2];
 
-        // TODO: Forma mas sencilla de crear o actualizar.
-        // $fijo = costosFijosCincoAnios::updateOrCreate(
-        //     . ['id' => 0],
-        //     . ['Id_estudio_financiero' => 7,
-        //     . 'Id_costo_fijo' => 7,
-        //     . 'anio' => 1,
-        //     . 'monto_conservador' => 200]);
+        // TODO: Almacenando o actualizando los costos fijos pesimistas
+        foreach ($costosFijos as $key => $value) {
+            for ($i = 0; $i < count($value); $i++) {
+                costosFijosCincoAnios::updateOrCreate(
+                    ['id' => $value[$i][0]],
+                    [
+                        'Id_estudio_financiero' => $estudio->id,
+                        'Id_costo_fijo' => $key,
+                        'anio' => $i + 1,
+                        'monto_conservador' => $value[$i][1]
+                    ]
+                );
+            }
+        }
+
+        // TODO: Almacenamos o actualizamos los costos variables pesimistas
+        foreach ($costosVariables as $key => $value) {
+            for ($i = 0; $i < count($value); $i++) {
+                costosVariablesCincoAniosPesimistas::updateOrCreate(
+                    ['id' => $value[$i][0]],
+                    [
+                        'Id_estudio_financiero' => $estudio->id,
+                        'Id_costo_variable' => $key,
+                        'anio' => $i + 1,
+                        'monto_pesimista' => $value[$i][1]
+                    ]
+                );
+            }
+
+            // TODO: Almacenamos o actualizamos los ingresos
+            foreach ($ingresos as $key => $value) {
+                for ($i = 0; $i < count($value); $i++) {
+                    ingresosCincoAniosPesimista::updateOrCreate(
+                        ['id' => $value[$i][0]],
+                        [
+                            'Id_estudio_financiero' => $estudio->id,
+                            'Id_ingresos' => $key,
+                            'anio' => $i + 1,
+                            'monto_pesimista' => $value[$i][1]
+                        ]
+                    );
+                }
+            }
+        }
     }
 
     /**
