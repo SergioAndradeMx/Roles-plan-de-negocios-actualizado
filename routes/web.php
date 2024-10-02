@@ -31,6 +31,7 @@ use App\Http\Controllers\GruposDeTrabajoController;
 use App\Http\Controllers\CapturarResultadoController;
 use App\Http\Controllers\ImagenCorporativaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\cincoAniosConservador;
 use App\Http\Controllers\CulturaOrganizacionalController;
 
 /*
@@ -83,7 +84,8 @@ Route::middleware('auth')->group(function () {
             'plan_de_negocio.proyeccionConservador' => ConservadorController::class,
             'plan_de_negocio.proyeccionPesimista' => PesimistaAnualController::class,
             'plan_de_negocio.proyeccionOptimista' => OptimistaAnualController::class,
-            'plan_de_negocio.proyeccionPesimistaCincoAnios' => cincoAniosPesimista::class
+            'plan_de_negocio.proyeccionPesimistaCincoAnios' => cincoAniosPesimista::class,
+            'plan_de_negocio.proyeccionConservadorCincoAnios' => cincoAniosConservador::class
         ]);
     });
 
