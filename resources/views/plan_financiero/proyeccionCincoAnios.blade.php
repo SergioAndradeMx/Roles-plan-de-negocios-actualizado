@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/proyeccionPesimistaCincoAnios.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/proyeccionCincoAnios.js'])
     <title>Proyección cinco años conservador</title>
 </head>
 
@@ -26,17 +26,16 @@
             </a>
         </button>
     </div>
-
     {{-- Informacion de la vista --}}
     <div class="mb-5">
         <h1 class="text-center text-4xl font-bold font-sans ">Plan financiero</h1>
-        <h2 class="text-center">Proyección cinco años Pesimista</h2>
+        <h2 class="text-center">{{$titulo}}</h2>
     </div>
 
     {{-- Contenedor  --}}
     <div class="container mx-auto card">
         {{-- Texto informativo --}}
-        <h2 class="text-center text-2xl text-white py-4">Proyección cinco años Pesimista</h2>
+        <h2 class="text-center text-2xl text-white py-4">{{$titulo}}</h2>
         {{-- Particion del texto informativo y la tabla --}}
         <hr class="my-2 h-0.5  border-t-0 w-full bg-neutral-100 dark:bg-white m-0 p-0" />
         {{-- Contenedor de la tabla --}}
@@ -270,7 +269,8 @@
         </div>
         {{-- TODO: Boton para guardar --}}
         <div class="flex justify-center py-3">
-            <button id="miBoton" class="w-1/4  bg-green-500 hover:bg-green-700 text-white font-bold py-1  rounded">
+            {{-- TODO: Inserto la urlDinamica --}}
+            <button id="miBoton" urlDinamica= {{$ruta}} class="w-1/4  bg-green-500 hover:bg-green-700 text-white font-bold py-1  rounded">
                 Guardar cambios
             </button>
         </div>

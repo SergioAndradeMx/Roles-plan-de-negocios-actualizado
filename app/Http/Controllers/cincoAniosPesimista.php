@@ -19,10 +19,6 @@ class cincoAniosPesimista extends Controller
      */
     public function index(Plan_de_negocio $plan_de_negocio)
     {
-        // $jsonString = '[{"8":[["0",2400],["0",2400],["0",2400],["0",2400],["0",2400]],"9":[["0",36],["0",36],["0",36],["0",36],["0",36]]},{"7":[["0",48],["0",48],["0",48],["0",48],["0",48]]},{"8":[["0",12],["0",12],["0",12],["0",12],["0",12]]}]';
-        // $data = json_decode($jsonString, true);
-        // $costosFijos = $data[0];
-        // dd($costosFijos);
         // Buscamos a cual estudio pertenece.
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
         // Arreglos que me van a servir para crear la estructura de datos cuando no exista datos de cinco años.
@@ -70,7 +66,6 @@ class cincoAniosPesimista extends Controller
                 ->orderBy('Id_costo_fijo')
                 ->orderBy('mes')
                 ->get();
-            // dd($costosFijosAnuales);
             // * Obtengo los Costos Variables Pesimistas
             $costosVariablesAnuales = $estudio->variables_pesimistas()
                 ->orderBy('Id_costo_variable')
@@ -160,7 +155,7 @@ class cincoAniosPesimista extends Controller
         $costosVariables = $estructuraConvertida[1];
         $ingresos = $estructuraConvertida[2];
 
-        // TODO: Almacenando o actualizando los costos fijos pesimistas
+        // TODO: Almacenando o actualizando los costos fijos
         foreach ($costosFijos as $key => $value) {
             for ($i = 0; $i < count($value); $i++) {
                 costosFijosCincoAnios::updateOrCreate(

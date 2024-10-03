@@ -16,7 +16,7 @@ class PesimistaAnualController extends Controller
      */
     public function index(Plan_de_negocio $plan_de_negocio)
     {
-
+        // ! MODIFICAR
         // Obtengo el estudio Financiero.
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
         // TODO: Obtengo los costos Fijos.

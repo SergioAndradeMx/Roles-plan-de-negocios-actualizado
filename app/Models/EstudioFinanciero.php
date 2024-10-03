@@ -89,4 +89,14 @@ class EstudioFinanciero extends Model
     public function variables_pesimista_cincoAnios(){
         return $this->hasMany(costosVariablesCincoAniosPesimistas::class, 'Id_estudio_financiero');
     }
+
+    // * Relación de cinco años variables conservador
+    public function variables_conservador_cincoAnios() {
+        return $this->hasMany(costosVariablesCincoAniosConservador::class, 'Id_estudio_financiero');
+    }
+
+    // * Relación de cinco años ingresos conservador
+    public function ingresos_conservador_CincoAnios() {
+        return $this->hasMany(ingresosCincoAniosConservador::class, 'Id_estudio_financiero');
+    }
 }

@@ -210,9 +210,9 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     document.getElementById('miBoton').addEventListener('click', function () {
         let objeto = [ diccionarioFijo, diccionarioVariable, diccionarioIngreso];
-        console.log(JSON.stringify(objeto));
-        //! CAMBIAR
-        fetch(adasd/da11231.awdERROR, {
+        // Obtengo la ruta dinámica
+        let ruta = this.getAttribute("urlDinamica");
+        fetch(ruta, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -222,7 +222,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }).then(response => {
             if (response.ok) {
                 toastDiv.style.display = 'block';
-                console.log('Todo correcto');
             } else {
                 throw new Error("Error en la solicitud");
             }

@@ -222,7 +222,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }).then(response => {
             if (response.ok) {
                 toastDiv.style.display = 'block';
-                console.log('Todo correcto');
             } else {
                 throw new Error("Error en la solicitud");
             }
