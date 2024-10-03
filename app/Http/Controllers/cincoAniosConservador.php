@@ -207,7 +207,7 @@ class cincoAniosConservador extends Controller
                         'Id_estudio_financiero' => $estudio->id,
                         'Id_ingresos' => $key,
                         'anio' => $i + 1,
-                        'monto_pesimista' => $value[$i][1]
+                        'monto_conservador' => $value[$i][1]
                     ]
                 );
             }

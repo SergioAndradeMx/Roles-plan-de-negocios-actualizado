@@ -9,10 +9,10 @@ use App\Models\CostosVariable;
 use App\Models\Plan_de_negocio;
 use App\Models\EstudioFinanciero;
 use App\Models\costosFijosCincoAnios;
-use App\Models\costosVariablesCincoAniosPesimistas;
-use App\Models\ingresosCincoAniosPesimista;
+use App\Models\costosVariablesCincoAniosOptimistas;
+use App\Models\ingresosCincoAniosOptimistas;
 
-class cincoAniosPesimista extends Controller
+class cincoAniosOptimista extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,9 +27,9 @@ class cincoAniosPesimista extends Controller
         $arrayVariables = [];
         $arrayIngresos = [];
         $montoTotal = 0;
-        $titulo = "Proyección cinco años Pesimista";
+        $titulo = "Proyección cinco años Optimista";
 
-        $url = route('plan_de_negocio.proyeccionPesimistaCincoAnios.store', $plan_de_negocio);
+        $url = route('plan_de_negocio.proyeccionOptimistaCincoAnios.store', $plan_de_negocio);
 
         if (count($estudio->fijos_cincoAnios) > 0) {
             // TODO: Estructurando los datos fijos
@@ -62,23 +62,22 @@ class cincoAniosPesimista extends Controller
                     $montoTotal = 0;
                 }
             }
-
         }
 
         // * Condición que valida que existan ingresos, costos variables e fijos de cinco años.
-        if (count($estudio->variables_pesimista_cincoAnios) > 0 && count($estudio->ingresos_pesimista_cincoAnios) > 0) {
+        if (count($estudio->variables_optimistas_CincoAnios) > 0 && count($estudio->ingresos_optimistas_CincoAnios) > 0) {
             // TODO: Estructurando los datos variables
-            $variablesOrdenados = $estudio->variables_pesimista_cincoAnios()->orderBy('Id_costo_variable')->orderBy('anio')->get();
+            $variablesOrdenados = $estudio->variables_optimistas_CincoAnios()->orderBy('Id_costo_variable')->orderBy('anio')->get();
             foreach ($variablesOrdenados as  $value) {
                 $variable = CostosVariable::find($value->Id_costo_variable);
-                $arrayVariables[$value->Id_costo_variable][$variable->nombre][$value->anio] = [$value->id, $value->monto_pesimista];
+                $arrayVariables[$value->Id_costo_variable][$variable->nombre][$value->anio] = [$value->id, $value->monto_optimista];
             }
 
             // TODO: Estructurando los datos ingresos
-            $ingresosOrdenados = $estudio->ingresos_pesimista_cincoAnios()->orderBy('Id_ingresos')->orderBy('anio')->get();
+            $ingresosOrdenados = $estudio->ingresos_optimistas_CincoAnios()->orderBy('Id_ingresos')->orderBy('anio')->get();
             foreach ($ingresosOrdenados as  $value) {
                 $ingreso = Ingreso::find($value->Id_ingresos);
-                $arrayIngreso[$value->Id_ingresos][$ingreso->nombre][$value->anio] = [$value->id, $value->monto_pesimista];
+                $arrayIngreso[$value->Id_ingresos][$ingreso->nombre][$value->anio] = [$value->id, $value->monto_optimista];
             }
 
             // * Envía a la vista
@@ -93,23 +92,22 @@ class cincoAniosPesimista extends Controller
                 'ruta' => $url,
                 'titulo' => $titulo
             ]);
-            // Validamos que existan ingresos, costos fijos y variables anuales para que se agregue.
-        } else if ((count($estudio->ingresos_pesimistas) > 0) && (count($estudio->variables_pesimistas) > 0) && (count($estudio->costos_fijos_anuales)) > 0) {
+        } else if ((count($estudio->ingresos_optimista) > 0) && (count($estudio->variables_optimista) > 0)) {
             // TODO: Pedir los datos ordenados.
             // * Obtengo los Costos Variables Pesimistas
-            $costosVariablesAnuales = $estudio->variables_pesimistas()
+            $costosVariablesAnuales = $estudio->variables_optimista()
                 ->orderBy('Id_costo_variable')
                 ->orderBy('mes')
                 ->get();
             // * Obtengo los Ingresos Pesimistas
-            $ingresosAnuales = $estudio->ingresos_pesimistas()
+            $ingresosAnuales = $estudio->ingresos_optimista()
                 ->orderBy('Id_ingresos')
                 ->orderBy('mes')
                 ->get();
 
             // TODO: Calcular el total de costo variable anual
             foreach ($costosVariablesAnuales as $value) {
-                $montoTotal += $value->monto_pesimista;
+                $montoTotal += $value->monto_optimista;
                 // Cuando llegue a 12 lo almacenara
                 if ($value->mes == 12) {
                     // Busco el costo variable
@@ -123,7 +121,7 @@ class cincoAniosPesimista extends Controller
 
             // TODO: Calcular el total de ingresos.
             foreach ($ingresosAnuales as  $value) {
-                $montoTotal += $value->monto_pesimista;
+                $montoTotal += $value->monto_optimista;
                 if ($value->mes == 12) {
                     // Busco el ingreso correcto
                     $ingreso = Ingreso::find($value->Id_ingresos);
@@ -146,7 +144,7 @@ class cincoAniosPesimista extends Controller
                 'titulo' => $titulo
             ]);
         } else {
-            return back()->with('mensaje', 'Ingrese primero los pesimistas anuales');
+            return back()->with('mensaje', 'Ingrese primero los optimistas anuales');
         }
     }
 
@@ -185,33 +183,33 @@ class cincoAniosPesimista extends Controller
             }
         }
 
-        // TODO: Almacenamos o actualizamos los costos variables pesimistas
+        // TODO: Almacenamos o actualizamos los costos variables optimista
         foreach ($costosVariables as $key => $value) {
             for ($i = 0; $i < count($value); $i++) {
-                costosVariablesCincoAniosPesimistas::updateOrCreate(
+                costosVariablesCincoAniosOptimistas::updateOrCreate(
                     ['id' => $value[$i][0]],
                     [
                         'Id_estudio_financiero' => $estudio->id,
                         'Id_costo_variable' => $key,
                         'anio' => $i + 1,
-                        'monto_pesimista' => $value[$i][1]
+                        'monto_optimista' => $value[$i][1]
                     ]
                 );
             }
+        }
 
-            // TODO: Almacenamos o actualizamos los ingresos
-            foreach ($ingresos as $key => $value) {
-                for ($i = 0; $i < count($value); $i++) {
-                    ingresosCincoAniosPesimista::updateOrCreate(
-                        ['id' => $value[$i][0]],
-                        [
-                            'Id_estudio_financiero' => $estudio->id,
-                            'Id_ingresos' => $key,
-                            'anio' => $i + 1,
-                            'monto_pesimista' => $value[$i][1]
-                        ]
-                    );
-                }
+        // TODO: Almacenamos o actualizamos los ingresos
+        foreach ($ingresos as $key => $value) {
+            for ($i = 0; $i < count($value); $i++) {
+                ingresosCincoAniosOptimistas::updateOrCreate(
+                    ['id' => $value[$i][0]],
+                    [
+                        'Id_estudio_financiero' => $estudio->id,
+                        'Id_ingresos' => $key,
+                        'anio' => $i + 1,
+                        'monto_optimista' => $value[$i][1]
+                    ]
+                );
             }
         }
     }

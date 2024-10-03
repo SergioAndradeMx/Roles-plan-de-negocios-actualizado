@@ -99,4 +99,14 @@ class EstudioFinanciero extends Model
     public function ingresos_conservador_CincoAnios() {
         return $this->hasMany(ingresosCincoAniosConservador::class, 'Id_estudio_financiero');
     }
+
+    // * Relación de cinco años variables Optimista
+    public function variables_optimistas_CincoAnios(){
+        return $this->hasMany(costosVariablesCincoAniosOptimistas::class,'Id_estudio_financiero');
+    }
+
+    // * Relación de cinco años ingresos Optimista
+    public function ingresos_optimistas_CincoAnios(){
+        return $this->hasMany(ingresosCincoAniosOptimistas::class,'Id_estudio_financiero');
+    }
 }
