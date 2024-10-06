@@ -22,15 +22,28 @@ class cincoAniosConservador extends Controller
         // Buscamos a cual estudio pertenece
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
         // Arreglos que me van a servir para crear la estructura de datos cuando no exista datos de cinco años.
+        // * Arrays para fijos
         $arrayCincoFijos = [];
         $arrayAnualFijos = [];
-        $arrayVariables = [];
-        $arrayIngresos = [];
+        // * Arrays para variables
+        $arrayAnualVariables = [];
+        $arrayCincoVariables = [];
+        // * Arrays para ingresos
+        $arrayAnualIngresos = [];
+        $arrayCincoIngresos = [];
         $montoTotal = 0;
+        // * Variables para enviar el titulo y la ruta dinámicamente
         $titulo = "Proyección cinco años Conservador";
-
         $url = route('plan_de_negocio.proyeccionConservadorCincoAnios.store', $plan_de_negocio);
 
+        // * Si no existen datos anuales fijos, variables o ingresos va a pedir que regrese al anual correspondiente para guardar.
+        if ((count($estudio->ingresos_anuales) < 1) || (count($estudio->costos_variables_anuales) < 1) || (count($estudio->costos_fijos_anuales)) < 1) {
+            return back()->with('mensaje', 'Ingrese primero los anuales conservadores');
+        }
+
+
+        // TODO: Condición para capturan los datos correspondientes.
+        // * Si existen los costos fijos de cinco años los capturan
         if (count($estudio->fijos_cincoAnios) > 0) {
             // TODO: Estructurando los datos fijos.
             $fijosOrdenados = $estudio->fijos_cincoAnios()->orderBy('Id_costo_fijo')->orderBy('anio')->get();
@@ -38,7 +51,8 @@ class cincoAniosConservador extends Controller
                 $fijo = CostoFijo::find($value->Id_costo_fijo);
                 $arrayCincoFijos[$value->Id_costo_fijo][$fijo->nombre][$value->anio] = [$value->id, $value->monto_conservador];
             }
-        } else if (count($estudio->costos_fijos_anuales) > 0) {
+            // * Si existe los costos fijos anuales capturara los datos.
+        } else {
             // TODO: Pedir los datos ordenados.
             // * Obtengo los costos Fijos.
             $costosFijosAnuales = $estudio->costos_fijos_anuales()
@@ -46,8 +60,6 @@ class cincoAniosConservador extends Controller
                 ->orderBy('mes')
                 ->get();
             // TODO: Calcular el total de costo fijo anual
-            // Variable para sumar todo los años.
-
             foreach ($costosFijosAnuales as  $value) {
                 // Suma todos los valores
                 $montoTotal += $value->monto_conservador;
@@ -63,48 +75,21 @@ class cincoAniosConservador extends Controller
             }
         }
 
-        // * Condición que valida que existan ingresos, costos variables e fijos de cinco años de conservador
-        if (count($estudio->variables_conservador_cincoAnios) > 0 && count($estudio->ingresos_conservador_CincoAnios) > 0) {
+
+        // TODO: Condición para capturan los datos correspondientes.
+        if (count($estudio->variables_conservador_cincoAnios) > 0) {
             // TODO: Estructurando los datos variables
             $variablesOrdenados = $estudio->variables_conservador_cincoAnios()->orderBy('Id_costo_variable')->orderBy('anio')->get();
             foreach ($variablesOrdenados as  $value) {
                 $variable = CostosVariable::find($value->Id_costo_variable);
-                $arrayVariables[$value->Id_costo_variable][$variable->nombre][$value->anio] = [$value->id, $value->monto_conservador];
+                $arrayCincoVariables[$value->Id_costo_variable][$variable->nombre][$value->anio] = [$value->id, $value->monto_conservador];
             }
-
-            // TODO: Estructurando los datos ingresos
-            $ingresosOrdenados = $estudio->ingresos_conservador_CincoAnios()->orderBy('Id_ingresos')->orderBy('anio')->get();
-            foreach ($ingresosOrdenados as  $value) {
-                $ingreso = Ingreso::find($value->Id_ingresos);
-                $arrayIngreso[$value->Id_ingresos][$ingreso->nombre][$value->anio] = [$value->id, $value->monto_conservador];
-            }
-
-            // * Envía a la vista
-            return view('plan_financiero.proyeccionCincoAnios', [
-                'arrayFijo' => $arrayAnualFijos,
-                'arrayVariable' => [],
-                'arrayIngresos' => [],
-                'costosFijos' => $arrayCincoFijos,
-                'costosVariables' => $arrayVariables,
-                'ingresos' => $arrayIngreso,
-                'plan_de_negocio' => $plan_de_negocio,
-                'ruta' => $url,
-                'titulo' => $titulo
-            ]);
-            // Validamos que existan ingresos, costos fijos y variables anuales para que se agregue.
-        } else if ((count($estudio->ingresos_anuales) > 0) && (count($estudio->costos_variables_anuales) > 0) && (count($estudio->costos_fijos_anuales)) > 0) {
-            // * Obtengo los Costos Variables conservador
+            // * Si no existen costos variables de cinco años agarra los anuales
+        } else {
             $costosVariablesAnuales = $estudio->costos_variables_anuales()
                 ->orderBy('Id_costo_variable')
                 ->orderBy('mes')
                 ->get();
-            // * Obtengo los Ingresos conservador
-            $ingresosAnuales = $estudio->ingresos_anuales()
-                ->orderBy('Id_ingresos')
-                ->orderBy('mes')
-                ->get();
-
-
             // TODO: Calcular el total de costo variable anual
             foreach ($costosVariablesAnuales as $value) {
                 $montoTotal += $value->monto_conservador;
@@ -113,11 +98,29 @@ class cincoAniosConservador extends Controller
                     // Busco el costo variable
                     $cVariable = CostosVariable::find($value->Id_costo_variable);
                     // Lo agrego al arreglo.
-                    $arrayVariables[$value->Id_costo_variable][$cVariable->nombre] = $montoTotal;
+                    $arrayAnualVariables[$value->Id_costo_variable][$cVariable->nombre] = $montoTotal;
                     // Regreso el valor por a cero para que no se acumulen
                     $montoTotal = 0;
                 }
             }
+        }
+
+
+        // TODO: Condición para capturar los datos correctos de ingresos
+        if (count($estudio->ingresos_conservador_CincoAnios) > 0) {
+            // TODO: Estructurando los datos ingresos
+            $ingresosOrdenados = $estudio->ingresos_conservador_CincoAnios()->orderBy('Id_ingresos')->orderBy('anio')->get();
+            foreach ($ingresosOrdenados as  $value) {
+                $ingreso = Ingreso::find($value->Id_ingresos);
+                $arrayCincoIngresos[$value->Id_ingresos][$ingreso->nombre][$value->anio] = [$value->id, $value->monto_conservador];
+            }
+            // * Si no existen ingresos de cinco años agarra los anuales
+        } else {
+            // * Obtengo los Ingresos conservador
+            $ingresosAnuales = $estudio->ingresos_anuales()
+                ->orderBy('Id_ingresos')
+                ->orderBy('mes')
+                ->get();
             // TODO: Calcular el total de ingresos.
             foreach ($ingresosAnuales as  $value) {
                 $montoTotal += $value->monto_conservador;
@@ -125,27 +128,25 @@ class cincoAniosConservador extends Controller
                     // Busco el ingreso correcto
                     $ingreso = Ingreso::find($value->Id_ingresos);
                     // Lo agrego al arreglo.
-                    $arrayIngresos[$value->Id_ingresos][$ingreso->nombre] = $montoTotal;
+                    $arrayAnualIngresos[$value->Id_ingresos][$ingreso->nombre] = $montoTotal;
                     // Regreso el valor por a cero para que no se acumulen
                     $montoTotal = 0;
                 }
             }
-            // * Envía a la vista
-            return view('plan_financiero.proyeccionCincoAnios', [
-                'arrayFijo' => $arrayAnualFijos,
-                'arrayVariable' => $arrayVariables,
-                'arrayIngresos' => $arrayIngresos,
-                'costosFijos' => $arrayCincoFijos,
-                'costosVariables' => [],
-                'ingresos' => [],
-                'plan_de_negocio' => $plan_de_negocio,
-                'ruta' => $url,
-                'titulo' => $titulo
-            ]);
-            // De lo contrario retorna un mensaje.
-        } else {
-            return back()->with('mensaje', 'Ingrese primero los conservadores anuales');
         }
+
+        // * Envió de datos a la vista.
+        return view('plan_financiero.proyeccionCincoAnios', [
+            'arrayAnualFijo' => $arrayAnualFijos,
+            'arrayAnualVariable' => $arrayAnualVariables,
+            'arrayAnualIngresos' => $arrayAnualIngresos,
+            'costosCincoAniosFijos' => $arrayCincoFijos,
+            'costosCincoAniosVariables' => $arrayCincoVariables,
+            'ingresosCincoAnios' => $arrayCincoIngresos,
+            'plan_de_negocio' => $plan_de_negocio,
+            'ruta' => $url,
+            'titulo' => $titulo
+        ]);
     }
 
     /**

@@ -63,9 +63,9 @@
                 {{-- TODO: Cuerpo de los costos fijos --}}
                 <tbody id="fijo">
                     {{-- Pregunto si existen los costos fijos --}}
-                    @if (count($costosFijos) > 0)
+                    @if (count($costosCincoAniosFijos) > 0)
                         {{-- Se agregan los costos fijos de cinco años --}}
-                        @foreach ($costosFijos as $idPertenece => $itemsFijos)
+                        @foreach ($costosCincoAniosFijos as $idPertenece => $itemsFijos)
                             @foreach ($itemsFijos as $nombrePertenece => $valoresFijos)
                                 <tr>
                                     <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
@@ -81,7 +81,7 @@
                         @endforeach
                         {{-- De lo contrario agregan los costos anuales --}}
                     @else
-                        @foreach ($arrayFijo as $id => $itemFijo)
+                        @foreach ($arrayAnualFijo as $id => $itemFijo)
                             @foreach ($itemFijo as $nombre => $montoFijo)
                                 <tr>
                                     <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
@@ -133,9 +133,9 @@
                 {{-- TODO: Cuerpo de los costos variables --}}
                 <tbody id="variable">
                     {{-- Pregunto si exiten costos variables --}}
-                    @if (count($costosVariables) > 0)
+                    @if (count($costosCincoAniosVariables) > 0)
                         {{-- Se agregan los costos VARIABLES de cinco años --}}
-                        @foreach ($costosVariables as $idPertenece => $itemsVariables)
+                        @foreach ($costosCincoAniosVariables as $idPertenece => $itemsVariables)
                             @foreach ($itemsVariables as $nombrePertenece => $valoresVariables)
                                 <tr>
                                     <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
@@ -151,7 +151,7 @@
                         @endforeach
                         {{-- De lo contrario se agregan los de los anuales --}}
                     @else
-                        @foreach ($arrayVariable as $id => $itemVariable)
+                        @foreach ($arrayAnualVariable as $id => $itemVariable)
                             @foreach ($itemVariable as $nombre => $montoVariable)
                                 <tr>
                                     <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
@@ -204,9 +204,9 @@
                 {{-- TODO: Cuerpo de ingresos. --}}
                 <tbody id="ingreso">
                     {{-- Pregunto si hay ingresos --}}
-                    @if (count($ingresos) > 0)
+                    @if (count($ingresosCincoAnios) > 0)
                         {{-- Se agregan los ingresos de cinco años --}}
-                        @foreach ($ingresos as $idPertenece => $itemsIngresos)
+                        @foreach ($ingresosCincoAnios as $idPertenece => $itemsIngresos)
                             @foreach ($itemsIngresos as $nombrePertenece => $valoresIngresos)
                                 <tr>
                                     <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
@@ -222,7 +222,7 @@
                         @endforeach
                         {{-- De lo contrario se agregaran los valores calculados anuales --}}
                     @else
-                        @foreach ($arrayIngresos as $id => $itemIngreso)
+                        @foreach ($arrayAnualIngresos as $id => $itemIngreso)
                             @foreach ($itemIngreso as $nombre => $montoIngreso)
                                 <tr>
                                     <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
