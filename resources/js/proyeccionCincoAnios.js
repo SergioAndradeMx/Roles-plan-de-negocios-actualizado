@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let columnasUtilidades = f_utilidades.children;
 
         // For que calculara el resultado de utilidades y lo asignara en la columna de utilidades correspondiente.
-        for (let index = 1; index < 6; index++) {
+        for (let index = 1; index < columnasUtilidades.length; index++) {
             // Obtenemos el valor de la columna correspondiente.
             let vFijo = columnasFijo[index].textContent.substring(1);
             let vVariable = columnasVariable[index].textContent.substring(1);
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Obtengo las llaves del diccionario
         let claves = Object.keys(estructuraBody);
         // Recorro 5 veces por los cinco años que son.
-        for (let indexColumna = 0; indexColumna < 5; indexColumna++) {
+        for (let indexColumna = 0; indexColumna < columnasFila.length - 1; indexColumna++) {
             // Creo una variable el cual obtendrá la suma total del resultado
             let sumaResultado = 0;
             // For que recorre por filas

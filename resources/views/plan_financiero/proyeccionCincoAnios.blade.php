@@ -7,10 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/proyeccionCincoAnios.js'])
-    <title>Proyección cinco años conservador</title>
+    <title>{{$titulo}}</title>
 </head>
 
 <body>
+    
+
+
+
+
+    {{-- ! FALTA EN LOS FOR AGREGAR IGUAL EL width Y SU VALOR CORRES PONDIENTE --}}
+
+
+
+
+
     {{-- barra de navegacion header --}}
     @include('layouts.navigation')
     {{-- Boton de regreso --}}
