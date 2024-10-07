@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingreso;
+use App\Models\CostoFijo;
 use Illuminate\Http\Request;
+use App\Models\CostosVariable;
 use App\Models\Plan_de_negocio;
 use App\Models\EstudioFinanciero;
 use App\Models\CostosFijosAnuales;
@@ -16,63 +19,103 @@ class PesimistaAnualController extends Controller
      */
     public function index(Plan_de_negocio $plan_de_negocio)
     {
-        // ! MODIFICAR
+        // TODO: Variables que me ayudaran a capturar los datos
+        // * Arrays de fijos
+        $arrayAnualesFijos = [];
+        $arrayMensualesFijos = [];
+        // * Arrays de variables
+        $arrayAnualesVariables = [];
+        $arrayMensualesVariables = [];
+        // * Arrays de ingresos
+        $arrayAnualesIngresos = [];
+        $arrayMensualesIngresos = [];
+        // * Variable que me va a servir para enviar dinamicamente el titulo
+        $titulo = "Proyección anual Pesimista";
         // Obtengo el estudio Financiero.
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
-        // TODO: Obtengo los costos Fijos.
-        $costosFijosAnuales = $estudio->costos_fijos_anuales()
-            ->orderBy('Id_costo_fijo')
-            ->orderBy('mes')
-            ->get();
-        // TODO: Obtengo los Costos Variables Pesimistas
-        $costosVariablesAnuales = $estudio->variables_pesimistas()
-            ->orderBy('Id_costo_variable')
-            ->orderBy('mes')
-            ->get();
-        // TODO: Obtengo los Ingresos Pesimistas
-        $ingresosAnuales = $estudio->ingresos_pesimistas()
-            ->orderBy('Id_ingresos')
-            ->orderBy('mes')
-            ->get();
 
-        // TODO: Si tiene datos en los costos fijos, variables y ingresos pesimistas.
-        // TODO: Agrupo todos los costos fijos.
-        $costosFijosAgrupados = [];
-        foreach ($costosFijosAnuales as $costoFijo) {
-            $nombreCostoFijo = $costoFijo->costo_fijo->nombre;
-            $id = $costoFijo->costo_fijo->id;
-            $mes = $costoFijo->mes;
-            $montoConservador = $costoFijo->monto_conservador;
-            $costosFijosAgrupados[$id][$nombreCostoFijo][$mes] = $montoConservador;
+        // TODO: Captura de costos fijos Anuales
+        if (count($estudio->costos_fijos_anuales) > 0) {
+            // TODO: Obtengo todos los costosFijosAnuales que pertenecen al estudio financiero correspondiente.
+            $costosFijosAnuales = $estudio->costos_fijos_anuales()
+                ->orderBy('Id_costo_fijo')
+                ->orderBy('mes')
+                ->get();
+            // * Ordenando los datos.
+            foreach ($costosFijosAnuales as $value) {
+                $fijo = CostoFijo::find($value->Id_costo_fijo);
+                $arrayAnualesFijos[$value->Id_costo_fijo][$fijo->nombre][$value->mes] = [$value->id, $value->monto_conservador];
+            }
+            // * De lo contrario agarra los mensuales
+        } else {
+            $fijosMensuales = $estudio->costosFijos;
+            foreach ($fijosMensuales as $value) {
+                $arrayMensualesFijos[$value->id][$value->nombre] = $value->valor_unitario * $value->cantidad;
+            }
         }
-        // TODO: Agrupo todos los costos variables pesimistas.
-        $costosVariablesAgrupados = [];
-        foreach ($costosVariablesAnuales as $costoVariable) {
-            $nombreCostoVariable = $costoVariable->costo_variable->nombre;
-            $id = $costoVariable->costo_variable->id;
-            $mes = $costoVariable->mes;
-            $monto_pesimista = $costoVariable->monto_pesimista;
-            $costosVariablesAgrupados[$id][$nombreCostoVariable][$mes] = $monto_pesimista;
+
+
+        // TODO: Captura los costos Variables Anuales
+        if (count($estudio->variables_pesimistas) > 0) {
+            // TODO: Obtengo todos los costos Variables Anuales que pertenecen al estudio financiero correspondiente.
+            $costosVariablesAnuales = $estudio->variables_pesimistas()
+                ->orderBy('Id_costo_variable')
+                ->orderBy('mes')
+                ->get();
+            // * Ordenando los datos.
+            foreach ($costosVariablesAnuales as $value) {
+                $Variables = CostosVariable::find($value->Id_costo_variable);
+                $arrayAnualesVariables[$value->Id_costo_variable][$Variables->nombre][$value->mes] = [$value->id, $value->monto_pesimista];
+            }
+            // * De lo contrario agarra los mensuales
+        } else {
+            $variablesMensuales = $estudio->costosVariables;
+            foreach ($variablesMensuales as $value) {
+                $arrayMensualesVariables[$value->id][$value->nombre] = $value->escenario_pesimista;
+            }
         }
-        // TODO: Organizo los ingresos.
-        $IngresosAgrupados = [];
-        foreach ($ingresosAnuales as $ingreso) {
-            $nombreIngreso = $ingreso->ingreso->nombre;
-            $id = $ingreso->ingreso->id;
-            $mes = $ingreso->mes;
-            $monto_pesimista = $ingreso->monto_pesimista;
-            $IngresosAgrupados[$id][$nombreIngreso][$mes] = $monto_pesimista;
+
+        // TODO: Captura los ingresos anuales
+        if (count($estudio->ingresos_pesimistas) > 0) {
+            // * Obtengo los ingresos anuales.
+            $ingresosAnuales = $estudio->ingresos_pesimistas()
+                ->orderBy('Id_ingresos')
+                ->orderBy('mes')
+                ->get();
+            // * Ordenando los datos de ingresos
+            foreach ($ingresosAnuales as $value) {
+                $Ingreso = Ingreso::find($value->Id_ingresos);
+                $arrayAnualesIngresos[$value->Id_ingresos][$Ingreso->nombre][$value->mes] = [$value->id, $value->monto_pesimista];
+            }
+            // * De lo contrario agarra los mensuales
+        } else {
+            $ingresosMensuales = $estudio->ingresos;
+            foreach ($ingresosMensuales as $value) {
+                $arrayMensualesIngresos[$value->id][$value->nombre] = $value->escenario_pesimista;
+            }
         }
-        // TODO: Lo envio en la vista.
-        return view('plan_financiero.pesimistaAnual', [
-            'plan_de_negocio' => $plan_de_negocio,
-            'costos_fijos' => $estudio->costosFijos,
-            'costosFijosAgrupados' => $costosFijosAgrupados,
-            'costos_variables' => $estudio->costosVariables,
-            'costosVariablesAgrupados' => $costosVariablesAgrupados,
-            'ingresos' => $estudio->ingresos,
-            'ingresos_anual' => $IngresosAgrupados
-        ]);
+
+        // * La ruta para almacenar los datos.
+        $url = route('plan_de_negocio.proyeccionPesimista.store', $plan_de_negocio);
+
+        // TODO: Envió de información a la vista
+        return view(
+            'plan_financiero.proyeccionAnual',
+            [
+                'plan_de_negocio' => $plan_de_negocio,
+                'titulo' => $titulo,
+                'ruta' => $url,
+                // TODO: Envió de datos fijos
+                'costosAniosFijos' => $arrayAnualesFijos,
+                'arrayMenualFijo' => $arrayMensualesFijos,
+                // TODO: Envió de datos variables
+                'costosAnualesVariables' => $arrayAnualesVariables,
+                'arrayMensualVariable' => $arrayMensualesVariables,
+                // TODO: Envio de datos ingresos
+                'ingresosAnuales' => $arrayAnualesIngresos,
+                'arrayMenualIngresos' => $arrayMensualesIngresos
+            ]
+        );
     }
 
     /**
@@ -90,49 +133,53 @@ class PesimistaAnualController extends Controller
     {
         // Busco el estudio.
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
-        // Borrar los costos fijos pesimistas
-        $estudio->costos_fijos_anuales()->delete();
-        // Borrar los variables pesimistas
-        $estudio->variables_pesimistas()->delete();
-        // Borrar los ingresos pesimistas.
-        $estudio->ingresos_pesimistas()->delete();
-        // Obtiene todos los costos fijos.
-        $costos_fijos_anuales = $request->input('costos_Fijos');
-        // Obtener todos los costos variables
-        $costos_Variables_anuales = $request->input('costos_variables');
-        // Obtener todos los Ingresos.
-        $ingresos_anuales = $request->input('ingresos');
-        // TODO: Inserta datos Costos Fijos
-        foreach ($costos_fijos_anuales as $fila) {
-            for ($j = 0; $j < count($fila) - 1; $j++) {
-                CostosFijosAnuales::create([
-                    'Id_estudio_financiero' => $estudio->id,
-                    'Id_costo_fijo' => $fila[0],
-                    'mes' => ($j + 1),
-                    'monto_conservador' => $fila[$j + 1]
-                ]);
+        $estructuraConvertida = json_decode($request->getContent(), true);
+        $costosFijos = $estructuraConvertida[0];
+        $costosVariables = $estructuraConvertida[1];
+        $ingresos = $estructuraConvertida[2];
+
+        // TODO: Almacenando o actualizando los costos fijos
+        foreach ($costosFijos as $key => $value) {
+            for ($i = 0; $i < count($value); $i++) {
+                CostosFijosAnuales::updateOrCreate(
+                    ['id' => $value[$i][0]],
+                    [
+                        'Id_estudio_financiero' => $estudio->id,
+                        'Id_costo_fijo' => $key,
+                        'mes' => $i + 1,
+                        'monto_conservador' => $value[$i][1]
+                    ]
+                );
             }
         }
-        // TODO: Insertamos datos Costos Variables Pesimistas.
-        foreach ($costos_Variables_anuales as $fila) {
-            for ($i = 0; $i < count($fila) - 1; $i++) {
-                CostosVariablesAnualesPesimista::create([
-                    'Id_estudio_financiero' => $estudio->id,
-                    'Id_costo_variable' => $fila[0],
-                    'mes' => ($i + 1),
-                    'monto_pesimista' => $fila[$i + 1]
-                ]);
+
+        // TODO: Almacenamos o actualizamos los costos variables conservador
+        foreach ($costosVariables as $key => $value) {
+            for ($i = 0; $i < count($value); $i++) {
+                CostosVariablesAnualesPesimista::updateOrCreate(
+                    ['id' => $value[$i][0]],
+                    [
+                        'Id_estudio_financiero' => $estudio->id,
+                        'Id_costo_variable' => $key,
+                        'mes' => $i + 1,
+                        'monto_pesimista' => $value[$i][1]
+                    ]
+                );
             }
         }
-        // TODO: Insertamos datos Ingresos Pesimistas.
-        foreach ($ingresos_anuales as $fila) {
-            for ($i = 0; $i < count($fila) - 1; $i++) {
-                IngresosAnualesPesimista::create([
-                    'Id_estudio_financiero' => $estudio->id,
-                    'Id_ingresos' => $fila[0],
-                    'mes' => ($i + 1),
-                    'monto_pesimista' => $fila[$i + 1]
-                ]);
+
+        // TODO: Almacenamos o actualizamos los ingresos
+        foreach ($ingresos as $key => $value) {
+            for ($i = 0; $i < count($value); $i++) {
+                IngresosAnualesPesimista::updateOrCreate(
+                    ['id' => $value[$i][0]],
+                    [
+                        'Id_estudio_financiero' => $estudio->id,
+                        'Id_ingresos' => $key,
+                        'mes' => $i + 1,
+                        'monto_pesimista' => $value[$i][1]
+                    ]
+                );
             }
         }
     }

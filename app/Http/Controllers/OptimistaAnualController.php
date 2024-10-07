@@ -30,7 +30,7 @@ class OptimistaAnualController extends Controller
         $arrayAnualesIngresos = [];
         $arrayMensualesIngresos = [];
         // * Variable que me va a servir para enviar dinamicamente el titulo
-        $titulo = "Proyección anual Conservador";
+        $titulo = "Proyección anual Optimista";
         // Obtengo el estudio Financiero.
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
 
