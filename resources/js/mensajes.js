@@ -216,3 +216,14 @@ const newButtonCorrecto = document.getElementById('toast-año');
 newButtonCorrecto.addEventListener('click', function () {
     newToastDiv.style.display = 'none';
 });
+
+
+// TODO: Evento para eliminar la alerta de navegacion con años
+    // * Obtengo el boton para cerrar el mensaje.
+    export const botonCerrar = document.getElementById('cerrarMensaje');
+    export const divMensaje = document.getElementById('toast-warning');
+    if (botonCerrar) {
+        botonCerrar.addEventListener('click', function () {
+            divMensaje.style.display = 'none';
+        })
+    }
