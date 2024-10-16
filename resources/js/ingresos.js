@@ -1,7 +1,9 @@
 // * Importamos los botones asi como los divs de los mensajes de error y que se guardo correctamente.
-import { toastDiv , newToastDiv , newMessageP, botonCerrar, divMensaje} from './mensajes.js';
+import { toastDiv, newToastDiv, newMessageP, botonCerrar, divMensaje } from './mensajes.js';
 var matrizMultidimensional = [];
 document.addEventListener("DOMContentLoaded", function () {
+    // * Crea un evento onclick para un boton.
+    const miBoton = document.getElementById("miBoton");
     // Primero recorre la tabla para saber si hay elementos que envia la base de datos
     let filas = document.querySelectorAll("#miTabla tbody tr");
     filas.forEach(function (fila) {
@@ -48,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     input.value = input.value.trim();
                     // Le asigno los valor a la posicion correspondiente en la matriz.
                     matrizMultidimensional[fila - 1][columna] = input.value;
+                    activarButton();
                     // Valida para crear una fila.
                     crearFila(fila, tdPadre);
                     // Sale del switch.
@@ -62,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             input.value = input.value.trim();
                             // Despues lo agrego a la matriz.
                             matrizMultidimensional[fila - 1][columna] = input.value;
+                            activarButton();
                             // Comprueba si el nodo siguiente tiene un valor entonces calcular el total de costo fijo
                             // y revisara que si toda la fila esta completa para crear una nueva fila.
                             columnaSiguiente(tdPadre, fila, columna, input)
@@ -71,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             input.value = "0";
                             // Se le asignara en la matriz el dato correspondiente
                             matrizMultidimensional[fila - 1][columna] = "0";
+                            activarButton();
                             // Comprueba si el nodo siguiente tiene un valor entonces calcular el total de costo fijo
                             // y revisara que si toda la fila esta completa para crear una nueva fila.
                             columnaSiguiente(tdPadre, fila, columna, input);
@@ -85,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         matrizMultidimensional[fila - 1][columna + 2] = "";
                         // Cambio el valor en la matriz.
                         matrizMultidimensional[fila - 1][columna] = "";
+                        activarButton();
                         // Obtengo el nodo padre que es el td
                         const tdSiguiente = tdPadre.nextElementSibling;
                         // Obtengo el nodo siguiente o sea otro td
@@ -105,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (regex.test(input.value)) {
                             // Despues el mismo valor lo agrega al input
                             input.value = input.value.trim();
+                            activarButton();
                             // Despues lo agrego a la matriz.
                             matrizMultidimensional[fila - 1][columna] = input.value;
                             // Valida el nodo anterior
@@ -113,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             // Le asigna el valor de cero al input actual
                             input.value = "0";
                             matrizMultidimensional[fila - 1][columna] = "0";
+                            activarButton();
                             // Valido el nodo anterior si tiene un valor.
                             columnaAnterior(tdPadre, input, columna, fila);
                             // Muestra un alert de que esta mal ingresar otra cosa que no sean numeros.
@@ -127,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         matrizMultidimensional[fila - 1][columna + 1] = "";
                         // cambiO el valor en la matriz.
                         matrizMultidimensional[fila - 1][columna] = "";
+                        activarButton();
                         // Obtengo el nodo padre que es el td
                         const tdSiguiente = tdPadre.nextElementSibling;
                         // Le asigno el valor 0
@@ -137,9 +146,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     break;
                 case 4:
                     eventoOptimistaConservadorPesimista(input, fila, columna, regex, "Total optimista: $", "optimista", tdPadre);
+                    activarButton();
                     break;
                 case 5:
                     eventoOptimistaConservadorPesimista(input, fila, columna, regex, "Total pesimista: $", "pesimista", tdPadre);
+                    activarButton();
                     break;
             }
         });
@@ -405,7 +416,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const tabla = document.getElementById("miTabla");
             // Lo elimina en la matriz.
             matrizMultidimensional.splice(row - 1, 1);
-            console.log(matrizMultidimensional);
+            activarButton();
             // Eliminar en el HTML
             tabla.deleteRow(row);
             // Recalcula el total de costo Fijo.
@@ -416,8 +427,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // * Crea un evento onclick para un boton.
-    const miBoton = document.getElementById("miBoton");
     // * Agregar el evento onclick al botón
     miBoton.onclick = async function () {
         // * Obtener si hay costos Fijos.
@@ -551,7 +560,6 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let fila = copiaMatriz.length - 1; fila >= 0; fila--) {
                 if (copiaMatriz[fila].every(elemento => elemento === "")) {
                     copiaMatriz.splice(fila, 1); // Elimina la fila vacía
-                    console.log("Elimina una fila.");
                 }
             }
             // Recorremos cada fila de la matriz
@@ -590,6 +598,17 @@ document.addEventListener("DOMContentLoaded", function () {
             // Si llegamos aquí, significa que todas las filas pasaron la validación
             return true;
         }
+    }
 
+    /**
+    * TODO: Funcion que activa el botonm de guardar
+    */
+    function activarButton() {
+        if (miBoton.disabled) {
+            miBoton.classList.replace('bg-green-800', 'bg-green-500');
+            miBoton.classList.toggle
+            miBoton.classList.replace('text-gray-400', 'text-white');
+            miBoton.disabled = false;
+        }
     }
 });

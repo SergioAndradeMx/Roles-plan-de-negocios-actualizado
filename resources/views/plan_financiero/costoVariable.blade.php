@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -148,8 +148,8 @@
                 </table>
             </div>
             <div class="flex  justify-center">
-                <button id="miBoton" informacion="{{$datosAnuales}}"
-                    class="w-1/2  bg-green-500 hover:bg-green-700 text-white font-bold py-1 mb-5 rounded">
+                <button id="miBoton" informacion="{{$datosAnuales}}" disabled
+                    class="w-1/2  bg-green-800 text-gray-400 font-bold py-1 mb-5 rounded">
                     Guardar cambios
                 </button>
             </div>

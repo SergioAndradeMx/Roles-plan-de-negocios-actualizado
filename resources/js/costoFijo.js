@@ -4,10 +4,12 @@
  * description:
  */
 // * Importamos los botones asi como los divs de los mensajes de error y que se guardo correctamente.
-import { toastDiv , newToastDiv , newMessageP, botonCerrar, divMensaje} from './mensajes.js';
+import { toastDiv, newToastDiv, newMessageP, botonCerrar, divMensaje } from './mensajes.js';
 // Creo la matrizMultidimensional.
 var matrizMultidimensional = [];
 document.addEventListener("DOMContentLoaded", function () {
+    // * Crea un evento onclick para un boton.
+    const miBoton = document.getElementById("miBoton");
     // Agrega elementos por si vienen de la base de datos
     let filas = document.querySelectorAll("#miTabla tbody tr");
     // ForEach para obtener cada dato que traiga la base de datos.
@@ -41,9 +43,10 @@ document.addEventListener("DOMContentLoaded", function () {
         eventoButton(boton);
     });
 
-    // ############################################################################################################
-    // * Crea un evento onclick para un boton.
-    const miBoton = document.getElementById("miBoton");
+
+    /**
+     *  TODO: Evento que envia guardar los valores a la base de datos.
+     */
     // * Agregar el evento onclick al botón
     miBoton.onclick = async function () {
         // * Quitar la ultima fila.
@@ -241,6 +244,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (regex.test(input.value)) {
                             // Despues el mismo valor lo agrega al input
                             input.value = input.value.trim();
+                            // * Evento para activar el boton de guardar
+                            activarButton();
                             // Despues lo agrego a la matriz.
                             matrizMultidimensional[fila - 1][columna] = input.value;
                             // Comprueba si el nodo siguiente tiene un valor entonces calcular el total de costo fijo
@@ -255,6 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             // Comprueba si el nodo siguiente tiene un valor entonces calcular el total de costo fijo
                             // y revisara que si toda la fila esta completa para crear una nueva fila.
                             columnaSiguiente(tdPadre, fila, columna, input);
+                            activarButton();
                             // Se mostrar en pantalla que solo se permiten numeros
                             // alert("Solo se permiten números en este campo.");
                             newMessageP.textContent = "Solo se permiten números en este campo.";
@@ -271,6 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         const tdSiguiente = tdPadre.nextElementSibling;
                         // Obtengo el nodo siguiente o sea otro td
                         const totalNodo = tdSiguiente.nextElementSibling;
+                        activarButton();
                         // Le asigno el valor 0
                         totalNodo.querySelector("input").value = "0";
                         // Calculo de nuevo el total costo fijo.
@@ -286,6 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (regex.test(input.value)) {
                             // Despues el mismo valor lo agrega al input
                             input.value = input.value.trim();
+                            activarButton();
                             // Despues lo agrego a la matriz.
                             matrizMultidimensional[fila - 1][columna] = input.value;
                             // Valida el nodo anterior
@@ -294,6 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             // Le asigna el valor de cero al input actual
                             input.value = "0";
                             matrizMultidimensional[fila - 1][columna] = "0";
+                            activarButton();
                             // Valido el nodo anterior si tiene un valor.
                             columnaAnterior(tdPadre, input, columna, fila);
                             // Muestra un alert de que esta mal ingresar otra cosa que no sean numeros.
@@ -306,6 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         input.value = "";
                         // Asigno el vacio a la matriz en la posicion correspondiente.
                         matrizMultidimensional[fila - 1][columna + 1] = "";
+                        activarButton();
                         // cambiO el valor en la matriz.
                         matrizMultidimensional[fila - 1][columna] = "";
                         // Obtengo el nodo padre que es el td
@@ -316,10 +326,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         calcularTotalFijos();
                     }
                     break;
-
                 default:
                     // Le quito todos los espacios.
                     input.value = input.value.trim();
+                    activarButton();
                     // Le asigno los valor a la posicion correspondiente en la matriz.
                     matrizMultidimensional[fila - 1][columna] = input.value;
                     // Valida para crear una fila.
@@ -532,10 +542,11 @@ document.addEventListener("DOMContentLoaded", function () {
      * @param {*} button
      */
     function eventoButton(button) {
-        // Se crea el evento
+        // * Se crea el evento para eliminar
         button.addEventListener('click', function () {
             // Obtengo la posicion de la fila.
             const row = button.parentNode.parentNode.rowIndex;
+            activarButton();
             // Obtengo la tabla
             const tabla = document.getElementById("miTabla");
             // Lo elimina en la matriz.
@@ -545,6 +556,19 @@ document.addEventListener("DOMContentLoaded", function () {
             // Recalcula el total de costo Fijo.
             calcularTotalFijos();
         });
+    }
+
+
+    /**
+     *  TODO: Funcion que activa el botonm de guardar
+     */
+    function activarButton() {
+        if (miBoton.disabled) {
+            miBoton.classList.replace('bg-green-800', 'bg-green-500');
+            miBoton.classList.toggle
+            miBoton.classList.replace('text-gray-400', 'text-white');
+            miBoton.disabled = false;
+        }
     }
 });
 
