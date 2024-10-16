@@ -77,7 +77,7 @@ class IngresoController extends Controller
                         'estudio_financiero_id' => $nuevoEstudio->id,
                         'nombre' => $fila[0],
                         'valor_unitario' => $fila[1],
-                        'cantidad' => $fila[2],
+                        'monto_unitario' => $fila[2],
                         'escenario_conservador' => $fila[3],
                         'escenario_optimista' => $fila[4],
                         'escenario_pesimista' => $fila[5]
@@ -105,7 +105,7 @@ class IngresoController extends Controller
                             'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
                             'nombre' => $fila[0],
                             'valor_unitario' => $fila[1],
-                            'cantidad' => $fila[2],
+                            'monto_unitario' => $fila[2],
                             'escenario_conservador' => $fila[3],
                             'escenario_optimista' => $fila[4],
                             'escenario_pesimista' => $fila[5]
@@ -122,7 +122,7 @@ class IngresoController extends Controller
                             'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
                             'nombre' => $fila[0],
                             'valor_unitario' => $fila[1],
-                            'cantidad' => $fila[2],
+                            'monto_unitario' => $fila[2],
                             'escenario_conservador' => $fila[3],
                             'escenario_optimista' => $fila[4],
                             'escenario_pesimista' => $fila[5]
