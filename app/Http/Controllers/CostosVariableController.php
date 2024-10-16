@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\CostosVariable;
-use App\Models\Plan_de_negocio;
 use App\Models\EstudioFinanciero;
-use Exception;
+use App\Models\Plan_de_negocio;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CostosVariableController extends Controller
 {
@@ -69,7 +69,7 @@ class CostosVariableController extends Controller
                         'estudio_financiero_id' => $nuevoEstudio->id,
                         'nombre' => $fila[0],
                         'valor_unitario' => $fila[1],
-                        'cantidad' => $fila[2],
+                        'monto_unitario' => $fila[2],
                         'escenario_conservador' => $fila[3],
                         'escenario_optimista' => $fila[4],
                         'escenario_pesimista' => $fila[5]
@@ -100,7 +100,7 @@ class CostosVariableController extends Controller
                             'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
                             'nombre' => $fila[0],
                             'valor_unitario' => $fila[1],
-                            'cantidad' => $fila[2],
+                            'monto_unitario' => $fila[2],
                             'escenario_conservador' => $fila[3],
                             'escenario_optimista' => $fila[4],
                             'escenario_pesimista' => $fila[5]
@@ -116,7 +116,7 @@ class CostosVariableController extends Controller
                             'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
                             'nombre' => $fila[0],
                             'valor_unitario' => $fila[1],
-                            'cantidad' => $fila[2],
+                            'monto_unitario' => $fila[2],
                             'escenario_conservador' => $fila[3],
                             'escenario_optimista' => $fila[4],
                             'escenario_pesimista' => $fila[5]

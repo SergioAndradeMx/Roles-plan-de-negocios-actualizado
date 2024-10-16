@@ -92,7 +92,7 @@
                                 </td>
                                 <td class="border px-4 py-2"><input type="text"
                                         class="w-full border rounded-sm px-2 py-1 text-right"
-                                        value="{{ $costos_variable->cantidad }}">
+                                        value="{{ $costos_variable->monto_unitario }}">
                                 </td>
                                 <td class="border px-4 py-2"><input type="text"
                                         class="w-full border rounded-sm px-2 py-1 text-right"

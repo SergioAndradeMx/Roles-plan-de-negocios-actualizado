@@ -13,7 +13,7 @@ class CostosVariable extends Model
         'estudio_financiero_id',
         'nombre',
         'valor_unitario',
-        'cantidad',
+        'monto_unitario',
         'escenario_conservador',
         'escenario_optimista',
         'escenario_pesimista'
