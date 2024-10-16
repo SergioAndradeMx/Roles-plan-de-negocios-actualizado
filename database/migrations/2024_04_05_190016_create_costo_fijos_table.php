@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('estudio_financiero_id')->constrained('estudio_financieros')->onDelete('cascade');
             $table->string('nombre', 255);
-            $table->float('valor_unitario');
-            $table->float('cantidad');
+            $table->decimal('valor_unitario');
+            $table->decimal('monto_unitario',12,2);
             $table->timestamps();
         });
     }

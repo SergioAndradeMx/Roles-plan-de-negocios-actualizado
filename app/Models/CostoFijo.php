@@ -13,7 +13,7 @@ class CostoFijo extends Model
         'estudio_financiero_id',
         'nombre',
         'valor_unitario',
-        'cantidad'
+        'monto_unitario'
     ];
 
     public function estudioFinanciero()

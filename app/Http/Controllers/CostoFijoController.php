@@ -67,7 +67,7 @@ class CostoFijoController extends Controller
                         'estudio_financiero_id' => $nuevoEstudio->id,
                         'nombre' => $fila[0],
                         'valor_unitario' => $fila[1],
-                        'cantidad' => $fila[2],
+                        'monto_unitario' => $fila[2],
                     ]);
                     $totalCostoFijo += $fila[3];
                 }
@@ -95,7 +95,7 @@ class CostoFijoController extends Controller
                             'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
                             'nombre' => $fila[0],
                             'valor_unitario' => $fila[1],
-                            'cantidad' => $fila[2],
+                            'monto_unitario' => $fila[2],
                         ]);
                         $totalCostoFijo += $fila[3];
                     }
@@ -110,7 +110,7 @@ class CostoFijoController extends Controller
                             'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
                             'nombre' => $fila[0],
                             'valor_unitario' => $fila[1],
-                            'cantidad' => $fila[2],
+                            'monto_unitario' => $fila[2],
                         ]);
                         $totalCostoFijo += $fila[3];
                     }

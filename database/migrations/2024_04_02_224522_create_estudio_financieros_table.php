@@ -15,9 +15,9 @@ return new class extends Migration
             // Los campos de la tabla
             $table->id();
             $table->foreignId('plan_de_negocio_id')->unique()->constrained('plan_de_negocios')->onDelete('cascade');
-            $table->float('total_costo_fijo');
-            $table->float('total_costo_variable');
-            $table->float('total_ingresos');
+            $table->decimal('total_costo_fijo',12,2);
+            $table->decimal('total_costo_variable',12,2);
+            $table->decimal('total_ingresos',12,2);
             $table->timestamps();
         });
     }
