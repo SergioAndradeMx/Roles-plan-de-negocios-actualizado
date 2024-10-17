@@ -50,6 +50,8 @@ class CostosVariableController extends Controller
 
         // * Obtengo todo en formato json.
         $jsonData = $request->json()->all();
+        // * Variable para calcular el total.
+        $totalCostoVariable = 0;
         // * Hay que buscar si existe en la tabla estudio financiero si no pues se crea.
         $estudioFinanciero = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
         // * Si no existe se crea en la tabla estudio financiero.
@@ -61,43 +63,42 @@ class CostosVariableController extends Controller
                 'total_costo_variable' => 0.0,
                 'total_ingresos' => 0.0,
             ]);
-            if ($jsonData[0][0] !== null && $jsonData[0][1] !== null && $jsonData[0][2] !== null && $jsonData[0][4] !== null && $jsonData[0][5] !== null ) {
-                $totalCostoVariable = 0;
-                // * Se almacena en la base de datos.
-                foreach ($jsonData as $fila) {
-                    CostosVariable::create([
-                        'estudio_financiero_id' => $nuevoEstudio->id,
-                        'nombre' => $fila[0],
-                        'valor_unitario' => $fila[1],
-                        'monto_unitario' => $fila[2],
-                        'escenario_conservador' => $fila[3],
-                        'escenario_optimista' => $fila[4],
-                        'escenario_pesimista' => $fila[5]
-                    ]);
-                    $totalCostoVariable += $fila[3];
-                }
-                // * Luego modificar el total_costo_fijo.
-                EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
-                    ->update(['total_costo_variable' => $totalCostoVariable]);
+            // * Se almacena en la base de datos.
+            foreach ($jsonData as $fila) {
+                CostosVariable::create([
+                    'estudio_financiero_id' => $nuevoEstudio->id,
+                    'nombre' => $fila[0],
+                    'valor_unitario' => $fila[1],
+                    'monto_unitario' => $fila[2],
+                    'escenario_conservador' => $fila[3],
+                    'escenario_optimista' => $fila[4],
+                    'escenario_pesimista' => $fila[5]
+                ]);
+                $totalCostoVariable += $fila[3];
             }
-            //TODO:  Segunda
+            // * Luego modificar el total_costo_fijo.
+            EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
+                ->update(['total_costo_variable' => $totalCostoVariable]);
+            //TODO:  Si existe el costo fijo entrara aqui.
         } else {
-            if ($jsonData[0][0] === null && $jsonData[0][1] === null && $jsonData[0][2] === null && $jsonData[0][4] === null && $jsonData[0][5] === null ) {
-                if (CostosVariable::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->exists()) {
-                    CostosVariable::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->delete();
+            // * Si esta vacio el json entonces entra aqui.
+            if ($jsonData[0][0] === null && $jsonData[0][1] === null && $jsonData[0][2] === null && $jsonData[0][4] === null && $jsonData[0][5] === null) {
+                // * Si hay costos variables en del mismo estudio financiero entonces los borra.
+                if (count($estudioFinanciero->costosVariables) > 0) {
+                    // * Mando a eliminar los que existen.
+                    $estudioFinanciero->costosVariables()->delete();
+                    // * Actualizo la columna correspondiente.
                     EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
                         ->update(['total_costo_variable' => 0]);
                 }
-                return response()->json([
-                    'mensaje' => 'Solo elimino.'
-                ]);
+                // * De lo contrario si no esta vacio entonces hara lo siguiente.
             } else {
-                $totalCostoVariable = 0;
-                if (CostosVariable::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->exists()) {
-                    CostosVariable::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->delete();
+                    // * Mando a eliminar los que existen.
+                    $estudioFinanciero->costosVariables()->delete();
+                    // * Mando a guardar los datos.
                     foreach ($jsonData as $fila) {
                         CostosVariable::create([
-                            'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
+                            'estudio_financiero_id' => $estudioFinanciero->id,
                             'nombre' => $fila[0],
                             'valor_unitario' => $fila[1],
                             'monto_unitario' => $fila[2],
@@ -107,25 +108,9 @@ class CostosVariableController extends Controller
                         ]);
                         $totalCostoVariable += $fila[3];
                     }
+                    // * Actualizo en campo correspondiente.
                     EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
                         ->update(['total_costo_variable' => $totalCostoVariable]);
-                } else {
-
-                    foreach ($jsonData as $fila) {
-                        CostosVariable::create([
-                            'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
-                            'nombre' => $fila[0],
-                            'valor_unitario' => $fila[1],
-                            'monto_unitario' => $fila[2],
-                            'escenario_conservador' => $fila[3],
-                            'escenario_optimista' => $fila[4],
-                            'escenario_pesimista' => $fila[5]
-                        ]);
-                        $totalCostoVariable += $fila[3];
-                    }
-                    EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
-                        ->update(['total_costo_variable' => $totalCostoVariable]);
-                }
             }
         }
     }

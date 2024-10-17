@@ -48,6 +48,8 @@ class CostoFijoController extends Controller
     {
         // * Obtengo todo en formato json.
         $jsonData = $request->json()->all();
+        // * variable que me ayudara a calcular
+        $totalCostoFijo = 0;
         // * Hay que buscar si existe en la tabla estudio financiero si no pues se crea.
         $estudioFinanciero = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
         // * Si no existe se crea en la tabla estudio financiero.
@@ -61,7 +63,6 @@ class CostoFijoController extends Controller
             ]);
             // TODO: Si no esta vacio entonces va a insertar
             if ($jsonData[0][0] !== null && $jsonData[0][1] !== null && $jsonData[0][2] !== null) {
-                $totalCostoFijo = 0;
                 // * Se almacena en la base de datos.
                 foreach ($jsonData as $fila) {
                     CostoFijo::create([
@@ -85,7 +86,6 @@ class CostoFijoController extends Controller
                 EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
                     ->update(['total_costo_fijo' => 0]);
             } else {
-                $totalCostoFijo = 0;
                 // TODO: Si existe un costo fijo entonces lo elimina y crea los nuevos datos.
                 if (count($estudioFinanciero->costosFijos) > 0) {
                     $estudioFinanciero->costosFijos()->delete();
