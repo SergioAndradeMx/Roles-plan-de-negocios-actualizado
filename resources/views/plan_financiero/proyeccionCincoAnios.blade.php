@@ -80,9 +80,9 @@
                         @foreach ($costosCincoAniosFijos as $idPertenece => $itemsFijos)
                             @foreach ($itemsFijos as $nombrePertenece => $valoresFijos)
                                 <tr>
-                                    <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
+                                    <td class="border" width="15%" id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
                                     @foreach ($valoresFijos as $item)
-                                        <td class="border" id_actual={{ $item[0] }}>
+                                        <td class="border" width="7.5%" id_actual={{ $item[0] }}>
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $item[1] }}">
@@ -96,9 +96,9 @@
                         @foreach ($arrayAnualFijo as $id => $itemFijo)
                             @foreach ($itemFijo as $nombre => $montoFijo)
                                 <tr>
-                                    <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
+                                    <td class="border" width="15%" id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 5; $i++)
-                                        <td class="border" id_actual="0">
+                                        <td class="border" width="7.5%" id_actual="0">
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $montoFijo }}">
@@ -150,9 +150,9 @@
                         @foreach ($costosCincoAniosVariables as $idPertenece => $itemsVariables)
                             @foreach ($itemsVariables as $nombrePertenece => $valoresVariables)
                                 <tr>
-                                    <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
+                                    <td class="border" width="15%" id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
                                     @foreach ($valoresVariables as $item)
-                                        <td class="border" id_actual={{ $item[0] }}>
+                                        <td class="border" width="7.5%" id_actual={{ $item[0] }}>
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $item[1] }}">
@@ -166,9 +166,9 @@
                         @foreach ($arrayAnualVariable as $id => $itemVariable)
                             @foreach ($itemVariable as $nombre => $montoVariable)
                                 <tr>
-                                    <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
+                                    <td class="border" width="15%" id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 5; $i++)
-                                        <td class="border" id_actual="0">
+                                        <td class="border" width="7.5%" id_actual="0">
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $montoVariable }}">
@@ -221,9 +221,9 @@
                         @foreach ($ingresosCincoAnios as $idPertenece => $itemsIngresos)
                             @foreach ($itemsIngresos as $nombrePertenece => $valoresIngresos)
                                 <tr>
-                                    <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
+                                    <td class="border" width="15%" id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
                                     @foreach ($valoresIngresos as $item)
-                                        <td class="border" id_actual={{ $item[0] }}>
+                                        <td class="border" width="7.5%" id_actual={{ $item[0] }}>
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $item[1] }}">
@@ -237,9 +237,9 @@
                         @foreach ($arrayAnualIngresos as $id => $itemIngreso)
                             @foreach ($itemIngreso as $nombre => $montoIngreso)
                                 <tr>
-                                    <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
+                                    <td class="border" width="15%" id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 5; $i++)
-                                        <td class="border" id_actual="0">
+                                        <td class="border" width="7.5%" id_actual="0">
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $montoIngreso }}">
