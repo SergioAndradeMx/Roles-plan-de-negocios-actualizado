@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ingresos_cinco_anios_conservador', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('Id_estudio_financiero')->constrained('estudio_financieros')->onDelete('cascade')->index('fk_ingresos_estudio_financiero');
-            $table->foreignId('Id_ingresos')->constrained('ingresos')->onDelete('cascade')->index('fk_ingreso_pertenece');
+            $table->foreignId('Id_estudio_financiero')->constrained('estudio_financieros','id','fk_ingresos_estudio_financiero')->onDelete('cascade');
+            $table->foreignId('Id_ingresos')->constrained('ingresos','id','fk_ingreso_pertenece')->onDelete('cascade');
             $table->integer('anio');
             $table->float('monto_conservador');
             $table->timestamps();

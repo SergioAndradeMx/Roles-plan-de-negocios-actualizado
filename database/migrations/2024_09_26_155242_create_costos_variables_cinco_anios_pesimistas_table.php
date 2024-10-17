@@ -14,13 +14,11 @@ return new class extends Migration
         Schema::create('costos_variables_cinco_anios_pesimistas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('Id_estudio_financiero')
-                ->constrained('estudio_financieros', 'id')
-                ->onDelete('cascade')
-                ->index('fk_estudio_financiero_cinco');
+                ->constrained('estudio_financieros', 'id','fk_estudio_financiero_cinco')
+                ->onDelete('cascade');
             $table->foreignId('Id_costo_variable')
-                ->constrained('costos_variables', 'id')
-                ->onDelete('cascade')
-                ->index('fk_costo_variable_cinco');
+                ->constrained('costos_variables', 'id','fk_costo_variable_cinco')
+                ->onDelete('cascade');
             $table->integer('anio');
             $table->float('monto_pesimista');
             $table->timestamps();

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ingresos_anuales_conservador', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('Id_estudio_financiero')->constrained('estudio_financieros')->onDelete('cascade')->index('idx_ingresos_estudio_financiero');
+            $table->foreignId('Id_estudio_financiero')->constrained('estudio_financieros','id','idx_ingresos_estudio_financiero')->onDelete('cascade');
             $table->foreignId('Id_ingresos')->constrained('ingresos')->onDelete('cascade');
             $table->integer('mes');
             $table->float('monto_conservador');
@@ -26,6 +26,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ingresos_anuales_conservadors');
+        Schema::table('ingresos_anuales_conservador', function (Blueprint $table) {
+            // Eliminar las llaves foráneas
+            $table->dropForeign('idx_ingresos_estudio_financiero');
+            $table->dropForeign('ingresos_anuales_conservador_id_ingresos_foreign');
+        });
+        Schema::dropIfExists('ingresos_anuales_conservador');
     }
 };

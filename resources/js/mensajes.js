@@ -152,7 +152,7 @@ newMainContentDiv.appendChild(newIconTextDiv);
 
 // Crear el div para el ícono
 const newIconDiv = document.createElement('div');
-newIconDiv.classList.add('mx-auto', 'flex', 'h-12', 'w-12', 'flex-shrink-0', 'items-center', 'justify-center', 'rounded-full', 'bg-green-100', 'sm:mx-0', 'sm:h-10', 'sm:w-10');
+newIconDiv.classList.add('mx-auto', 'flex', 'h-12', 'w-12', 'flex-shrink-0', 'items-center', 'justify-center', 'rounded-full', 'bg-gray-100', 'sm:mx-0', 'sm:h-10', 'sm:w-10');
 newIconTextDiv.appendChild(newIconDiv);
 
 // Crear el SVG para el ícono
