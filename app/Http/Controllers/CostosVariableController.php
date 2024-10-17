@@ -83,34 +83,31 @@ class CostosVariableController extends Controller
         } else {
             // * Si esta vacio el json entonces entra aqui.
             if ($jsonData[0][0] === null && $jsonData[0][1] === null && $jsonData[0][2] === null && $jsonData[0][4] === null && $jsonData[0][5] === null) {
-                // * Si hay costos variables en del mismo estudio financiero entonces los borra.
-                if (count($estudioFinanciero->costosVariables) > 0) {
-                    // * Mando a eliminar los que existen.
-                    $estudioFinanciero->costosVariables()->delete();
-                    // * Actualizo la columna correspondiente.
-                    EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
-                        ->update(['total_costo_variable' => 0]);
-                }
+                // * Mando a eliminar los que existen.
+                $estudioFinanciero->costosVariables()->delete();
+                // * Actualizo la columna correspondiente.
+                EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
+                    ->update(['total_costo_variable' => 0]);
                 // * De lo contrario si no esta vacio entonces hara lo siguiente.
             } else {
-                    // * Mando a eliminar los que existen.
-                    $estudioFinanciero->costosVariables()->delete();
-                    // * Mando a guardar los datos.
-                    foreach ($jsonData as $fila) {
-                        CostosVariable::create([
-                            'estudio_financiero_id' => $estudioFinanciero->id,
-                            'nombre' => $fila[0],
-                            'valor_unitario' => $fila[1],
-                            'monto_unitario' => $fila[2],
-                            'escenario_conservador' => $fila[3],
-                            'escenario_optimista' => $fila[4],
-                            'escenario_pesimista' => $fila[5]
-                        ]);
-                        $totalCostoVariable += $fila[3];
-                    }
-                    // * Actualizo en campo correspondiente.
-                    EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
-                        ->update(['total_costo_variable' => $totalCostoVariable]);
+                // * Mando a eliminar los que existen.
+                $estudioFinanciero->costosVariables()->delete();
+                // * Mando a guardar los datos.
+                foreach ($jsonData as $fila) {
+                    CostosVariable::create([
+                        'estudio_financiero_id' => $estudioFinanciero->id,
+                        'nombre' => $fila[0],
+                        'valor_unitario' => $fila[1],
+                        'monto_unitario' => $fila[2],
+                        'escenario_conservador' => $fila[3],
+                        'escenario_optimista' => $fila[4],
+                        'escenario_pesimista' => $fila[5]
+                    ]);
+                    $totalCostoVariable += $fila[3];
+                }
+                // * Actualizo en campo correspondiente.
+                EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
+                    ->update(['total_costo_variable' => $totalCostoVariable]);
             }
         }
     }

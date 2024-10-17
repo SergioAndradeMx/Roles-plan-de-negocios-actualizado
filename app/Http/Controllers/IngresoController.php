@@ -17,23 +17,12 @@ class IngresoController extends Controller
     {
         //
         $estudio = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
-
         if ($estudio) {
-            // Se encontró el estudio financiero, entonces se puede acceder a sus propiedades
-            //if ($estudio->ingresos != null) {
-                return view('plan_financiero.ingresos', [
-                    'plan_de_negocio' => $plan_de_negocio,
-                    'ingresos' => $estudio->ingresos,
-                    'datosAnuales' => (count($estudio->ingresos_anuales) > 0 || count($estudio->ingresos_pesimistas) > 0 || count($estudio->ingresos_optimista) > 0)
-                ]);
-            /* } else {
-                // Si no hay costos variables, puedes pasar un valor por defecto o manejarlo según tu lógica
-                return view('plan_financiero.ingresos', [
-                    'plan_de_negocio' => $plan_de_negocio,
-                    'ingresos' => [],
-                    'datosAnuales' => count($estudio->costos_fijos_anuales) > 0
-                ]);
-            } */
+            return view('plan_financiero.ingresos', [
+                'plan_de_negocio' => $plan_de_negocio,
+                'ingresos' => $estudio->ingresos,
+                'datosAnuales' => (count($estudio->ingresos_anuales) > 0 || count($estudio->ingresos_pesimistas) > 0 || count($estudio->ingresos_optimista) > 0)
+            ]);
         } else {
             // No se encontró el estudio financiero, puedes manejar esta situación según tu lógica
             return view('plan_financiero.ingresos', [
@@ -58,6 +47,8 @@ class IngresoController extends Controller
     public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
         $jsonData = $request->json()->all();
+        // Variable que calculara los ingresos totales.
+        $ingresos = 0;
         // * Hay que buscar si existe en la tabla estudio financiero si no pues se crea.
         $estudioFinanciero = EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)->first();
         // * Si no existe se crea en la tabla estudio financiero.
@@ -69,12 +60,35 @@ class IngresoController extends Controller
                 'total_costo_variable' => 0.0,
                 'total_ingresos' => 0.0,
             ]);
-            if ($jsonData[0][0] !== null && $jsonData[0][1] !== null && $jsonData[0][2] !== null && $jsonData[0][4] !== null && $jsonData[0][5] !== null) {
-                $ingresos = 0;
-                // * Se almacena en la base de datos.
+            // * Se almacena en la base de datos.
+            foreach ($jsonData as $fila) {
+                Ingreso::create([
+                    'estudio_financiero_id' => $nuevoEstudio->id,
+                    'nombre' => $fila[0],
+                    'valor_unitario' => $fila[1],
+                    'monto_unitario' => $fila[2],
+                    'escenario_conservador' => $fila[3],
+                    'escenario_optimista' => $fila[4],
+                    'escenario_pesimista' => $fila[5]
+                ]);
+                $ingresos += $fila[3];
+            }
+            // * Luego modificar el total_costo_fijo.
+            EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
+                ->update(['total_ingresos' => $ingresos]);
+            // TODO: Si existe el estudio financiero entonces entrara aqui.
+        } else {
+            // * Si esta vacio el json entonces entra aqui.
+            if ($jsonData[0][0] === null && $jsonData[0][1] === null && $jsonData[0][2] === null && $jsonData[0][4] === null && $jsonData[0][5] === null) {
+                $estudioFinanciero->ingresos()->delete();
+                EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
+                    ->update(['total_ingresos' => 0]);
+                // * De lo contrario entrara aqui.
+            } else {
+                $estudioFinanciero->ingresos()->delete();
                 foreach ($jsonData as $fila) {
                     Ingreso::create([
-                        'estudio_financiero_id' => $nuevoEstudio->id,
+                        'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
                         'nombre' => $fila[0],
                         'valor_unitario' => $fila[1],
                         'monto_unitario' => $fila[2],
@@ -84,54 +98,8 @@ class IngresoController extends Controller
                     ]);
                     $ingresos += $fila[3];
                 }
-                // * Luego modificar el total_costo_fijo.
                 EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
                     ->update(['total_ingresos' => $ingresos]);
-            }
-            // TODO: Segunda condicion
-        } else {
-            if ($jsonData[0][0] === null && $jsonData[0][1] === null && $jsonData[0][2] === null && $jsonData[0][4] === null && $jsonData[0][5] === null) {
-                if (Ingreso::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->exists()) {
-                    Ingreso::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->delete();
-                    EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
-                        ->update(['total_ingresos' => 0]);
-                }
-            } else {
-                $ingresos = 0;
-                if (Ingreso::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->exists()) {
-                    Ingreso::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->delete();
-                    foreach ($jsonData as $fila) {
-                        Ingreso::create([
-                            'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
-                            'nombre' => $fila[0],
-                            'valor_unitario' => $fila[1],
-                            'monto_unitario' => $fila[2],
-                            'escenario_conservador' => $fila[3],
-                            'escenario_optimista' => $fila[4],
-                            'escenario_pesimista' => $fila[5]
-                        ]);
-                        $ingresos += $fila[3];
-                    }
-                    EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
-                        ->update(['total_ingresos' => $ingresos]);
-                } else {
-                    $jsonData = $request->json()->all();
-                    $ingresos = 0;
-                    foreach ($jsonData as $fila) {
-                        Ingreso::create([
-                            'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
-                            'nombre' => $fila[0],
-                            'valor_unitario' => $fila[1],
-                            'monto_unitario' => $fila[2],
-                            'escenario_conservador' => $fila[3],
-                            'escenario_optimista' => $fila[4],
-                            'escenario_pesimista' => $fila[5]
-                        ]);
-                        $ingresos += $fila[3];
-                    }
-                    EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
-                        ->update(['total_ingresos' => $ingresos]);
-                }
             }
         }
     }
