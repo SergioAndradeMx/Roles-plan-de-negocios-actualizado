@@ -34,6 +34,8 @@ class cincoAniosPesimista extends Controller
         $montoTotal = 0;
         // * Variables para enviar el titulo y la ruta dinámicamente
         $titulo = "Proyección cinco años Pesimista";
+        // * Variable que dice si el boton estara prendido o no.
+        $estaActivado = false;
         $url = route('plan_de_negocio.proyeccionPesimistaCincoAnios.store', $plan_de_negocio);
 
         // * Si no existen datos anuales fijos, variables o ingresos va a pedir que regrese al anual correspondiente para guardar.
@@ -52,6 +54,7 @@ class cincoAniosPesimista extends Controller
             }
             // * Si no existen los de cinco años entonces agarra los anuales
         } else {
+            $estaActivado = true;
             // * Obtengo los costos Fijos.
             $costosFijosAnuales = $estudio->costos_fijos_anuales()
                 ->orderBy('Id_costo_fijo')
@@ -87,6 +90,7 @@ class cincoAniosPesimista extends Controller
             }
             // * Si no existen los de cinco años entonces agarra los anuales
         } else {
+            $estaActivado = true;
             $costosVariablesAnuales = $estudio->variables_pesimistas()
                 ->orderBy('Id_costo_variable')
                 ->orderBy('mes')
@@ -116,6 +120,7 @@ class cincoAniosPesimista extends Controller
             }
             // * Si no existen los de cinco años entonces agarra los anuales
         } else {
+            $estaActivado = true;
             // * Obtengo los Ingresos Pesimistas
             $ingresosAnuales = $estudio->ingresos_pesimistas()
                 ->orderBy('Id_ingresos')
@@ -146,7 +151,9 @@ class cincoAniosPesimista extends Controller
             'ingresosCincoAnios' => $arrayCincoIngresos,
             'plan_de_negocio' => $plan_de_negocio,
             'ruta' => $url,
-            'titulo' => $titulo
+            'titulo' => $titulo,
+            // TODO: Envio pasa saber si el boton se vera activado.
+            'estaActivado' => $estaActivado
         ]);
     }
 

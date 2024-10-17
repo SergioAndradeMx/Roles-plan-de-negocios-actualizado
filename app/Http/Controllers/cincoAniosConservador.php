@@ -32,6 +32,8 @@ class cincoAniosConservador extends Controller
         $arrayAnualIngresos = [];
         $arrayCincoIngresos = [];
         $montoTotal = 0;
+        // * Variable que dice si el boton estara prendido o no.
+        $estaActivado = false;
         // * Variables para enviar el titulo y la ruta dinámicamente
         $titulo = "Proyección cinco años Conservador";
         $url = route('plan_de_negocio.proyeccionConservadorCincoAnios.store', $plan_de_negocio);
@@ -53,6 +55,7 @@ class cincoAniosConservador extends Controller
             }
             // * Si existe los costos fijos anuales capturara los datos.
         } else {
+            $estaActivado = true;
             // TODO: Pedir los datos ordenados.
             // * Obtengo los costos Fijos.
             $costosFijosAnuales = $estudio->costos_fijos_anuales()
@@ -86,6 +89,7 @@ class cincoAniosConservador extends Controller
             }
             // * Si no existen costos variables de cinco años agarra los anuales
         } else {
+            $estaActivado = true;
             $costosVariablesAnuales = $estudio->costos_variables_anuales()
                 ->orderBy('Id_costo_variable')
                 ->orderBy('mes')
@@ -116,6 +120,7 @@ class cincoAniosConservador extends Controller
             }
             // * Si no existen ingresos de cinco años agarra los anuales
         } else {
+            $estaActivado = true;
             // * Obtengo los Ingresos conservador
             $ingresosAnuales = $estudio->ingresos_anuales()
                 ->orderBy('Id_ingresos')
@@ -145,7 +150,9 @@ class cincoAniosConservador extends Controller
             'ingresosCincoAnios' => $arrayCincoIngresos,
             'plan_de_negocio' => $plan_de_negocio,
             'ruta' => $url,
-            'titulo' => $titulo
+            'titulo' => $titulo,
+            // TODO: Envio pasa saber si el boton se vera activado.
+            'estaActivado' => $estaActivado
         ]);
     }
 

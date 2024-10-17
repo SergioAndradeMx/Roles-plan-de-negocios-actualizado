@@ -35,6 +35,8 @@ class cincoAniosOptimista extends Controller
         // * Variables para enviar el titulo y la ruta dinámicamente
         $montoTotal = 0;
         $titulo = "Proyección cinco años Optimista";
+        // * Variable que dice si el boton estara prendido o no.
+        $estaActivado = false;
 
         $url = route('plan_de_negocio.proyeccionOptimistaCincoAnios.store', $plan_de_negocio);
 
@@ -52,6 +54,7 @@ class cincoAniosOptimista extends Controller
                 $arrayCincoFijos[$value->Id_costo_fijo][$fijo->nombre][$value->anio] = [$value->id, $value->monto_conservador];
             }
         } else {
+            $estaActivado = true;
             // * Obtengo los costos Fijos.
             $costosFijosAnuales = $estudio->costos_fijos_anuales()
                 ->orderBy('Id_costo_fijo')
@@ -86,6 +89,7 @@ class cincoAniosOptimista extends Controller
             }
             // * Si no existen los de cinco años entonces agarra los anuales
         } else {
+            $estaActivado = true;
             $costosVariablesAnuales = $estudio->variables_optimista()
                 ->orderBy('Id_costo_variable')
                 ->orderBy('mes')
@@ -116,6 +120,7 @@ class cincoAniosOptimista extends Controller
             }
             // * Si no existen los de cinco años entonces agarra los anuales
         } else {
+            $estaActivado = true;
             // * Obtengo los Ingresos Pesimistas
             $ingresosAnuales = $estudio->ingresos_optimista()
                 ->orderBy('Id_ingresos')
@@ -145,7 +150,9 @@ class cincoAniosOptimista extends Controller
             'ingresosCincoAnios' => $arrayCincoIngresos,
             'plan_de_negocio' => $plan_de_negocio,
             'ruta' => $url,
-            'titulo' => $titulo
+            'titulo' => $titulo,
+            // TODO: Envio pasa saber si el boton se vera activado.
+            'estaActivado' => $estaActivado
         ]);
     }
 
