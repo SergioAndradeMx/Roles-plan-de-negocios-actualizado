@@ -1,7 +1,7 @@
 import { toastDiv , newToastDiv , newMessageP} from './mensajes.js';
 // TODO: Se ejecutara después de que cargue el html
 document.addEventListener("DOMContentLoaded", function () {
-
+    const botonGuardar = document.getElementById('miBoton');
     // * Creación de diccionarios
     let diccionarioFijo = {};
     let diccionarioVariable = {};
@@ -169,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let regex = /^[-+]?\d*\.?\d+$/;
                 // Si cumple con un valor decimal manda hacer lo demás
                 if (regex.test(input.value)) {
+                    activarButton();
                     // Le asignamos el valor del input.
                     diccionario[id_pertenece][columnaPosición - 1][1] = parseFloat(input.value);
                     // Llamamos para que calcule la fila de resultado correspondiente.
@@ -177,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     resultadoUtilidades();
                     // De lo contrario mandar error.
                 } else {
+                    activarButton();
                     // Le asignamos el valor 0
                     input.value = 0;
                     // Le asignamos el valor 0
@@ -190,6 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 // De lo contrario pondrá un cero al input
             } else {
+                activarButton();
                 // Le asignamos el valor 0
                 input.value = 0;
                 // Le asignamos el valor 0
@@ -208,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
      * TODO: Evento del botón guardar.
      * * Manda la estructura a guardar en la base de datos.
      */
-    document.getElementById('miBoton').addEventListener('click', function () {
+    botonGuardar.addEventListener('click', function () {
         let objeto = [ diccionarioFijo, diccionarioVariable, diccionarioIngreso];
         // Obtengo la ruta dinámica
         let ruta = this.getAttribute("urlDinamica");
@@ -229,5 +232,17 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("error: ", error);
         })
     });
+
+    /**
+     *  TODO: Funcion que activa el botonm de guardar
+     */
+    function activarButton() {
+        if (botonGuardar.disabled) {
+            botonGuardar.classList.replace('bg-green-800', 'bg-green-500');
+            botonGuardar.classList.toggle
+            botonGuardar.classList.replace('text-gray-400', 'text-white');
+            botonGuardar.disabled = false;
+        }
+    }
 
 });

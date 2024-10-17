@@ -11,19 +11,6 @@
 </head>
 
 <body>
-
-
-
-
-
-    {{-- ! FALTA EN LOS FOR AGREGAR IGUAL EL width Y SU VALOR CORRES PONDIENTE --}}
-    {{-- ! PONER UN IF Y DEPENDIENDO DE LO QUE ENVIE EL CONTROLLER SE VA A MOSTRAR ACTIVADO O NO
-        ! JAVASCRIPT SE ENCARGARA DE ACTIVARLO Y SI ESTA ACTIVADO PUES YA  --}}
-
-
-
-
-
     {{-- barra de navegacion header --}}
     @include('layouts.navigation')
     {{-- Boton de regreso --}}
@@ -184,10 +171,10 @@
                         @foreach ($costosAnualesVariables as $idPertenece => $itemsVariables)
                             @foreach ($itemsVariables as $nombrePertenece => $valoresVariables)
                                 <tr>
-                                    <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}
+                                    <td class="border" width="15%" id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}
                                     </td>
                                     @foreach ($valoresVariables as $item)
-                                        <td class="border" id_actual={{ $item[0] }}>
+                                        <td class="border" width="7%" id_actual={{ $item[0] }}>
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $item[1] }}">
@@ -281,9 +268,10 @@
                         @foreach ($ingresosAnuales as $idPertenece => $itemsIngresos)
                             @foreach ($itemsIngresos as $nombrePertenece => $valoresIngresos)
                                 <tr>
-                                    <td class="border " id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}</td>
+                                    <td class="border" width="15%" id_pertenece="{{ $idPertenece }}">{{ $nombrePertenece }}
+                                    </td>
                                     @foreach ($valoresIngresos as $item)
-                                        <td class="border" id_actual={{ $item[0] }}>
+                                        <td class="border" width="7%" id_actual={{ $item[0] }}>
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $item[1] }}">
@@ -297,9 +285,9 @@
                         @foreach ($arrayMenualIngresos as $id => $itemIngreso)
                             @foreach ($itemIngreso as $nombre => $montoIngreso)
                                 <tr>
-                                    <td class="border " id_pertenece="{{ $id }}">{{ $nombre }}</td>
+                                    <td class="border" width="15%" id_pertenece="{{ $id }}">{{ $nombre }}</td>
                                     @for ($i = 0; $i < 12; $i++)
-                                        <td class="border" id_actual="0">
+                                        <td class="border" width="7%" id_actual="0">
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
                                                 value="{{ $montoIngreso }}">
@@ -313,49 +301,85 @@
                 {{-- TODO: Utilidades de ingresos --}}
                 <thead>
                     <tr id="ingresos">
-                        <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black" width="15%">
+                        <th class="border text-center text-xs border-gray-500 dark:bg-gray-400  text-black"
+                            width="15%">
                             Total ingresos: </th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black" width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-gray-400  text-black"
+                            width="7%"></th>
                     </tr>
                 </thead>
                 {{-- TODO: Utilidades totales --}}
                 <thead>
                     <tr id="utilidades">
-                        <th class="border text-center text-xs border-gray-500 dark:bg-red-300  text-black" width="15%">
+                        <th class="border text-center text-xs border-gray-500 dark:bg-red-300  text-black"
+                            width="15%">
                             Total utilidades: </th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
-                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black" width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
+                        <th class="border text-xs text-right border-gray-500 dark:bg-red-300  text-black"
+                            width="7%"></th>
                     </tr>
                 </thead>
             </table>
         </div>
         {{-- TODO: Boton para guardar --}}
         <div class="flex justify-center py-3">
-            {{-- TODO: Inserto la urlDinamica --}}
-            <button id="miBoton" urlDinamica= {{$ruta}} class="w-1/4  bg-green-500 hover:bg-green-700 text-white font-bold py-1  rounded">
-                Guardar cambios
-            </button>
+            @if ($estaActivado)
+                {{-- TODO: Inserto la urlDinamica --}}
+                <button id="miBoton" urlDinamica={{ $ruta }}
+                    class="w-1/4  bg-green-500 text-white font-bold py-1  rounded">
+                    Guardar cambios
+                </button>
+            @else
+                {{-- TODO: Inserto la urlDinamica --}}
+                <button id="miBoton" urlDinamica={{ $ruta }} disabled
+                    class="w-1/4  bg-green-800 text-gray-400 font-bold py-1  rounded">
+                    Guardar cambios
+                </button>
+            @endif
+
         </div>
     </div>
 </body>

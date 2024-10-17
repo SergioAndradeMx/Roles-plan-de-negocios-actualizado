@@ -29,6 +29,7 @@ class OptimistaAnualController extends Controller
         // * Arrays de ingresos
         $arrayAnualesIngresos = [];
         $arrayMensualesIngresos = [];
+        $estaActivado = false;
         // * Variable que me va a servir para enviar dinamicamente el titulo
         $titulo = "Proyección anual Optimista";
         // Obtengo el estudio Financiero.
@@ -48,6 +49,7 @@ class OptimistaAnualController extends Controller
             }
             // * De lo contrario agarra los mensuales
         } else {
+            $estaActivado = true;
             $fijosMensuales = $estudio->costosFijos;
             foreach ($fijosMensuales as $value) {
                 $arrayMensualesFijos[$value->id][$value->nombre] = $value->valor_unitario * $value->cantidad;
@@ -69,6 +71,7 @@ class OptimistaAnualController extends Controller
             }
             // * De lo contrario agarra los mensuales
         } else {
+            $estaActivado = true;
             $variablesMensuales = $estudio->costosVariables;
             foreach ($variablesMensuales as $value) {
                 $arrayMensualesVariables[$value->id][$value->nombre] = $value->escenario_optimista;
@@ -90,6 +93,7 @@ class OptimistaAnualController extends Controller
             }
             // * De lo contrario agarra los mensuales
         } else {
+            $estaActivado = true;
             $ingresosMensuales = $estudio->ingresos;
             foreach ($ingresosMensuales as $value) {
                 $arrayMensualesIngresos[$value->id][$value->nombre] = $value->escenario_optimista;
@@ -114,7 +118,9 @@ class OptimistaAnualController extends Controller
                 'arrayMensualVariable' => $arrayMensualesVariables,
                 // TODO: Envio de datos ingresos
                 'ingresosAnuales' => $arrayAnualesIngresos,
-                'arrayMenualIngresos' => $arrayMensualesIngresos
+                'arrayMenualIngresos' => $arrayMensualesIngresos,
+                // TODO: Envio pasa saber si el boton se vera activado.
+                'estaActivado' => $estaActivado
             ]
         );
     }
