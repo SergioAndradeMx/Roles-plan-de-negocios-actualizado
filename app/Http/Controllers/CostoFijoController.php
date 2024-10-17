@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CostoFijo;
-use App\Models\EstudioFinanciero;
-use App\Models\Plan_de_negocio;
-use Illuminate\Http\Request;
 use Exception;
+use App\Models\CostoFijo;
+use Illuminate\Http\Request;
+use App\Models\Plan_de_negocio;
+use App\Models\EstudioFinanciero;
+use Illuminate\Support\Facades\Log;
 
 class CostoFijoController extends Controller
 {
@@ -78,21 +79,20 @@ class CostoFijoController extends Controller
         } else {
             // TODO: Si el json esta vacio entonces es eliminar
             if ($jsonData[0][0] === null && $jsonData[0][1] === null && $jsonData[0][2] === null) {
-                // TODO: Si es que tiene datos costo fijo.
-                if (CostoFijo::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->exists()) {
-                    CostoFijo::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->delete();
-                    EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
-                        ->update(['total_costo_fijo' => 0]);
-                }
+                // TODO: Si es que tiene datos costo fijo se mandan a eliminar
+                $estudioFinanciero->costosFijos()->delete();
+                // * Se manda actualizar el total de costo fijo
+                EstudioFinanciero::where('plan_de_negocio_id', $plan_de_negocio->id)
+                    ->update(['total_costo_fijo' => 0]);
             } else {
                 $totalCostoFijo = 0;
                 // TODO: Si existe un costo fijo entonces lo elimina y crea los nuevos datos.
-                if (CostoFijo::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->exists()) {
-                    CostoFijo::where('estudio_financiero_id', $plan_de_negocio->estudioFinanciero->id)->delete();
+                if (count($estudioFinanciero->costosFijos) > 0) {
+                    $estudioFinanciero->costosFijos()->delete();
                     // * Se almacena en la base de datos.
                     foreach ($jsonData as $fila) {
                         CostoFijo::create([
-                            'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
+                            'estudio_financiero_id' => $estudioFinanciero->id,
                             'nombre' => $fila[0],
                             'valor_unitario' => $fila[1],
                             'monto_unitario' => $fila[2],
@@ -107,7 +107,7 @@ class CostoFijoController extends Controller
                     // * Se almacena en la base de datos.
                     foreach ($jsonData as $fila) {
                         CostoFijo::create([
-                            'estudio_financiero_id' => $plan_de_negocio->estudioFinanciero->id,
+                            'estudio_financiero_id' => $estudioFinanciero->id,
                             'nombre' => $fila[0],
                             'valor_unitario' => $fila[1],
                             'monto_unitario' => $fila[2],
