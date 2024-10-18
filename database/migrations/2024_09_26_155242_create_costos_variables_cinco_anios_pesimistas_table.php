@@ -20,7 +20,7 @@ return new class extends Migration
                 ->constrained('costos_variables', 'id','fk_costo_variable_cinco')
                 ->onDelete('cascade');
             $table->integer('anio');
-            $table->float('monto_pesimista');
+            $table->decimal('monto_pesimista',12,2);
             $table->timestamps();
         });
     }

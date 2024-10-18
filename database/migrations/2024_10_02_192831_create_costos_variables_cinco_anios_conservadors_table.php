@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('Id_estudio_financiero')->constrained('estudio_financieros','id','fk_cincoConservador')->onDelete('cascade');
             $table->foreignId('Id_costo_variable')->constrained('costos_variables','id','fk_costaVariable')->onDelete('cascade');
             $table->integer('anio');
-            $table->float('monto_conservador');
+            $table->decimal('monto_conservador',12,2);
             $table->timestamps();
         });
     }

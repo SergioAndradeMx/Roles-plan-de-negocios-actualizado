@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('Id_estudio_financiero')->constrained('estudio_financieros')->onDelete('cascade');
             $table->foreignId('Id_ingresos')->constrained('ingresos')->onDelete('cascade');
             $table->integer('anio');
-            $table->float('monto_pesimista');
+            $table->decimal('monto_pesimista',12,2);
             $table->timestamps();
         });
     }
