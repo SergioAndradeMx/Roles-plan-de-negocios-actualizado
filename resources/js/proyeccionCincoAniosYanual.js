@@ -1,4 +1,4 @@
-import { toastDiv , newToastDiv , newMessageP} from './mensajes.js';
+import { toastDiv, newToastDiv, newMessageP } from './mensajes.js';
 // TODO: Se ejecutara después de que cargue el html
 document.addEventListener("DOMContentLoaded", function () {
     const botonGuardar = document.getElementById('miBoton');
@@ -169,13 +169,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 let regex = /^[-+]?\d*\.?\d+$/;
                 // Si cumple con un valor decimal manda hacer lo demás
                 if (regex.test(input.value)) {
-                    activarButton();
-                    // Le asignamos el valor del input.
-                    diccionario[id_pertenece][columnaPosición - 1][1] = parseFloat(input.value);
-                    // Llamamos para que calcule la fila de resultado correspondiente.
-                    asignaciónResultadoFila(columnaResultado, diccionario);
-                    // Llamamos función para que calcula las utilidades.
-                    resultadoUtilidades();
+                    if (input.value != diccionario[id_pertenece][columnaPosición - 1][1]) {
+                        activarButton();
+                        // Le asignamos el valor del input.
+                        diccionario[id_pertenece][columnaPosición - 1][1] = parseFloat(input.value);
+                        // Llamamos para que calcule la fila de resultado correspondiente.
+                        asignaciónResultadoFila(columnaResultado, diccionario);
+                        // Llamamos función para que calcula las utilidades.
+                        resultadoUtilidades();
+                    }
                     // De lo contrario mandar error.
                 } else {
                     activarButton();
@@ -212,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
      * * Manda la estructura a guardar en la base de datos.
      */
     botonGuardar.addEventListener('click', function () {
-        let objeto = [ diccionarioFijo, diccionarioVariable, diccionarioIngreso];
+        let objeto = [diccionarioFijo, diccionarioVariable, diccionarioIngreso];
         // Obtengo la ruta dinámica
         let ruta = this.getAttribute("urlDinamica");
         fetch(ruta, {
