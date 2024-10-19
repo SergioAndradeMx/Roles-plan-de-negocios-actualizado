@@ -52,7 +52,7 @@ class PesimistaAnualController extends Controller
             $estaActivado = true;
             $fijosMensuales = $estudio->costosFijos;
             foreach ($fijosMensuales as $value) {
-                $arrayMensualesFijos[$value->id][$value->nombre] = $value->valor_unitario * $value->cantidad;
+                $arrayMensualesFijos[$value->id][$value->nombre] = $value->valor_unitario * $value->monto_unitario;
             }
         }
 
