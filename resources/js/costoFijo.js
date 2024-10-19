@@ -474,6 +474,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         // Le asigno el total de todas las fila.
         document.getElementById("costosFijos").textContent = "Total costos fijos: $" + totalCostoFijo.toFixed(2).toString();
+        // document.getElementById("costosFijos").textContent = "Total costos fijos: $" + totalCostoFijo.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     /**

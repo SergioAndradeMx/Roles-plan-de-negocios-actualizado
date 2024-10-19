@@ -85,7 +85,7 @@
                     <p class="pl-2">Costos Totales (CT):</p>
                 </div>
                 <div class="bg-blue-400">
-                    <p class="text-center">${{ number_format($costos_fijos + $costos_variable, 2) }}</p>
+                    <p class="text-center">${{ sprintf("%.2f",$costos_fijos + $costos_variable, 2) }}</p>
                 </div>
             </div>
 
@@ -105,13 +105,13 @@
                     <p class="pl-2">Utilidades Totales Mensuales (UTM):</p>
                 </div>
                 <div class="bg-blue-400">
-                    <p class=" text-center">${{number_format( $ingresos - ($costos_fijos + $costos_variable) , 2)}}</p>
+                    <p class=" text-center">${{sprintf("%.2f", $ingresos - ($costos_fijos + $costos_variable) , 2)}}</p>
                 </div>
                 <div>
                     <p class="pl-2">Utilidades Totales Anual (UTM12):</p>
                 </div>
                 <div class="bg-blue-400">
-                    <p class=" text-center">${{number_format( ($ingresos - ($costos_fijos + $costos_variable)) * 12 ,2)}}</p>
+                    <p class=" text-center">${{sprintf("%.2f", ($ingresos - ($costos_fijos + $costos_variable)) * 12 ,2)}}</p>
                 </div>
             </div>
         </div>
