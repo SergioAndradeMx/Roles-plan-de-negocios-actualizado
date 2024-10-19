@@ -92,7 +92,7 @@
                                 </td>
                                 <td class="border px-4 py-2"><input type="text"
                                         class="w-full border rounded-sm px-2 text-right py-1"
-                                        value="{{ $costo_fijo->valor_unitario * $costo_fijo->monto_unitario }}" disabled></td>
+                                        value="{{ number_format( $costo_fijo->valor_unitario * $costo_fijo->monto_unitario , 2) }}" disabled></td>
                                 <td> <button
                                         class=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none">Eliminar</button>
                                 </td>

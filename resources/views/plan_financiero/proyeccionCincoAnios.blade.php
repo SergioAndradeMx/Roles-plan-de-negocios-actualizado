@@ -101,7 +101,7 @@
                                         <td class="border" width="7.5%" id_actual="0">
                                             <input type="text"
                                                 class="w-full border rounded-sm text-xs px-0 text-right"
-                                                value="{{ $montoFijo }}">
+                                                value="{{number_format( $montoFijo , 2) }}">
                                         </td>
                                     @endfor
                                 </tr>
