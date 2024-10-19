@@ -51,13 +51,15 @@ document.addEventListener("DOMContentLoaded", function () {
             // * Verifica cual columna fue seleccionada
             switch (tdPadre.cellIndex) {
                 case 0:
-                    // Le quito todos los espacios.
-                    input.value = input.value.trim();
-                    activarButton();
-                    // Le asigno los valor a la posicion correspondiente en la matriz.
-                    matrizMultidimensional[fila - 1][columna] = input.value;
-                    // Valida para crear una fila.
-                    crearFila(fila, tdPadre);
+                    if (input.value != matrizMultidimensional[fila - 1][columna]) {
+                        // Le quito todos los espacios.
+                        input.value = input.value.trim();
+                        activarButton();
+                        // Le asigno los valor a la posicion correspondiente en la matriz.
+                        matrizMultidimensional[fila - 1][columna] = input.value;
+                        // Valida para crear una fila.
+                        crearFila(fila, tdPadre);
+                    }
                     // Sale del switch.
                     break;
                 // Si es la columna uno entonces hara lo siguiente
@@ -66,14 +68,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (input.value.trim()) {
                         // Valida con la expresion regular que solo se permitan numeros enteros y decimales.
                         if (regex.test(input.value)) {
-                            // Despues el mismo valor lo agrega al input
-                            input.value = input.value.trim();
-                            activarButton();
-                            // Despues lo agrego a la matriz.
-                            matrizMultidimensional[fila - 1][columna] = input.value;
-                            // Comprueba si el nodo siguiente tiene un valor entonces calcular el total de costo fijo
-                            // y revisara que si toda la fila esta completa para crear una nueva fila.
-                            columnaSiguiente(tdPadre, fila, columna, input)
+                            if (input.value != matrizMultidimensional[fila - 1][columna]) {
+                                // Despues el mismo valor lo agrega al input
+                                input.value = input.value.trim();
+                                activarButton();
+                                // Despues lo agrego a la matriz.
+                                matrizMultidimensional[fila - 1][columna] = input.value;
+                                // Comprueba si el nodo siguiente tiene un valor entonces calcular el total de costo fijo
+                                // y revisara que si toda la fila esta completa para crear una nueva fila.
+                                columnaSiguiente(tdPadre, fila, columna, input)
+                            }
                             // En caso de que no sea un numero o un dato valido entonces se hara lo siguiente
                         } else {
                             // Se cambiara el valor en el input actual.
@@ -90,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                         // * Si esta vacio el valor hara lo siguiente
                     } else {
-                        input.value = "";
+                        input.value = "0";
                         activarButton();
                         // Asigno el vacio a la matriz en la posicion correspondiente.
                         matrizMultidimensional[fila - 1][columna + 2] = "";
@@ -114,13 +118,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (input.value.trim()) {
                         // Valida con la expresion regular que solo se permitan numeros enteros y decimales.
                         if (regex.test(input.value)) {
-                            activarButton();
-                            // Despues el mismo valor lo agrega al input
-                            input.value = input.value.trim();
-                            // Despues lo agrego a la matriz.
-                            matrizMultidimensional[fila - 1][columna] = input.value;
-                            // Valida el nodo anterior
-                            columnaAnterior(tdPadre, input, columna, fila);
+                            if (input.value != matrizMultidimensional[fila - 1][columna]) {
+                                activarButton();
+                                // Despues el mismo valor lo agrega al input
+                                input.value = input.value.trim();
+                                // Despues lo agrego a la matriz.
+                                matrizMultidimensional[fila - 1][columna] = input.value;
+                                // Valida el nodo anterior
+                                columnaAnterior(tdPadre, input, columna, fila);
+                            }
                         } else {
                             // Le asigna el valor de cero al input actual
                             input.value = "0";
@@ -135,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         // * Si esta vacio entonces hara lo siguiente
                     } else {
                         // Le asigno vacio al input actual.
-                        input.value = "";
+                        input.value = "0";
                         activarButton();
                         // Asigno el vacio a la matriz en la posicion correspondiente.
                         matrizMultidimensional[fila - 1][columna + 1] = "";
@@ -150,12 +156,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     break;
                 case 4:
-                    eventoOptimistaConservadorPesimista(input, fila, columna, regex, "Total optimista: $", "optimista", tdPadre);
-                    activarButton();
+                    if (input.value != matrizMultidimensional[fila - 1][columna]) {
+                        eventoOptimistaConservadorPesimista(input, fila, columna, regex, "Total optimista: $", "optimista", tdPadre);
+                        activarButton();
+                    }
                     break;
                 case 5:
-                    eventoOptimistaConservadorPesimista(input, fila, columna, regex, "Total pesimista: $", "pesimista", tdPadre);
-                    activarButton();
+                    if (input.value != matrizMultidimensional[fila - 1][columna]) {
+                        eventoOptimistaConservadorPesimista(input, fila, columna, regex, "Total pesimista: $", "pesimista", tdPadre);
+                        activarButton();
+                    }
                     break;
             }
         });
