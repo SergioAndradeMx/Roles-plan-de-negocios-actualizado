@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('Id_estudio_financiero')->constrained('estudio_financieros','id','idx_ingresos_optimista_estudio_financiero')->onDelete('cascade');
             $table->foreignId('Id_ingresos')->constrained('ingresos')->onDelete('cascade');
             $table->integer('mes');
-            $table->float('monto_optimista');
+            $table->decimal('monto_optimista',12,2);
             $table->timestamps();
         });
     }
