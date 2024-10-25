@@ -71,7 +71,7 @@
                     <thead>
                         <tr class="bg-gray-200">
                             <th class="border w-24">Nombre</th>
-                            <th class="border w-16">Valor unitario</th>
+                            <th class="border w-16">Proporción</th>
                             <th class="border w-16">Monto unitario</th>
                             <th class="border w-16">Conservador</th>
                             <th class="border w-16">Optimista</th>

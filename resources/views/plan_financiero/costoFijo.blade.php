@@ -71,7 +71,7 @@
                     <thead>
                         <tr class="bg-gray-200">
                             <th class="border w-24">Nombre</th>
-                            <th class="border w-16">Valor unitario</th>
+                            <th class="border w-16">Unidad mensual</th>
                             <th class="border w-16">Monto unitario</th>
                             <th class="border w-16">Total</th>
                             <th class="border w-10">Acciones</th>
