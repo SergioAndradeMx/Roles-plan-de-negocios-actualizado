@@ -261,6 +261,69 @@
                     </div>
                 </a>
             </div>
+            {{-- TODO: Recursos humanos--}}
+            <div
+                    x-data="{
+                        open: false,
+                        toggle() {
+                            if (this.open) { return this.close() }
+                            this.$refs.button.focus()
+                            this.open = true
+                        },
+                        close(focusAfter) {
+                            if (! this.open) return
+                            this.open = false
+                            focusAfter && focusAfter.focus()
+                        }
+                    }"
+                    x-on:keydown.escape.prevent.stop="close($refs.button)"
+                    x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
+                    x-id="['dropdown-button']"
+                    class="relative"
+                    >
+                    <!-- Button -->
+                    <button
+                        x-ref="button"
+                        x-on:click="toggle()"
+                        :aria-expanded="open"
+                        :aria-controls="$id('dropdown-button')"
+                        type="button"
+                        class="flex w-full justify-between items-center gap-2 p-4 my-1 rounded-md
+                        hover:bg-slate-800 hover:dark:bg-gray-700"
+                        >
+                        <div class="flex items-center">
+                            <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                            <p class="text-left">Unidades Administrativas</p>
+                        </div>
+
+                        <!-- Heroicon: chevron-down -->
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </button>
+
+                    <!-- Panel -->
+                    <div
+                        x-ref="panel"
+                        x-show="open"
+                        x-transition.origin.top.left
+                        x-on:click.outside="close($refs.button)"
+                        :id="$id('dropdown-button')"
+                        style="display: none;"
+                        class="left-0 mt-2 rounded-md m-2"
+                        >
+                        <a href="{{ route($user_route.'plan_de_negocio.cultura_organizacional.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-800 hover:dark:bg-gray-700 disabled:text-gray-500">
+                            Nivel Estratégico
+                        </a>
+
+                        <a href="{{ route($user_route.'plan_de_negocio.estructura_legal.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-800 hover:dark:bg-gray-700 disabled:text-gray-500">
+                            Nivel Táctico
+                        </a>
+                        <a href="{{ route($user_route.'plan_de_negocio.estructura_legal.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-800 hover:dark:bg-gray-700 disabled:text-gray-500">
+                            Nivel Operativo
+                        </a>
+                    </div>
+                </div>
         </aside>
     </div>
 </div>
