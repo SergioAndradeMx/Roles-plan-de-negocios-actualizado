@@ -5,6 +5,7 @@ use App\Http\Controllers\FodaController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\AdviserController;
 use App\Http\Controllers\EstudioController;
 use App\Http\Controllers\IngresoController;
@@ -12,11 +13,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ConceptoController;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\cincoAniosOptimista;
 use App\Http\Controllers\cincoAniosPesimista;
 use App\Http\Controllers\CostoFijoController;
 use App\Http\Controllers\ConclusionController;
 use App\Http\Controllers\FormularioController;
 use App\Http\Controllers\PublicidadController;
+use App\Http\Controllers\cincoAniosConservador;
 use App\Http\Controllers\ConservadorController;
 use App\Http\Controllers\estadisticasController;
 use App\Http\Controllers\ModeloCanvasController;
@@ -28,12 +31,12 @@ use App\Http\Controllers\OptimistaAnualController;
 use App\Http\Controllers\PesimistaAnualController;
 use App\Http\Controllers\EstructuraLegalController;
 use App\Http\Controllers\GruposDeTrabajoController;
+use App\Http\Controllers\nivelestretegicocontorler;
 use App\Http\Controllers\CapturarResultadoController;
 use App\Http\Controllers\ImagenCorporativaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\cincoAniosConservador;
-use App\Http\Controllers\cincoAniosOptimista;
 use App\Http\Controllers\CulturaOrganizacionalController;
+use App\Http\Controllers\OrganigramaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,10 +90,25 @@ Route::middleware('auth')->group(function () {
             'plan_de_negocio.proyeccionOptimista' => OptimistaAnualController::class,
             'plan_de_negocio.proyeccionPesimistaCincoAnios' => cincoAniosPesimista::class,
             'plan_de_negocio.proyeccionConservadorCincoAnios' => cincoAniosConservador::class,
-            'plan_de_negocio.proyeccionOptimistaCincoAnios' => cincoAniosOptimista::class
+            'plan_de_negocio.proyeccionOptimistaCincoAnios' => cincoAniosOptimista::class,
+            'plan_de_negocio.prueba' => PruebaController::class,
+            'plan_de_negocio.nivelesEstrategico' => nivelestretegicocontorler::class,
+            
+           
         ]);
     });
 
+
+    //recursos humanos
+    Route::prefix('organigrama')->name('organigrama.')->group(function () {
+        Route::get('/', [OrganigramaController::class, 'index'])->name('index'); // Lista todos los organigramas
+        Route::get('/create', [OrganigramaController::class, 'create'])->name('create'); // Formulario de creación
+        Route::post('/', [OrganigramaController::class, 'store'])->name('store'); // Guardar el organigrama
+        Route::get('/{organigrama}/download', [OrganigramaController::class, 'download'])->name('download'); // Descargar PDF
+        Route::delete('/{organigrama}', [OrganigramaController::class, 'destroy'])->name('destroy'); // Eliminar el organigrama
+    });
+    
+    
     Route::group(['middleware' => 'admin'], function() {
         Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
         Route::post('register', [RegisteredUserController::class, 'store']);
