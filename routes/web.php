@@ -36,7 +36,12 @@ use App\Http\Controllers\CapturarResultadoController;
 use App\Http\Controllers\ImagenCorporativaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CulturaOrganizacionalController;
+
+
 use App\Http\Controllers\OrganigramaController;
+use App\Http\Controllers\DescripcionPuestoController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -100,14 +105,12 @@ Route::middleware('auth')->group(function () {
 
 
     //recursos humanos
-    Route::prefix('organigrama')->name('organigrama.')->group(function () {
-        Route::get('/', [OrganigramaController::class, 'index'])->name('index'); // Lista todos los organigramas
-        Route::get('/create', [OrganigramaController::class, 'create'])->name('create'); // Formulario de creación
-        Route::post('/', [OrganigramaController::class, 'store'])->name('store'); // Guardar el organigrama
-        Route::get('/{organigrama}/download', [OrganigramaController::class, 'download'])->name('download'); // Descargar PDF
-        Route::delete('/{organigrama}', [OrganigramaController::class, 'destroy'])->name('destroy'); // Eliminar el organigrama
-    });
-    
+    Route::resource('organigramas', OrganigramaController::class);
+    Route::get('organigramas/{organigrama}/download', [OrganigramaController::class, 'download'])->name('organigramas.download');
+
+    Route::resource('descripciones', DescripcionPuestoController::class);
+    Route::put('descripciones/{descripcione}', [DescripcionPuestoController::class, 'update'])->name('descripciones.update');
+
     
     Route::group(['middleware' => 'admin'], function() {
         Route::get('register', [RegisteredUserController::class, 'create'])->name('register');

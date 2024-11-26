@@ -264,17 +264,19 @@
 
             
              {{-- TODO: Unidades Administrativas  --}}
-             <div class="flex justify-between">
-          
-                <!-- Botón de Organigrama -->
-                <a href="{{ route('organigrama.index') }}" 
-                   class="flex items-center justify-between gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-slate-800 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500 flex mt-4">
-                    <div class="flex">
+             <div class="flex justify-between items-center mt-4">
+                <!-- Botón de Descripción de Puesto -->
+                <a href="{{ route('descripciones.index') }}" 
+                   class="flex items-center justify-between gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-slate-800 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500">
+                    <div class="flex items-center">
+                        <!-- Icono -->
                         <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 15v-4m0-4h.01"/>
                         </svg>
-                        <p class="text-left">Organigrama</p>
+                        <!-- Texto -->
+                        <p class="text-white">Descripción de Puesto</p>
                     </div>
+                    <!-- Flecha de navegación -->
                     <div class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 18l6-6-6-6"/>
@@ -282,6 +284,8 @@
                     </div>
                 </a>
             </div>
+            
+            
             {{-- TODO: Recursos humanos--}}
             <div
                     x-data="{

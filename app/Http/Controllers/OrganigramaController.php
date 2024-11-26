@@ -2,59 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organigrama;
 use Illuminate\Http\Request;
+use App\Models\Organigrama;
 use Illuminate\Support\Facades\Storage;
 
 class OrganigramaController extends Controller
 {
+    // Mostrar la lista de organigramas
     public function index()
     {
         $organigramas = Organigrama::all();
-        return view('organigrama.index', compact('organigramas'));
+        return view('organigramas.index', compact('organigramas'));
     }
 
-    public function create()
-    {
-        return view('organigrama.create');
-    }
-
+    // Subir un nuevo organigrama
     public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'archivo' => 'required|mimes:pdf|max:2048',
+            'archivo' => 'required|file|mimes:pdf',
         ]);
 
-        // Guardar archivo en storage
+        // Almacenar el archivo y registrar el organigrama
         $path = $request->file('archivo')->store('organigramas');
 
-        // Guardar en la base de datos
         Organigrama::create([
             'nombre' => $request->nombre,
             'archivo' => $path,
         ]);
 
-        return redirect()->route('organigrama.index')->with('success', 'Organigrama subido exitosamente.');
+        return redirect()->route('organigramas.index')->with('success', 'Organigrama subido exitosamente.');
     }
 
-    public function download($id)
+    // Mostrar el formulario para editar un organigrama
+    public function edit(Organigrama $organigrama)
     {
-        $organigrama = Organigrama::findOrFail($id);
-
-        return Storage::download($organigrama->archivo);
+        return view('organigramas.edit', compact('organigrama'));
     }
 
-    public function destroy($id)
+    // Actualizar un organigrama existente
+    public function update(Request $request, Organigrama $organigrama)
     {
-        $organigrama = Organigrama::findOrFail($id);
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'archivo' => 'nullable|file|mimes:pdf',
+        ]);
 
-        // Eliminar archivo del almacenamiento
+        // Si el usuario sube un nuevo archivo, lo reemplazamos
+        if ($request->hasFile('archivo')) {
+            // Eliminar el archivo viejo
+            Storage::delete($organigrama->archivo);
+
+            // Almacenar el nuevo archivo
+            $path = $request->file('archivo')->store('organigramas');
+            $organigrama->archivo = $path;
+        }
+
+        // Actualizar el nombre
+        $organigrama->nombre = $request->nombre;
+        $organigrama->save();
+
+        return redirect()->route('organigramas.index')->with('success', 'Organigrama actualizado exitosamente.');
+    }
+
+    // Eliminar un organigrama
+    public function destroy(Organigrama $organigrama)
+    {
+        // Eliminar el archivo del servidor
         Storage::delete($organigrama->archivo);
 
-        // Eliminar registro de la base de datos
+        // Eliminar el organigrama de la base de datos
         $organigrama->delete();
 
-        return redirect()->route('organigrama.index')->with('success', 'Organigrama eliminado exitosamente.');
+        return redirect()->route('organigramas.index')->with('success', 'Organigrama eliminado exitosamente.');
+    }
+
+    // Descargar un organigrama
+    public function download(Organigrama $organigrama)
+    {
+        // Descargar el archivo desde el almacenamiento
+        return Storage::download($organigrama->archivo);
     }
 }
