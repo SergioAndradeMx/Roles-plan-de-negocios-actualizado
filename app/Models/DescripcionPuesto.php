@@ -10,6 +10,7 @@ class DescripcionPuesto extends Model
     use HasFactory;
 
     protected $fillable = [
+        'plan_de_negocio_id',
         'nivel',
         'codigo',
         'unidad_administrativa',

@@ -24,7 +24,7 @@
         <div class="relative rounded-lg border-none card h-full bg-white 2xl:p-5 p-6 dark:bg-gray-800">
             @include('descripciones.menu')
         </div>
-
+        
         <main class=" rounded-lg border-none card h-full bg-white 2xl:p-5 dark:bg-gray-800 flex-1 p-8">
             <!-- Formulario -->
             <form action="{{ route('plan_de_negocio.descripciones.store', $plan_de_negocio) }}" method="POST">
@@ -38,8 +38,8 @@
                         <select
                             class="block border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             name="nivel" id="nivel" required>
-                            <option value="estrategico">Estratégico</option>
                             <option value="tactico">Táctico</option>
+                            <option value="estrategico">Estratégico</option>
                             <option value="operativo">Operativo</option>
                         </select>
                     </div>
@@ -169,9 +169,10 @@
                         class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Reporta a:</label>
                     <select name="reporta_a" id="reporta_a"
                         class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        {{-- @foreach ($unidadesAdministrativas as $unidad)
-                            <option value="{{ $unidad }}">{{ $unidad }}</option>
-                        @endforeach --}}
+                       
+                        @foreach ($descripcionesEstrategicos as $unidad)
+                        <option value="{{ $unidad->unidad_administrativa}}">{{ $unidad->unidad_administrativa }}</option>
+                    @endforeach
                     </select>
                 </div>
 

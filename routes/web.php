@@ -11,16 +11,20 @@ use App\Http\Controllers\EstudioController;
 use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ConceptoController;
+use App\Http\Controllers\ControladorTactico;
 use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\cincoAniosOptimista;
 use App\Http\Controllers\cincoAniosPesimista;
 use App\Http\Controllers\CostoFijoController;
 use App\Http\Controllers\ConclusionController;
+use App\Http\Controllers\ControladorOperativo;
 use App\Http\Controllers\FormularioController;
+use App\Http\Controllers\ProyeccionController;
 use App\Http\Controllers\PublicidadController;
 use App\Http\Controllers\cincoAniosConservador;
 use App\Http\Controllers\ConservadorController;
+use App\Http\Controllers\OrganigramaController;
 use App\Http\Controllers\estadisticasController;
 use App\Http\Controllers\ModeloCanvasController;
 use App\Http\Controllers\GeneralidadesController;
@@ -30,16 +34,16 @@ use App\Http\Controllers\CostosVariableController;
 use App\Http\Controllers\OptimistaAnualController;
 use App\Http\Controllers\PesimistaAnualController;
 use App\Http\Controllers\EstructuraLegalController;
+
 use App\Http\Controllers\GruposDeTrabajoController;
-use App\Http\Controllers\nivelestretegicocontorler;
+
+
 use App\Http\Controllers\CapturarResultadoController;
+use App\Http\Controllers\DescripcionPuestoController;
 use App\Http\Controllers\ImagenCorporativaController;
+
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CulturaOrganizacionalController;
-
-
-use App\Http\Controllers\OrganigramaController;
-use App\Http\Controllers\DescripcionPuestoController;
 
 
 
@@ -97,19 +101,32 @@ Route::middleware('auth')->group(function () {
             'plan_de_negocio.proyeccionConservadorCincoAnios' => cincoAniosConservador::class,
             'plan_de_negocio.proyeccionOptimistaCincoAnios' => cincoAniosOptimista::class,
             'plan_de_negocio.prueba' => PruebaController::class,
-            'plan_de_negocio.nivelesEstrategico' => nivelestretegicocontorler::class,
+            'plan_de_negocio.organigramas'=>OrganigramaController::class,
+            'plan_de_negocio.descripciones'=>DescripcionPuestoController::class,
+            'plan_de_negocio.proyecciones'=>ProyeccionController::class,
+            'plan_de_negocio.operativo'=>ControladorOperativo::class,
+            'plan_de_negocio.tactico'=>ControladorTactico::class
             
-           
         ]);
     });
 
 
     //recursos humanos
-    Route::resource('organigramas', OrganigramaController::class);
+    //Route::resource('organigramas', OrganigramaController::class);
     Route::get('organigramas/{organigrama}/download', [OrganigramaController::class, 'download'])->name('organigramas.download');
 
-    Route::resource('descripciones', DescripcionPuestoController::class);
-    Route::put('descripciones/{descripcione}', [DescripcionPuestoController::class, 'update'])->name('descripciones.update');
+    //Route::resource('descripciones', DescripcionPuestoController::class);
+    //Route::put('descripciones/{descripcione}', [DescripcionPuestoController::class, 'update'])->name('descripciones.update');
+  
+    Route::resource('proyecciones', ProyeccionController::class);
+    Route::get('/plan-de-negocio/{plan_de_negocio}/proyecciones/resumen', [App\Http\Controllers\ProyeccionController::class, 'resumen'])
+    ->name('plan_de_negocio.proyecciones.resumen');
+    Route::get('/proyeccion-anual', [App\Http\Controllers\ProyeccionController::class, 'proyeccionAnual'])->name('proyeccion.anual');
+    Route::get('/proyeccion-cinco-anos', [App\Http\Controllers\ProyeccionController::class, 'proyeccionCincoAnios'])->name('proyeccion.cinco-anos');
+    Route::put('/proyeccion/{id}', [ProyeccionController::class, 'update'])->name('proyeccion.update');
+
+
+
 
     
     Route::group(['middleware' => 'admin'], function() {

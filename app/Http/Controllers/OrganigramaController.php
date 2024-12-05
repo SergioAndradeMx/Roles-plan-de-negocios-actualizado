@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Organigrama;
+use App\Models\Plan_de_negocio;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class OrganigramaController extends Controller
 {
     // Mostrar la lista de organigramas
-    public function index()
+    public function index(Plan_de_negocio $plan_de_negocio)
     {
-        $organigramas = Organigrama::all();
-        return view('organigramas.index', compact('organigramas'));
+        $organigramas = $plan_de_negocio->organigramas;
+        return view('organigramas.index', compact('organigramas', 'plan_de_negocio'));
     }
 
     // Subir un nuevo organigrama
-    public function store(Request $request)
+    public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
@@ -27,21 +28,23 @@ class OrganigramaController extends Controller
         $path = $request->file('archivo')->store('organigramas');
 
         Organigrama::create([
+            'plan_de_negocio_id' => $plan_de_negocio->id,
             'nombre' => $request->nombre,
-            'archivo' => $path,
+            'archivo' => $path
         ]);
 
-        return redirect()->route('organigramas.index')->with('success', 'Organigrama subido exitosamente.');
+        return redirect()->route('plan_de_negocio.organigramas.index', $plan_de_negocio)
+            ->with('success', 'Organigrama subido exitosamente.');
     }
 
     // Mostrar el formulario para editar un organigrama
-    public function edit(Organigrama $organigrama)
+    public function edit(Plan_de_negocio $plan_de_negocio, Organigrama $organigrama)
     {
-        return view('organigramas.edit', compact('organigrama'));
+        return view('organigramas.edit', compact('plan_de_negocio', 'organigrama'));
     }
 
     // Actualizar un organigrama existente
-    public function update(Request $request, Organigrama $organigrama)
+    public function update(Request $request, Plan_de_negocio $plan_de_negocio, Organigrama $organigrama)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
@@ -62,11 +65,13 @@ class OrganigramaController extends Controller
         $organigrama->nombre = $request->nombre;
         $organigrama->save();
 
-        return redirect()->route('organigramas.index')->with('success', 'Organigrama actualizado exitosamente.');
+        // Redirigir con mensaje de éxito
+        return redirect()->route('plan_de_negocio.organigramas.index', $plan_de_negocio)
+            ->with('success', 'Organigrama actualizado exitosamente.');
     }
 
     // Eliminar un organigrama
-    public function destroy(Organigrama $organigrama)
+    public function destroy(Plan_de_negocio $plan_de_negocio, Organigrama $organigrama)
     {
         // Eliminar el archivo del servidor
         Storage::delete($organigrama->archivo);
@@ -74,7 +79,8 @@ class OrganigramaController extends Controller
         // Eliminar el organigrama de la base de datos
         $organigrama->delete();
 
-        return redirect()->route('organigramas.index')->with('success', 'Organigrama eliminado exitosamente.');
+        return redirect()->route('plan_de_negocio.organigramas.index', $plan_de_negocio)
+            ->with('success', 'Organigrama eliminado exitosamente.');
     }
 
     // Descargar un organigrama

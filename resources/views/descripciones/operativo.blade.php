@@ -38,9 +38,10 @@
                         <select
                             class="block border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             name="nivel" id="nivel" required>
+                            <option value="operativo">Operativo</option>
                             <option value="estrategico">Estratégico</option>
                             <option value="tactico">Táctico</option>
-                            <option value="operativo">Operativo</option>
+                          
                         </select>
                     </div>
 
@@ -169,9 +170,9 @@
                         class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Reporta a:</label>
                     <select name="reporta_a" id="reporta_a"
                         class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        {{-- @foreach ($unidadesAdministrativas as $unidad)
-                            <option value="{{ $unidad }}">{{ $unidad }}</option>
-                        @endforeach --}}
+                        @foreach ($descripcionesEstrategicos as $unidad)
+                        <option value="{{ $unidad->unidad_administrativa}}">{{ $unidad->unidad_administrativa }}</option>
+                    @endforeach
                     </select>
                 </div>
 

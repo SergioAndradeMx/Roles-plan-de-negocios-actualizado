@@ -248,8 +248,7 @@
 
             {{-- TODO: PLAN FINANCIERO --}}
             <div
-                class="flex justify-between"
-                >
+                class="flex justify-between">
                 <!-- Button -->
                 <a href="{{ route($user_route.'plan_de_negocio.costo_fijo.index', [$plan_de_negocio]) }}" class="flex items-center justify-between gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-slate-800 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500 flex mt-4">
                     <div class="flex">
@@ -261,94 +260,23 @@
                     </div>
                 </a>
             </div>
-
-            
-             {{-- TODO: Unidades Administrativas  --}}
-             <div class="flex justify-between items-center mt-4">
-                <!-- Botón de Descripción de Puesto -->
-                <a href="{{ route('descripciones.index') }}" 
-                   class="flex items-center justify-between gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-slate-800 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500">
-                    <div class="flex items-center">
-                        <!-- Icono -->
-                        <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 15v-4m0-4h.01"/>
-                        </svg>
-                        <!-- Texto -->
-                        <p class="text-white">Descripción de Puesto</p>
-                    </div>
-                    <!-- Flecha de navegación -->
-                    <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 18l6-6-6-6"/>
-                        </svg>
-                    </div>
-                </a>
-            </div>
-            
-            
-            {{-- TODO: Recursos humanos--}}
+              <!-- Button de recursos humanos -->
             <div
-                    x-data="{
-                        open: false,
-                        toggle() {
-                            if (this.open) { return this.close() }
-                            this.$refs.button.focus()
-                            this.open = true
-                        },
-                        close(focusAfter) {
-                            if (! this.open) return
-                            this.open = false
-                            focusAfter && focusAfter.focus()
-                        }
-                    }"
-                    x-on:keydown.escape.prevent.stop="close($refs.button)"
-                    x-on:focusin.window="! $refs.panel.contains($event.target) && close()"
-                    x-id="['dropdown-button']"
-                    class="relative"
-                    >
-                    <!-- Button -->
-                    <button
-                        x-ref="button"
-                        x-on:click="toggle()"
-                        :aria-expanded="open"
-                        :aria-controls="$id('dropdown-button')"
-                        type="button"
-                        class="flex w-full justify-between items-center gap-2 p-4 my-1 rounded-md
-                        hover:bg-slate-800 hover:dark:bg-gray-700"
-                        >
-                        <div class="flex items-center">
-                            <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                            <p class="text-left">Unidades Administrativas</p>
-                        </div>
-
-                        <!-- Heroicon: chevron-down -->
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                        </div>
-                    </button>
-
-                    <!-- Panel -->
-                    <div
-                        x-ref="panel"
-                        x-show="open"
-                        x-transition.origin.top.left
-                        x-on:click.outside="close($refs.button)"
-                        :id="$id('dropdown-button')"
-                        style="display: none;"
-                        class="left-0 mt-2 rounded-md m-2"
-                        >
-                        <a href="{{ route('plan_de_negocio.prueba.index', $plan_de_negocio) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-800 hover:dark:bg-gray-700 disabled:text-gray-500">
-                            Nivel Estratégico
-                        </a>
-
-                        <a href="{{ route($user_route.'plan_de_negocio.nivelesEstrategico.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-800 hover:dark:bg-gray-700 disabled:text-gray-500">
-                            Nivel Táctico
-                        </a>
-                        <a href="{{ route($user_route.'plan_de_negocio.estructura_legal.index',[$plan_de_negocio]) }}" class="flex items-center gap-2 w-full rounded-md px-4 py-2.5 text-left text-sm hover:bg-slate-800 hover:dark:bg-gray-700 disabled:text-gray-500">
-                            Nivel Operativo
-                        </a>
-                    </div>
+            class="flex justify-between">
+            <!-- Button -->
+            <a href="{{ route($user_route.'plan_de_negocio.descripciones.index', [$plan_de_negocio]) }}" class="flex items-center justify-between gap-2 w-full rounded-md px-4 py-2.5 text-left hover:bg-slate-800 hover:dark:bg-gray-600 dark:bg-gray-700 disabled:text-gray-500 flex mt-4">
+                <div class="flex">
+                    <svg class="mr-4" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#cfcfcf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 3v5h5M16 13H8M16 17H8M10 9H8"/></svg>
+                    <p class="text-left">Descripción de Puesto</p>
                 </div>
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </div>
+            </a>
+        </div>
+
+
+             
         </aside>
     </div>
 </div>

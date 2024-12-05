@@ -68,5 +68,13 @@ class Plan_de_negocio extends Model
     {
         return $this->hasOne(EstudioFinanciero::class)->select('id');
     }
+    public function organigramas()
+    {
+        return $this->hasMany(Organigrama::class);
+    }
+    public function descripcionpuesto()
+    {
+        return $this->hasMany(DescripcionPuesto::class);
+    }
 
 }

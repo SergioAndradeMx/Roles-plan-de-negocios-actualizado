@@ -10,6 +10,7 @@ class CreateOrganigramasTable extends Migration
     {
         Schema::create('organigramas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios')->onDelete('cascade');//id de plan negocios
             $table->string('nombre'); // Nombre del archivo
             $table->binary('archivo'); // Contenido binario del archivo
             $table->timestamps();

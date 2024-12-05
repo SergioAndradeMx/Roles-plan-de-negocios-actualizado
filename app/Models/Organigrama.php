@@ -9,5 +9,5 @@ class Organigrama extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'archivo'];
+    protected $fillable = ['plan_de_negocio_id','nombre', 'archivo'];
 }
