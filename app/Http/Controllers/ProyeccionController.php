@@ -82,22 +82,22 @@ class ProyeccionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-public function update(Request $request, $id)
-{
-    $proyeccion = Proyeccion::findOrFail($id);
+    public function update(Request $request, string $id)
+    {
+        $proyeccion = Proyeccion::findOrFail($id);
 
-    $data = $request->validate([
-        'puesto' => 'required|string|max:255',
-        'numero_trabajadores' => 'required|integer|min:0',
-        'salario' => 'required|numeric|min:0',
-    ]);
+        $data = $request->validate([
+            'puesto' => 'required|string',
+            'numero_trabajadores' => 'required|integer',
+            'salario' => 'required|numeric',
+        ]);
 
-    $data['total'] = $data['numero_trabajadores'] * $data['salario'];
+        $data['total'] = $data['numero_trabajadores'] * $data['salario'];
 
-    $proyeccion->update($data);
+        $proyeccion->update($data);
 
-    return redirect()->route('proyeccion.anual')->with('success', 'Proyección actualizada correctamente.');
-}
+        return redirect()->route('proyecciones.index')->with('success', 'Datos actualizados correctamente.');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -169,4 +169,7 @@ public function proyeccionCincoAnios()
     // Retorna la vista con los datos procesados
     return view('proyecciones.cinco_anios', compact('proyeccionCincoAnios'));
 }
+
+
+
 }
