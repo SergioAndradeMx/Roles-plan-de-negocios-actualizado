@@ -7,72 +7,68 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Proyección de Sueldos</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
     @include('layouts.navigation')
-
-    <div class="text-center text-black my-2 sm:my-4">
-        <h1 class="text-4xl antialiased font-sans">Plan</h1>
+    <div class="text-center text-black dark:text-white my-4 sm:my-6">
+        <h1 class="text-4xl font-semibold antialiased">Proyección de Sueldos</h1> 
     </div>
-    <div class="flex justify-center items-stretch 2xl:px-10 gap-20 xl:mx-2">
-        <!-- Contenedor principal -->
-        <div class="container mx-auto max-w-4xl p-6">
-            <h1 class="text-3xl font-bold mb-4">Proyección de Sueldos</h1>
-    
-            <!-- Formulario de Proyecciones -->
-            <form action="{{ route('proyecciones.store') }}" method="POST">
-                @csrf
-                <table class="table-auto w-full bg-white shadow rounded mb-4 overflow-x-auto">
+
+    <div class="container mx-auto my-4 px-4 sm:px-6 lg:px-8">
+        <!-- Formulario de Proyecciones -->
+        <form action="{{ route('proyecciones.store') }}" method="POST">
+            @csrf
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white dark:bg-gray-800 shadow rounded mb-4 border border-black dark:border-gray-600">
                     <thead>
-                        <tr class="bg-gray-200">
-                            <th class="px-4 py-2">Puesto</th>
-                            <th class="px-4 py-2">Número de Trabajadores</th>
-                            <th class="px-4 py-2">Salario</th>
-                            <th class="px-4 py-2">Total</th>
-                            <th class="px-4 py-2">Eliminar</th>
+                        <tr class="bg-gray-200 dark:bg-gray-700 border border-black dark:border-gray-600">
+                            <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Puesto</th>
+                            <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Número de Trabajadores</th>
+                            <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Salario</th>
+                            <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Total</th>
+                            <th class="px-4 py-2 text-center border border-black dark:border-gray-600">Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="proyecciones-body">
                         @foreach ($proyecciones as $proyeccion)
-                        <tr data-id="{{ $proyeccion->id }}">
-                            <td class="border px-4 py-2">
-                                <input type="text" name="puestos[]" value="{{ $proyeccion->puesto }}" class="border w-full px-2" required>
+                        <tr data-id="{{ $proyeccion->id }}" class="border border-black dark:border-gray-600">
+                            <td class="border px-4 py-2 border-black dark:border-gray-600">
+                                <input type="text" name="puestos[]" value="{{ $proyeccion->puesto }}" class="border w-full px-2 dark:bg-gray-700 dark:text-white" required>
                             </td>
-                            <td class="border px-4 py-2">
-                                <input type="number" name="numero_trabajadores[]" value="{{ $proyeccion->numero_trabajadores }}" class="border w-full px-2" min="0" oninput="validateInput(this); calculateTotal(this)" required>
+                            <td class="border px-4 py-2 border-black dark:border-gray-600">
+                                <input type="number" name="numero_trabajadores[]" value="{{ $proyeccion->numero_trabajadores }}" class="border w-full px-2 dark:bg-gray-700 dark:text-white" min="0" oninput="validateInput(this); calculateTotal(this)" required>
                             </td>
-                            <td class="border px-4 py-2">
-                                <input type="number" name="salario[]" value="{{ $proyeccion->salario }}" class="border w-full px-2" min="0" step="0.01" oninput="validateInput(this); calculateTotal(this)" required>
+                            <td class="border px-4 py-2 border-black dark:border-gray-600">
+                                <input type="number" name="salario[]" value="{{ $proyeccion->salario }}" class="border w-full px-2 dark:bg-gray-700 dark:text-white" min="0" step="0.01" oninput="validateInput(this); calculateTotal(this)" required>
                             </td>
-                            <td class="border px-4 py-2 total-cell">
+                            <td class="border px-4 py-2 total-cell border-black dark:border-gray-600">
                                 <span>${{ number_format($proyeccion->total, 2) }}</span>
                             </td>
-                            <td class="border px-4 py-2 text-center">
-                                <button type="button" class="bg-red-500 text-white px-4 py-2 rounded" onclick="deleteRow(this, {{ $proyeccion->id }})">Eliminar</button>
+                            <td class="border px-4 py-2 text-center border-black dark:border-gray-600">
+                                <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="deleteRow(this, {{ $proyeccion->id }})">Eliminar</button>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+            </div>
 
-                <!-- Botón para agregar nueva fila -->
-                <div class="mb-4 text-center">
-                    <button type="button" id="add-row" class="bg-green-500 text-white px-6 py-2 rounded">Agregar Fila</button>
-                </div>
+            <!-- Botón para agregar nueva fila -->
+            <div class="mb-4 text-center">
+                <button type="button" id="add-row" class="bg-green-500 text-white px-4 py-2 rounded">Agregar Fila</button>
+            </div>
 
-                <!-- Total de Sueldos -->
-                <div class="text-right mb-4">
-                    <strong>Total de Sueldos: <span id="grand-total">${{ number_format($totalSueldos, 2) }}</span></strong>
-                </div>
-    
-                <!-- Botón Guardar -->
-                <div class="text-center">
-                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded">Guardar</button>
-                </div>
-            </form>
-        </div>
+            <!-- Total de Sueldos -->
+            <div class="text-right mb-4">
+                <strong>Total de Sueldos: <span id="grand-total">${{ number_format($totalSueldos, 2) }}</span></strong>
+            </div>
+
+            <!-- Botón Guardar -->
+            <div class="text-center">
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded">Guardar</button>
+            </div>
+        </form>
     </div>
 
     <!-- Script para agregar nuevas filas, validar y calcular totales -->
@@ -109,20 +105,20 @@
             const tbody = document.getElementById('proyecciones-body');
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
-                <td class="border px-4 py-2">
-                    <input type="text" name="puestos[]" class="border w-full px-2" required>
+                <td class="border px-4 py-2 dark:border-gray-600">
+                    <input type="text" name="puestos[]" class="border w-full px-2 dark:bg-gray-700 dark:text-white" required>
                 </td>
-                <td class="border px-4 py-2">
-                    <input type="number" name="numero_trabajadores[]" class="border w-full px-2" min="0" oninput="validateInput(this); calculateTotal(this)" required>
+                <td class="border px-4 py-2 dark:border-gray-600">
+                    <input type="number" name="numero_trabajadores[]" class="border w-full px-2 dark:bg-gray-700 dark:text-white" min="0" oninput="validateInput(this); calculateTotal(this)" required>
                 </td>
-                <td class="border px-4 py-2">
-                    <input type="number" name="salario[]" class="border w-full px-2" min="0" step="0.01" oninput="validateInput(this); calculateTotal(this)" required>
+                <td class="border px-4 py-2 dark:border-gray-600">
+                    <input type="number" name="salario[]" class="border w-full px-2 dark:bg-gray-700 dark:text-white" min="0" step="0.01" oninput="validateInput(this); calculateTotal(this)" required>
                 </td>
-                <td class="border px-4 py-2 total-cell">
+                <td class="border px-4 py-2 total-cell dark:border-gray-600">
                     <span>$0.00</span>
                 </td>
-                <td class="border px-4 py-2 text-center">
-                    <button type="button" class="bg-red-500 text-white px-4 py-2 rounded" onclick="removeRow(this)">Eliminar</button>
+                <td class="border px-4 py-2 text-center dark:border-gray-600">
+                    <button type="button" class="bg-red-500 text-white px-3 py-1 rounded" onclick="removeRow(this)">Eliminar</button>
                 </td>
             `;
             tbody.appendChild(newRow);
@@ -136,33 +132,23 @@
         }
 
         function deleteRow(button, id) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Esta acción no se puede deshacer.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch(`/proyecciones/${id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                        }
-                    }).then(response => {
-                        if (response.ok) {
-                            const row = button.closest('tr');
-                            row.remove();
-                            calculateGrandTotal();
-                            Swal.fire('Eliminado', 'La proyección ha sido eliminada.', 'success');
-                        } else {
-                            Swal.fire('Error', 'No se pudo eliminar la fila.', 'error');
-                        }
-                    });
-                }
-            });
+            if (confirm('¿Estás seguro de eliminar esta proyección?')) {
+                fetch(`/proyecciones/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        const row = button.closest('tr');
+                        row.remove();
+                        calculateGrandTotal();
+                        alert('La proyección ha sido eliminada.');
+                    } else {
+                        alert('Error: No se pudo eliminar la proyección.');
+                    }
+                });
+            }
         }
     </script>
 </body>

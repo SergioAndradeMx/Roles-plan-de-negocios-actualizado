@@ -9,9 +9,19 @@ class Proyeccion extends Model
 {
     use HasFactory;
 
-    // Especifica el nombre de la tabla si es diferente al plural del nombre del modelo
+    // Especifica 
     protected $table = 'proyecciones';
 
-    // Asegúrate de que las columnas que se pueden llenar estén en $fillable
-    protected $fillable = ['puesto', 'numero_trabajadores', 'salario', 'total'];
+   
+    protected $fillable = [
+        'puesto',
+        'numero_trabajadores',
+        'salario',
+        'total',
+        'año_1',     
+        'año_2',    
+        'año_3',      
+        'año_4',      
+        'año_5',     
+    ];
 }

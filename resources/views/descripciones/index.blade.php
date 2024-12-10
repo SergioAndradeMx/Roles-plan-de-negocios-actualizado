@@ -1,86 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descripción de Puesto</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+
+<body class="bg-gray-100 dark:bg-gray-900">
     <!-- Barra de navegación -->
     @include('layouts.navigation')
     
     <!-- Encabezado -->
-    <div class="text-center text-black my-2 sm:my-4">
-        <h1 class="text-4xl antialiased font-sans">Descripción de Puesto</h1>
-        <h2>Gestión de las unidades administrativas</h2>
+    <div class="text-center text-black dark:text-white my-4 sm:my-6">
+        <h1 class="text-4xl font-semibold antialiased">Descripción de Puesto</h1>
+        <h2 class="text-lg text-black dark:text-white">Gestión de las unidades administrativas</h2>
     </div>
     
     <!-- Contenedor principal -->
-    <div class="flex justify-center items-stretch 2xl:px-10  gap-20 xl:mx-2">
+    <div class="flex flex-col lg:flex-row justify-center items-start gap-6 xl:px-10 p-4">
         <!-- Barra lateral -->
-        <div class="relative rounded-lg border-none card  h-full bg-white 2xl:p-5 p-6  dark:bg-gray-800">
-        @include("descripciones.menu")
-    </div>
+        <div class="w-full lg:w-1/4 bg-white rounded-lg shadow-md dark:bg-gray-800 p-4">
+            @include("descripciones.menu")
+        </div>
 
         <!-- Contenido principal -->
-        <main class="relative rounded-lg border-none card  h-full bg-white 2xl:p-5 p-6  dark:bg-gray-800">
-            <div class="bg-gray-800 shadow-md rounded-md " >
-                <div class="bg-gray-800 text-white px-4 py-3 flex justify-between items-center">
-                    <h4 class="text-lg font-semibold">Lista de Descripciones de Puesto</h4>
-                    <a href="{{ route('plan_de_negocio.descripciones.create', $plan_de_negocio) }}" 
-                    
-                       class="bg-green-900 text-white px-3 py-1 rounded-md text-sm hover:bg-green-600">
-                       Crear Descripción de Puesto
-                    </a>
-                </div>
-                
-                <div class="p-4">
-                    <table class="min-w-full table-auto border-collapse border border-gray-200">
-                        <thead class="bg-blue-200 text-left">
-                            <tr>
-                                <th class="border border-gray-300 px-4 py-2">Nivel Organigrama</th>
-                                <th class="border border-gray-300 px-4 py-2">Código</th>
-                                <th class="border border-gray-300 px-4 py-2">Unidad Administrativa</th>
-                                <th class="border border-gray-300 px-4 py-2">Nombre de Puesto</th>
-                                <th class="border border-gray-300 px-4 py-2">Editar</th>
-                                <th class="border border-gray-300 px-4 py-2">Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($descripciones as $descripcion)
-                            <tr class="odd:bg-white even:bg-gray-50">
-                                <td class="border border-gray-300 px-4 py-2">{{ $descripcion->nivel }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $descripcion->codigo }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $descripcion->unidad_administrativa }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $descripcion->nombre_puesto }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a href="{{ route('plan_de_negocio.descripciones.edit', [$plan_de_negocio,$descripcion->id]) }}" 
-                                       class="bg-orange-500 text-white px-3 py-1 rounded-md text-sm hover:bg-orange-600">
-                                       Editar
-                                    </a> 
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                  <form action="{{ route('plan_de_negocio.descripciones.destroy', [$plan_de_negocio,$descripcion->id]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" 
-                                                class="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600">
-                                                Eliminar
-                                        </button>
-                                    </form> 
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="6" class="text-center text-gray-500 py-4">No hay descripciones disponibles.</td>
-                            </tr>
-                            @endforelse 
-                        </tbody>
-                    </table>
-                </div>
+        <main class="w-full lg:w-3/4 bg-white rounded-lg shadow-md dark:bg-gray-800 p-4">
+            <div class="bg-gray-800 text-white p-4 rounded-md shadow-md mb-4 flex justify-between items-center">
+                <h4 class="text-lg font-semibold">Lista de Descripciones de Puesto</h4>
+                <a href="{{ route('plan_de_negocio.descripciones.create', $plan_de_negocio) }}" 
+                   class="bg-green-900 text-white px-3 py-2 rounded-md text-sm hover:bg-green-600 transition">
+                   Crear Descripción de Puesto
+                </a>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full border-collapse border border-gray-200">
+                    <thead class="bg-blue-200 dark:bg-blue-800 text-left">
+                        <tr>
+                            <th class="px-4 py-2 border border-gray-300">Nivel Organigrama</th>
+                            <th class="px-4 py-2 border border-gray-300">Código</th>
+                            <th class="px-4 py-2 border border-gray-300">Unidad Administrativa</th>
+                            <th class="px-4 py-2 border border-gray-300">Nombre de Puesto</th>
+                            <th class="px-4 py-2 border border-gray-300">Editar</th>
+                            <th class="px-4 py-2 border border-gray-300">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($descripciones as $descripcion)
+                        <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-700">
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ $descripcion->nivel }}</td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ $descripcion->codigo }}</td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ $descripcion->unidad_administrativa }}</td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ $descripcion->nombre_puesto }}</td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">
+                                <a href="{{ route('plan_de_negocio.descripciones.edit', [$plan_de_negocio, $descripcion->id]) }}" 
+                                   class="bg-orange-500 text-white px-3 py-1 rounded-md text-sm hover:bg-orange-600 transition">
+                                   Editar
+                                </a>
+                            </td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">
+                                <form action="{{ route('plan_de_negocio.descripciones.destroy', [$plan_de_negocio, $descripcion->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            class="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition">
+                                            Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-center text-gray-500 py-4">No hay descripciones disponibles.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </main>
     </div>
 </body>
+
 </html>

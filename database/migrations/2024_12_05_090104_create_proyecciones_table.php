@@ -17,10 +17,17 @@ return new class extends Migration
             $table->integer('numero_trabajadores');
             $table->decimal('salario', 10, 2);
             $table->decimal('total', 10, 2);
+            
+            // Nuevas columnas para los 5 años
+            $table->decimal('año_1', 10, 2)->nullable();
+            $table->decimal('año_2', 10, 2)->nullable();
+            $table->decimal('año_3', 10, 2)->nullable();
+            $table->decimal('año_4', 10, 2)->nullable();
+            $table->decimal('año_5', 10, 2)->nullable();
+            
             $table->timestamps();
         });
     }
-    
 
     /**
      * Reverse the migrations.

@@ -45,6 +45,8 @@ use App\Http\Controllers\ImagenCorporativaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CulturaOrganizacionalController;
 
+use App\Http\Controllers\ProyeccionCincoAniosController;
+
 
 
 /*
@@ -125,6 +127,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/proyeccion-cinco-anos', [App\Http\Controllers\ProyeccionController::class, 'proyeccionCincoAnios'])->name('proyeccion.cinco-anos');
     Route::put('/proyeccion/{id}', [ProyeccionController::class, 'update'])->name('proyeccion.update');
 
+Route::get('/proyecciones/cinco-anios', [ProyeccionController::class, 'index'])->name('proyecciones.cinco_anios');
+
+Route::post('/proyecciones/actualizar', [ProyeccionController::class, 'actualizar']);
 
 
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use App\Models\nivelEstrategico;
+use App\Models\nivel_estrategico;
 
 class nivelestretegicocontorler extends Controller
 {
@@ -13,7 +13,7 @@ class nivelestretegicocontorler extends Controller
      */
     public function index()
     {
-        $nivelEs = nivelEstrategico::all();
+        $nivelEs = nivel_estrategico::all();
         return view('nivelestrategicoviews.niveltrategicoviews', ['nivelEs' => $nivelEs]);
     }
 
