@@ -16,22 +16,57 @@ class DescripcionPuestoController extends Controller
      */
     public function index(Plan_de_negocio $plan_de_negocio)
     {
-        $arrayeedit=[];
+        $arraydatos = [];
         // Obtener las descripciones asociadas al plan de negocio ordenadas por nivel
         $descripciones = $plan_de_negocio->descripcionpuesto()
             ->orderByRaw("FIELD(nivel, 'estrategico', 'tactico', 'operativo')")
             ->get();
-        foreach ($descripciones as $value) {
-        $arrayenivel=[];
-            if ($value->nivel=='estrategico') {
-                $arrayenivel = [$value->id,$value->nivel,$value->codigo,$value->unidad_administrativa,
-                $value->nombre_puesto];
-                array_push($arrayeedit, $arrayenivel);
-           }
-        }   
-        // dd($arrayeedit);     
+        // foreach ($descripciones as $value) {
+        //     $arrayenivel = [];
+        //     if ($value->nivel == 'estrategico') {
+        //         $arrayenivel = [
+        //             $value->id,
+        //             $value->nivel,
+        //             $value->codigo,
+        //             $value->unidad_administrativa,
+        //             $value->nombre_puesto,
+        //             route('plan_de_negocio.descripciones.edit', [
+        //                 'plan_de_negocio' => $plan_de_negocio,
+        //                 'descripcione' => $value->id
+        //             ])
+        //         ];
+        //         array_push($arraydatos, $arrayenivel);
+        //     } else if ($value->nivel == 'tactico') {
+        //         $arrayenivel = [
+        //             $value->id,
+        //             $value->nivel,
+        //             $value->codigo,
+        //             $value->unidad_administrativa,
+        //             $value->nombre_puesto,
+        //             route('plan_de_negocio.tactico.edit', [
+        //                 'plan_de_negocio' => $plan_de_negocio,
+        //                 'tactico' => $value->id
+        //             ])
+        //         ];
+        //         array_push($arraydatos, $arrayenivel);
+        //     }
+        //     else {
+        //         $arrayenivel = [
+        //             $value->id,
+        //             $value->nivel,
+        //             $value->codigo,
+        //             $value->unidad_administrativa,
+        //             $value->nombre_puesto,
+        //             route('plan_de_negocio.operativo.edit', [
+        //                 'plan_de_negocio' => $plan_de_negocio,
+        //                 'operativo' => $value->id
+        //             ])
+        //         ];
+        //         array_push($arraydatos, $arrayenivel); 
+        //     }
+        // }
+
         return view('descripciones.index', compact('descripciones', 'plan_de_negocio'));
-    
     }
 
     /**
@@ -46,42 +81,42 @@ class DescripcionPuestoController extends Controller
      * Almacenar una nueva descripción de puesto.
      */
     public function store(Request $request, Plan_de_negocio $plan_de_negocio)
-{
-    $validatedData = $request->validate([
-        'nivel' => 'required|string',
-        'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo',
-        'unidad_administrativa' => 'required|string|max:255',
-        'nombre_puesto' => 'required|string|max:255',
-        'descripcion_generica' => 'required|string',
-        'descripcion_especifica' => 'required|string',
-        'objetivos_puesto' => 'required|string',
-        'salario_minimo' => 'required|numeric',
-        'salario_maximo' => 'required|numeric',
-        'jornada_laboral' => 'required|string',
-        'numero_plaza' => 'required|integer',
-        'reporta_a' => 'nullable|string',
-        'supervisa_a' => 'nullable|string',
-        'comunicacion_interna' => 'nullable|string',
-        'comunicacion_externa' => 'nullable|string',
-        'estado_civil' => 'nullable|string',
-        'edad' => 'nullable|integer',
-        'genero' => 'nullable|string',
-        'requisitos_generales' => 'nullable|string',
-        'habilidades_fisicas' => 'nullable|string',
-        'habilidades_mentales' => 'nullable|string',
-    ]);
-    
-    // Asociar la descripción al plan de negocio
-    if (DescripcionPuesto::where('codigo', $request->codigo)->exists()) {
-        return redirect()->back()->with('codigoDuplicado', 'El código ingresado ya está en uso. Por favor, use otro.');
-    }
-    
-    // Asociar la descripción al plan de negocio
-    $plan_de_negocio->descripcionpuesto()->create($validatedData);
+    {
+        $validatedData = $request->validate([
+            'nivel' => 'required|string',
+            'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo',
+            'unidad_administrativa' => 'required|string|max:255',
+            'nombre_puesto' => 'required|string|max:255',
+            'descripcion_generica' => 'required|string',
+            'descripcion_especifica' => 'required|string',
+            'objetivos_puesto' => 'required|string',
+            'salario_minimo' => 'required|numeric',
+            'salario_maximo' => 'required|numeric',
+            'jornada_laboral' => 'required|string',
+            'numero_plaza' => 'required|integer',
+            'reporta_a' => 'nullable|string',
+            'supervisa_a' => 'nullable|string',
+            'comunicacion_interna' => 'nullable|string',
+            'comunicacion_externa' => 'nullable|string',
+            'estado_civil' => 'nullable|string',
+            'edad' => 'nullable|integer',
+            'genero' => 'nullable|string',
+            'requisitos_generales' => 'nullable|string',
+            'habilidades_fisicas' => 'nullable|string',
+            'habilidades_mentales' => 'nullable|string',
+        ]);
 
-    return redirect()->route('plan_de_negocio.descripciones.index', $plan_de_negocio)
-        ->with('success', 'Descripción de puesto creada exitosamente.');
-}
+        // Asociar la descripción al plan de negocio
+        if (DescripcionPuesto::where('codigo', $request->codigo)->exists()) {
+            return redirect()->back()->with('codigoDuplicado', 'El código ingresado ya está en uso. Por favor, use otro.');
+        }
+
+        // Asociar la descripción al plan de negocio
+        $plan_de_negocio->descripcionpuesto()->create($validatedData);
+
+        return redirect()->route('plan_de_negocio.descripciones.index', $plan_de_negocio)
+            ->with('success', 'Descripción de puesto creada exitosamente.');
+    }
 
 
     /**
@@ -90,49 +125,64 @@ class DescripcionPuestoController extends Controller
     public function edit(Plan_de_negocio $plan_de_negocio, $id)
     {
         $descripcion = DescripcionPuesto::findOrFail($id);
-
-        return view('descripciones.edit', compact('descripcion', 'plan_de_negocio'));
+        $estrategicos = $plan_de_negocio
+        ->descripcionpuesto()
+        ->where('nivel', 'estrategico')
+        ->pluck('unidad_administrativa');
+        $tactico = $plan_de_negocio
+        ->descripcionpuesto()
+        ->where('nivel', 'tactico')
+        ->pluck('unidad_administrativa');
+        $operativo = $plan_de_negocio
+        ->descripcionpuesto()
+        ->where('nivel', 'operativo')
+        ->pluck('unidad_administrativa');
+        // Log::info($estrategicos);
+        // Log::info($tactico);
+        // Log::info($operativo);
+        // dd($descripcion->reporta_a);
+        return view('descripciones.edit', compact('descripcion', 'plan_de_negocio','estrategicos', 'tactico', 'operativo'));
     }
 
     /**
      * Actualizar una descripción de puesto existente.
      */
-    
+
     public function update(Request $request, Plan_de_negocio $plan_de_negocio, $id)
-{
-    $descripcion = DescripcionPuesto::findOrFail($id);
+    {
+        $descripcion = DescripcionPuesto::findOrFail($id);
 
-    $validatedData = $request->validate([
-        'nivel' => 'required|string',
-        'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo,' . $descripcion->id,
-        'unidad_administrativa' => 'required|string|max:255',
-        'nombre_puesto' => 'required|string|max:255',
-        'descripcion_generica' => 'required|string',
-        'descripcion_especifica' => 'required|string',
-        'objetivos_puesto' => 'required|string',
-        'salario_minimo' => 'required|numeric',
-        'salario_maximo' => 'required|numeric',
-        'jornada_laboral' => 'required|string',
-        'numero_plaza' => 'required|integer',
-        'reporta_a' => 'nullable|string',
-        'supervisa_a' => 'nullable|string',
-        'comunicacion_interna' => 'nullable|string',
-        'comunicacion_externa' => 'nullable|string',
-        'estado_civil' => 'nullable|string',
-        'edad' => 'nullable|integer',
-        'genero' => 'nullable|string',
-        'requisitos_generales' => 'nullable|string',
-        'habilidades_fisicas' => 'nullable|string',
-        'habilidades_mentales' => 'nullable|string',
-    ], [
-        'codigo.unique' => 'El código ya está en uso. Por favor, elija otro código.',
-    ]);
-    Log::info($request);
-    $descripcion->update($validatedData);
+        $validatedData = $request->validate([
+            'nivel' => 'required|string',
+            'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo,' . $descripcion->id,
+            'unidad_administrativa' => 'required|string|max:255',
+            'nombre_puesto' => 'required|string|max:255',
+            'descripcion_generica' => 'required|string',
+            'descripcion_especifica' => 'required|string',
+            'objetivos_puesto' => 'required|string',
+            'salario_minimo' => 'required|numeric',
+            'salario_maximo' => 'required|numeric',
+            'jornada_laboral' => 'required|string',
+            'numero_plaza' => 'required|integer',
+            'reporta_a' => 'nullable|string',
+            'supervisa_a' => 'nullable|string',
+            'comunicacion_interna' => 'nullable|string',
+            'comunicacion_externa' => 'nullable|string',
+            'estado_civil' => 'nullable|string',
+            'edad' => 'nullable|integer',
+            'genero' => 'nullable|string',
+            'requisitos_generales' => 'nullable|string',
+            'habilidades_fisicas' => 'nullable|string',
+            'habilidades_mentales' => 'nullable|string',
+        ], [
+            'codigo.unique' => 'El código ya está en uso. Por favor, elija otro código.',
+        ]);
+        Log::info($request);
+        $descripcion->update($validatedData);
 
-    return redirect()->route('plan_de_negocio.descripciones.index', ['plan_de_negocio' => $plan_de_negocio])
-        ->with('success', 'Descripción de puesto actualizada exitosamente.');
-}
+        return redirect()->route('plan_de_negocio.descripciones.index', ['plan_de_negocio' => $plan_de_negocio])
+            ->with('success', 'Descripción de puesto actualizada exitosamente.');
+    }
 
     /**
      * Eliminar una descripción de puesto.

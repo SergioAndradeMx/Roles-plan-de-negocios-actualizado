@@ -48,6 +48,30 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{-- @foreach ($arraydatos as $dato)
+                        <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-700">
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{$dato[1]}}</td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{$dato[2]}}</td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{$dato[3]}}</td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{$dato[4]}}</td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">
+                                <a href="{{$dato[5]}}" 
+                                   class="bg-orange-500 text-white px-3 py-1 rounded-md text-sm hover:bg-orange-600 transition">
+                                   Editar
+                                </a>
+                            </td>
+                            <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">
+                                <form action="{{ route('plan_de_negocio.descripciones.destroy', [$plan_de_negocio, $dato[0]]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            class="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition">
+                                            Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                           </tr>
+                        @endforeach --}}
                         @forelse($descripciones as $descripcion)
                         <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-700">
                             <td class="px-4 py-2 border border-gray-300 dark:border-gray-600">{{ $descripcion->nivel }}</td>
