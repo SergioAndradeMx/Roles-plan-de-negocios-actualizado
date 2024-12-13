@@ -126,9 +126,9 @@
                     {{-- <option value="opcion1">Opción 1</option>
                         <option value="opcion2">Opción 2</option> --}}
                     @foreach ($estrategicos as $estrategico)
-                        <option value="{{ $estrategico }}"
-                            {{ $descripcion->reporta_a == $estrategico ? 'selected' : '' }}>
-                            {{ $estrategico }}
+                        <option value="{{ $estrategico->id }}"
+                            {{ $descripcion->reporta_a == $estrategico->id ? 'selected' : '' }}>
+                            {{ $estrategico->unidad_administrativa}}
                         </option>
                     @endforeach
                 </select>
@@ -136,9 +136,9 @@
                 <select class="w-full border-gray-300 rounded-md shadow-sm" x-show="selectedSelector === 'operativo'"
                 x-bind:name="selectedSelector === 'operativo' ? 'reporta_a' : null"  id="reporta_a">
                     @foreach ($tactico as $tacticos)
-                        <option value="{{ $tacticos }}"
-                            {{ $descripcion->reporta_a == $tacticos ? 'selected' : '' }}>
-                            {{ $tacticos }}
+                        <option value="{{ $tacticos->id }}"
+                            {{ $descripcion->reporta_a == $tacticos->id ? 'selected' : '' }}>
+                            {{ $tacticos->unidad_administrativa}}
                         </option>
                     @endforeach
                 </select>

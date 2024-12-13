@@ -171,7 +171,7 @@
                     <select name="reporta_a" id="reporta_a"
                         class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         @foreach ($descripcionesEstrategicos as $unidad)
-                        <option value="{{ $unidad->unidad_administrativa}}">{{ $unidad->unidad_administrativa }}</option>
+                        <option value="{{ $unidad->id}}">{{ $unidad->unidad_administrativa }}</option>
                     @endforeach
                     </select>
                 </div>

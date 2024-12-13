@@ -16,9 +16,9 @@ class ControladorOperativo extends Controller
     {
         // Obtener solo las descripciones de nivel 'Operativo' asociadas al plan de negocio
         $descripcionesEstrategicos = $plan_de_negocio->descripcionpuesto()
-        ->where('nivel', 'tactico')
+        ->where('nivel', 'tactico')->select('id','unidad_administrativa')
         ->get();
-    
+        // dd( $descripcionesEstrategicos);
         return view('descripciones.operativo', ['descripcionesEstrategicos'=>$descripcionesEstrategicos, 'plan_de_negocio'=>$plan_de_negocio]);
     }
 

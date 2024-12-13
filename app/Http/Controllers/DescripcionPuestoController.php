@@ -21,51 +21,6 @@ class DescripcionPuestoController extends Controller
         $descripciones = $plan_de_negocio->descripcionpuesto()
             ->orderByRaw("FIELD(nivel, 'estrategico', 'tactico', 'operativo')")
             ->get();
-        // foreach ($descripciones as $value) {
-        //     $arrayenivel = [];
-        //     if ($value->nivel == 'estrategico') {
-        //         $arrayenivel = [
-        //             $value->id,
-        //             $value->nivel,
-        //             $value->codigo,
-        //             $value->unidad_administrativa,
-        //             $value->nombre_puesto,
-        //             route('plan_de_negocio.descripciones.edit', [
-        //                 'plan_de_negocio' => $plan_de_negocio,
-        //                 'descripcione' => $value->id
-        //             ])
-        //         ];
-        //         array_push($arraydatos, $arrayenivel);
-        //     } else if ($value->nivel == 'tactico') {
-        //         $arrayenivel = [
-        //             $value->id,
-        //             $value->nivel,
-        //             $value->codigo,
-        //             $value->unidad_administrativa,
-        //             $value->nombre_puesto,
-        //             route('plan_de_negocio.tactico.edit', [
-        //                 'plan_de_negocio' => $plan_de_negocio,
-        //                 'tactico' => $value->id
-        //             ])
-        //         ];
-        //         array_push($arraydatos, $arrayenivel);
-        //     }
-        //     else {
-        //         $arrayenivel = [
-        //             $value->id,
-        //             $value->nivel,
-        //             $value->codigo,
-        //             $value->unidad_administrativa,
-        //             $value->nombre_puesto,
-        //             route('plan_de_negocio.operativo.edit', [
-        //                 'plan_de_negocio' => $plan_de_negocio,
-        //                 'operativo' => $value->id
-        //             ])
-        //         ];
-        //         array_push($arraydatos, $arrayenivel); 
-        //     }
-        // }
-
         return view('descripciones.index', compact('descripciones', 'plan_de_negocio'));
     }
 
@@ -82,6 +37,7 @@ class DescripcionPuestoController extends Controller
      */
     public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
+        // Log::info($request);
         $validatedData = $request->validate([
             'nivel' => 'required|string',
             'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo',
@@ -94,8 +50,8 @@ class DescripcionPuestoController extends Controller
             'salario_maximo' => 'required|numeric',
             'jornada_laboral' => 'required|string',
             'numero_plaza' => 'required|integer',
-            'reporta_a' => 'nullable|string',
-            'supervisa_a' => 'nullable|string',
+            'reporta_a' => 'nullable|integer',
+            'supervisa_a' => 'nullable|integer',
             'comunicacion_interna' => 'nullable|string',
             'comunicacion_externa' => 'nullable|string',
             'estado_civil' => 'nullable|string',
@@ -128,19 +84,22 @@ class DescripcionPuestoController extends Controller
         $estrategicos = $plan_de_negocio
         ->descripcionpuesto()
         ->where('nivel', 'estrategico')
-        ->pluck('unidad_administrativa');
+        ->select('id', 'unidad_administrativa')
+        ->get();
         $tactico = $plan_de_negocio
         ->descripcionpuesto()
         ->where('nivel', 'tactico')
-        ->pluck('unidad_administrativa');
+        ->select('id','unidad_administrativa')
+        ->get();
         $operativo = $plan_de_negocio
         ->descripcionpuesto()
         ->where('nivel', 'operativo')
-        ->pluck('unidad_administrativa');
+        ->select('id','unidad_administrativa')
+        ->get();
         // Log::info($estrategicos);
         // Log::info($tactico);
         // Log::info($operativo);
-        // dd($descripcion->reporta_a);
+        // dd($estrategicos);
         return view('descripciones.edit', compact('descripcion', 'plan_de_negocio','estrategicos', 'tactico', 'operativo'));
     }
 

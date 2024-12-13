@@ -14,7 +14,7 @@ class ControladorTactico extends Controller
     {
         // Obtener solo las descripciones de nivel 'Táctico' asociadas al plan de negocio
         $descripcionesEstrategicos = $plan_de_negocio->descripcionpuesto()
-        ->where('nivel', 'estratégico')
+        ->where('nivel', 'estratégico')->select('id','unidad_administrativa')
         ->get();
         return view('descripciones.tactico', ['descripcionesEstrategicos'=>$descripcionesEstrategicos, 'plan_de_negocio'=>$plan_de_negocio]);
         

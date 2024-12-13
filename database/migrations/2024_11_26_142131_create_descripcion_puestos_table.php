@@ -25,8 +25,8 @@ return new class extends Migration
             $table->decimal('salario_maximo', 10, 2); // Salario máximo
             $table->string('jornada_laboral'); // Tipo de jornada laboral
             $table->integer('numero_plaza'); // Número de plaza
-            $table->string('reporta_a')->nullable(); // Quién reporta a este puesto
-            $table->string('supervisa_a')->nullable(); // Quién supervisa este puesto
+            $table->integer('reporta_a')->nullable(); // Quién reporta a este puesto
+            $table->integer('supervisa_a')->nullable(); // Quién supervisa este puesto
             $table->text('comunicacion_interna')->nullable(); // Comunicación interna
             $table->text('comunicacion_externa')->nullable(); // Comunicación externa
             $table->string('estado_civil')->nullable(); // Estado civil del candidato

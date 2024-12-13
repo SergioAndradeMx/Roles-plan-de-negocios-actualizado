@@ -34,8 +34,8 @@ class DescripcionPuesto extends Model
         'habilidades_mentales',
     ];
 
-    protected $casts = [
-        'reporta_a' => 'array',
-        'supervisa_a' => 'array',
-    ];
+    // protected $casts = [
+    //     'reporta_a' => 'array',
+    //     'supervisa_a' => 'array',
+    // ];
 }
