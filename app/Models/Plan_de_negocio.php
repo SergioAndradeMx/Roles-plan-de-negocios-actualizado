@@ -76,5 +76,9 @@ class Plan_de_negocio extends Model
     {
         return $this->hasMany(DescripcionPuesto::class);
     }
+    public function proyecciondesueldomensual()
+    {
+        return $this->hasMany(Proyeccion::class);
+    }
 
 }

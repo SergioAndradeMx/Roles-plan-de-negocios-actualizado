@@ -150,11 +150,102 @@
                         id="reporta_a" value="{{ $descripcion->reporta_a }}">
                 </div> --}}
 
-                <div>
-                    <label for="supervisa_a" class="block text-gray-50 font-semibold mb-1">Supervisa a</label>
-                    <input type="text" class="w-full border-gray-300 rounded-md shadow-sm" name="supervisa_a"
-                        id="supervisa_a" value="{{ $descripcion->supervisa_a }}">
+                <div class="mb-4 flex">
+                    <label for="dropdownOperativos"
+                        class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Supervisa a:</label>
+                    <select id="dropdownOperativos"
+                        class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="" disabled>Selecciona a los que supervisa</option>
+                        <!-- Opciones dinámicamente agregadas por JavaScript -->
+                    </select>
                 </div>
+                
+                <!-- Styled Table to Display Selected Options -->
+                <div class="mb-4">
+                    <table class="w-full border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+                        <thead class="bg-gray-100 rounded-t-lg">
+                            <tr>
+                                <th class="p-2 text-left text-gray-950">Opciones Seleccionadas</th>
+                                <th class="p-2 text-left text-gray-950">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="selectedOperativosTableBody" class="divide-y divide-gray-200 bg-white">
+                            <!-- Selected options will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- JavaScript to Handle Dropdown and Table -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const dropdown = document.getElementById('dropdownOperativos');
+                        const tableBody = document.getElementById('selectedOperativosTableBody');
+                        const selectedOptions = new Set();
+                
+                        // Fetch data to populate dropdown with Operativos
+                        const currentSupervisados = @json($descripcion->supervisa_a ?? []); // Los datos actuales seleccionados
+                        fetch('/api/supervisa-a?nivel={{ $descripcion->nivel }}')
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Error al obtener los datos');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                dropdown.innerHTML = '<option value="" disabled>Selecciona a los que supervisa</option>';
+                                data.forEach(item => {
+                                    const option = document.createElement('option');
+                                    option.value = item.id; // ID del registro
+                                    option.textContent = item.unidad_administrativa; // Nombre o descripción
+                
+                                    // Marcar como seleccionado si ya está en los supervisados actuales
+                                    if (currentSupervisados.includes(item.id)) {
+                                        option.selected = true;
+                                        addToTable(item.id, item.unidad_administrativa);
+                                    }
+                
+                                    dropdown.appendChild(option);
+                                });
+                            })
+                            .catch(error => console.error('Error al cargar los datos:', error));
+                
+                        dropdown.addEventListener('change', () => {
+                            const value = dropdown.value;
+                            const text = dropdown.options[dropdown.selectedIndex].text;
+                
+                            if (!selectedOptions.has(value)) {
+                                selectedOptions.add(value);
+                                addToTable(value, text);
+                            }
+                
+                            dropdown.selectedIndex = 0; // Reset dropdown selection
+                        });
+                
+                        function addToTable(value, text) {
+                            const row = document.createElement('tr');
+                            const optionCell = document.createElement('td');
+                            optionCell.className = 'p-2 text-gray-950';
+                            optionCell.textContent = text;
+                
+                            const actionCell = document.createElement('td');
+                            actionCell.className = 'p-2';
+                
+                            const removeButton = document.createElement('button');
+                            removeButton.textContent = 'Eliminar';
+                            removeButton.className = 'px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700';
+                            removeButton.addEventListener('click', () => {
+                                selectedOptions.delete(value);
+                                tableBody.removeChild(row);
+                            });
+                
+                            actionCell.appendChild(removeButton);
+                            row.appendChild(optionCell);
+                            row.appendChild(actionCell);
+                            tableBody.appendChild(row);
+                        }
+                    });
+                </script>
+                
 
                 <div>
                     <label for="comunicacion_interna" class="block text-gray-50 font-semibold mb-1">Comunicación

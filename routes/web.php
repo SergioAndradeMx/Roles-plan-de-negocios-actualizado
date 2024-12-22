@@ -43,9 +43,10 @@ use App\Http\Controllers\DescripcionPuestoController;
 use App\Http\Controllers\ImagenCorporativaController;
 
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\CulturaOrganizacionalController;
 
-use App\Http\Controllers\ProyeccionCincoAniosController;
+
+use App\Http\Controllers\CulturaOrganizacionalController;
+use App\Http\Controllers\proyeccionsueldoanualcontroller;
 
 
 
@@ -107,30 +108,18 @@ Route::middleware('auth')->group(function () {
             'plan_de_negocio.descripciones'=>DescripcionPuestoController::class,
             'plan_de_negocio.proyecciones'=>ProyeccionController::class,
             'plan_de_negocio.operativo'=>ControladorOperativo::class,
-            'plan_de_negocio.tactico'=>ControladorTactico::class
+            'plan_de_negocio.tactico'=>ControladorTactico::class,
+            'plan_de_negocio.proyeccionsueldoanual'=>proyeccionsueldoanualcontroller::class
             
         ]);
+        Route::get('/plan-de-negocio/{plan_de_negocio}/proyecciones/resumen', [App\Http\Controllers\ProyeccionController::class, 'resumen'])
+        ->name('plan_de_negocio.proyecciones.resumen');
     });
 
 
-    //recursos humanos
     //Route::resource('organigramas', OrganigramaController::class);
     Route::get('organigramas/{organigrama}/download', [OrganigramaController::class, 'download'])->name('organigramas.download');
-
-    //Route::resource('descripciones', DescripcionPuestoController::class);
-    //Route::put('descripciones/{descripcione}', [DescripcionPuestoController::class, 'update'])->name('descripciones.update');
   
-    Route::resource('proyecciones', ProyeccionController::class);
-    Route::get('/plan-de-negocio/{plan_de_negocio}/proyecciones/resumen', [App\Http\Controllers\ProyeccionController::class, 'resumen'])
-    ->name('plan_de_negocio.proyecciones.resumen');
-    Route::get('/proyeccion-anual', [App\Http\Controllers\ProyeccionController::class, 'proyeccionAnual'])->name('proyeccion.anual');
-    Route::get('/proyeccion-cinco-anos', [App\Http\Controllers\ProyeccionController::class, 'proyeccionCincoAnios'])->name('proyeccion.cinco-anos');
-    Route::put('/proyeccion/{id}', [ProyeccionController::class, 'update'])->name('proyeccion.update');
-
-Route::get('/proyecciones/cinco-anios', [ProyeccionController::class, 'index'])->name('proyecciones.cinco_anios');
-
-Route::post('/proyecciones/actualizar', [ProyeccionController::class, 'actualizar']);
-
 
 
     

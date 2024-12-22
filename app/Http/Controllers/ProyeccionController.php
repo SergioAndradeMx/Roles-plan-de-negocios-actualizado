@@ -2,17 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use PgSql\Lob;
 use App\Models\Proyeccion;
+use Illuminate\Http\Request;
+use App\Models\Plan_de_negocio;
+use Illuminate\Support\Facades\Log;
+
+use function Ramsey\Uuid\v1;
 
 class ProyeccionController extends Controller
 {
-    public function index()
+    public function index(Plan_de_negocio $plan_de_negocio)
     {
-        $proyecciones = Proyeccion::all();
-        $totalSueldos = $proyecciones->sum('total');
+        // $proyecciones = Proyeccion::all();
+        // $totalSueldos = $proyecciones->sum('total');
+        $arraydescripciondepuesto = $plan_de_negocio->descripcionpuesto;
+        $arraydatos = [];
+        $totaldelossueldos = 0;
+        foreach ($arraydescripciondepuesto as  $value) {
+            $totaldelossueldos += ($value->sueldomensual)
+                ? $value->sueldomensual->total : $value->salario_maximo;
+            array_push($arraydatos, [$value->id, $value->nombre_puesto, $value->numero_plaza, ($value->sueldomensual)
+                ? $value->sueldomensual->sueldo : $value->salario_maximo, ($value->sueldomensual) ? $value->sueldomensual->id : 0]);
+        }
 
-        return view('proyecciones.index', compact('proyecciones', 'totalSueldos'));
+        $ruta = route('plan_de_negocio.proyecciones.store', $plan_de_negocio);
+
+        return view('proyecciones.index', compact('arraydatos', 'totaldelossueldos', 'plan_de_negocio', 'ruta'));
     }
 
     /**
@@ -21,155 +37,70 @@ class ProyeccionController extends Controller
     public function create()
     {
         // Opcional si tienes un formulario separado para crear nuevas proyecciones
-        return view('proyecciones.create');
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
-        // Validación de los datos recibidos
-        $data = $request->validate([
-            'puestos' => 'required|array|min:1',
-            'numero_trabajadores' => 'required|array|min:1',
-            'salario' => 'required|array|min:1',
-            'puestos.*' => 'string|max:255',
-            'numero_trabajadores.*' => 'integer|min:0',
-            'salario.*' => 'numeric|min:0',
-        ]);
-    
-        // Guardar o actualizar cada proyección
-        foreach ($data['puestos'] as $index => $puesto) {
+
+        // $plan_de_negocio->proyecciondesueldomensual()->delete();
+        foreach ($request->all() as $value) {
             Proyeccion::updateOrCreate(
+                ['id' => $value[5]],
                 [
-                    'puesto' => $puesto,
-                    'numero_trabajadores' => $data['numero_trabajadores'][$index],
-                    'salario' => $data['salario'][$index],
-                ],
-                [
-                    'total' => $data['numero_trabajadores'][$index] * $data['salario'][$index],
+                    'plan_de_negocio_id' => $plan_de_negocio->id,
+                    'descripcion_de_puesto_id' => $value[0],
+                    'sueldo' => $value[3],
+                    'total' => $value[4]
                 ]
             );
+            // Log::info($value);
+            // Proyeccion::create([
+            //     'plan_de_negocio_id'=>$plan_de_negocio->id,
+            //     'descripcion_de_puesto_id'=>$value[0],
+            //     'sueldo'=>$value[3],
+            //     'total'=>$value[4]
+
+            // ]);
         }
-    
-        return redirect()->route('proyecciones.index')
-                         ->with('success', 'Datos guardados correctamente.');
     }
-    
-    
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        $proyeccion = Proyeccion::findOrFail($id);
-
-        return view('proyecciones.show', compact('proyeccion'));
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        $proyeccion = Proyeccion::findOrFail($id);
-
-        return view('proyecciones.edit', compact('proyeccion'));
-    }
+    public function edit(string $id) {}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $proyeccion = Proyeccion::findOrFail($id);
-
-        $data = $request->validate([
-            'puesto' => 'required|string',
-            'numero_trabajadores' => 'required|integer',
-            'salario' => 'required|numeric',
-        ]);
-
-        $data['total'] = $data['numero_trabajadores'] * $data['salario'];
-
-        $proyeccion->update($data);
-
-        return redirect()->route('proyecciones.index')->with('success', 'Datos actualizados correctamente.');
-    }
+    public function update(Request $request, string $id) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        try {
-            $proyeccion = Proyeccion::findOrFail($id);
-            $proyeccion->delete();
-    
-            return response()->json(['message' => 'Eliminado correctamente'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'No se pudo eliminar la proyección'], 500);
-        }
-    }
-    
+    public function destroy($id) {}
 
 
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function resumen()
+    public function resumen(Plan_de_negocio $plan_de_negocio)
     {
         // Obtener todas las proyecciones y calcular los totales
-        $proyecciones = Proyeccion::all();
-        $totalSueldoMensual = $proyecciones->sum('total');
-        $totalSueldoAnual = $totalSueldoMensual * 12;
-        $totalSueldoCincoAnios = $totalSueldoMensual * 60;
-
+       
+        $sueldos=$plan_de_negocio->proyecciondesueldomensual;
+        $total=0;
+        foreach ($sueldos as $value) {
+            $total+=$value->total;
+        
+        }
         // Pasar los datos a la vista
-        return view('proyecciones.resumen', compact('totalSueldoMensual', 'totalSueldoAnual', 'totalSueldoCincoAnios'));
+        return view('proyecciones.resumen', compact('plan_de_negocio','total'));
     }
-    public function proyeccionAnual()
-{
-    // Obtén los datos de proyecciones
-    $proyecciones = Proyeccion::all();
-
-    // Calcula la proyección anual para cada puesto
-    $proyeccionAnual = $proyecciones->map(function ($proyeccion) {
-        return [
-            'puesto' => $proyeccion->puesto,
-            'numero_trabajadores' => $proyeccion->numero_trabajadores,
-            'salario_mensual' => $proyeccion->salario,
-            'salario_anual' => $proyeccion->salario * 12,
-            'total_anual' => $proyeccion->numero_trabajadores * $proyeccion->salario * 12,
-        ];
-    });
-
-    // Retorna la vista con los datos procesados
-    return view('proyecciones.anual', compact('proyeccionAnual'));
-}
-public function proyeccionCincoAnios()
-{
-    // Obtén los datos de proyecciones
-    $proyecciones = Proyeccion::all();
-
-    // Calcula la proyección a cinco años para cada puesto
-    $proyeccionCincoAnios = $proyecciones->map(function ($proyeccion) {
-        return [
-            'puesto' => $proyeccion->puesto,
-            'numero_trabajadores' => $proyeccion->numero_trabajadores,
-            'salario_mensual' => $proyeccion->salario,
-            'salario_anual' => $proyeccion->salario * 12,
-            'total_cinco_anios' => $proyeccion->numero_trabajadores * $proyeccion->salario * 12 * 5,
-        ];
-    });
-
-    // Retorna la vista con los datos procesados
-    return view('proyecciones.cinco_anios', compact('proyeccionCincoAnios'));
-}
-
-
-
 }

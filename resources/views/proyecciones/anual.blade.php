@@ -11,7 +11,10 @@
 
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold mb-4">Proyección Anual</h1>
-
+ <!-- Barra lateral -->
+ <div class="w-full lg:w-1/4 bg-white rounded-lg shadow-md dark:bg-gray-800 p-4">
+    @include('descripciones.menu')
+</div>
         <!-- Tabla de Proyección Anual -->
         <table class="table-auto w-full bg-white shadow rounded mb-4">
             <thead>
@@ -28,7 +31,7 @@
                     $totalAnualGlobal = 0;
                 @endphp
 
-                @foreach($proyeccionAnual as $item)
+                {{-- @foreach($proyeccionAnual as $item)
                 <tr>
                     <td class="border px-4 py-2">{{ $item['puesto'] }}</td>
                     <td class="border px-4 py-2">{{ $item['numero_trabajadores'] }}</td>
@@ -41,13 +44,13 @@
                         @endphp
                     </td>
                 </tr>
-                @endforeach
+                @endforeach --}}
 
                 <!-- Fila del Total Anual Global -->
                 <tr class="bg-gray-100 font-bold">
                     <td colspan="4" class="border px-4 py-2 text-right">Total General Anual:</td>
                     <td class="border px-4 py-2">
-                        ${{ number_format($totalAnualGlobal, 2) }}
+                        {{-- ${{ number_format($totalAnualGlobal, 2) }} --}}
                     </td>
                 </tr>
             </tbody>

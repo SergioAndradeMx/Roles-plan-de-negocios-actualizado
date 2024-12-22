@@ -33,7 +33,11 @@ class DescripcionPuesto extends Model
         'habilidades_fisicas',
         'habilidades_mentales',
     ];
+    public function sueldomensual()
+    {
+        return $this->hasOne(Proyeccion::class,'descripcion_de_puesto_id');
 
+    }
     // protected $casts = [
     //     'reporta_a' => 'array',
     //     'supervisa_a' => 'array',

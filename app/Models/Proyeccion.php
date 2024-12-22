@@ -10,18 +10,13 @@ class Proyeccion extends Model
     use HasFactory;
 
     // Especifica 
-    protected $table = 'proyecciones';
+    protected $table = 'proyeccion_de_sueldo';
 
    
     protected $fillable = [
-        'puesto',
-        'numero_trabajadores',
-        'salario',
-        'total',
-        'año_1',     
-        'año_2',    
-        'año_3',      
-        'año_4',      
-        'año_5',     
+        'plan_de_negocio_id',
+        'descripcion_de_puesto_id',
+        'sueldo',
+        'total'
     ];
 }

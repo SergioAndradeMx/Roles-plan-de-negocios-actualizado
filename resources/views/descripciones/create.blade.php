@@ -176,14 +176,88 @@
                 </div>
 
 
-                <div class="mb-4 flex">
-                    <label for="supervisa_a"
-                        class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Supervisa
-                        a:</label>
-                    <input type="text"
-                        class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        name="supervisa_a" id="supervisa_a">
+                {{-- ejemplo  --}}
+      
+                <div class="mb-6">
+                    <button @click="activeDiv = 'div1'" class="px-4 py-2 bg-blue-500 text-white rounded-md">Botón 1</button>
+                    <button @click="activeDiv = 'div2'" class="px-4 py-2 bg-blue-500 text-white rounded-md">Botón 2</button>
+                    <button @click="activeDiv = 'div3'" class="px-4 py-2 bg-blue-500 text-white rounded-md">Botón 3</button>
                 </div>
+            
+                <!-- Divs -->
+                <div x-data="{ activeDiv: 'div1', tags: { div1: [], div2: [], div3: [] }, search: '', selectedTags: [] }">
+                    <!-- Div 1 -->
+                    <div x-show="activeDiv === 'div1'" class="relative w-full">
+                        <div class="dropdown-header flex items-center border border-gray-300 rounded-md p-3 bg-white">
+                            <input type="text" x-model="search" placeholder="Buscar..." class="w-full p-2 text-sm border-none outline-none focus:ring-2 focus:ring-blue-300" />
+                        </div>
+                        <div id="selectedTags1" class="flex flex-wrap gap-2 mt-2">
+                            <template x-for="tag in tags.div1" :key="tag">
+                                <span class="bg-blue-200 text-blue-800 rounded-full px-3 py-1 text-xs flex items-center gap-1">
+                                    <span x-text="tag"></span>
+                                    <span @click="tags.div1 = tags.div1.filter(t => t !== tag)" class="cursor-pointer text-blue-600">×</span>
+                                </span>
+                            </template>
+                        </div>
+                        <div class="dropdown-list absolute w-full max-h-48 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg mt-1 z-10">
+                            <template x-for="option in ['Opción 1', 'Opción 2'].filter(option => option.toLowerCase().includes(search.toLowerCase()))" :key="option">
+                                <div @click="tags.div1.push(option); search = ''" class="dropdown-option flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                    <span x-text="option"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+            
+                    <!-- Div 2 -->
+                    <div x-show="activeDiv === 'div2'" class="relative w-full">
+                        <div class="dropdown-header flex items-center border border-gray-300 rounded-md p-3 bg-white">
+                            <input type="text" x-model="search" placeholder="Buscar..." class="w-full p-2 text-sm border-none outline-none focus:ring-2 focus:ring-blue-300" />
+                        </div>
+                        <div id="selectedTags2" class="flex flex-wrap gap-2 mt-2">
+                            <template x-for="tag in tags.div2" :key="tag">
+                                <span class="bg-blue-200 text-blue-800 rounded-full px-3 py-1 text-xs flex items-center gap-1">
+                                    <span x-text="tag"></span>
+                                    <span @click="tags.div2 = tags.div2.filter(t => t !== tag)" class="cursor-pointer text-blue-600">×</span>
+                                </span>
+                            </template>
+                        </div>
+                        <div class="dropdown-list absolute w-full max-h-48 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg mt-1 z-10">
+                            <template x-for="option in ['Opción 3', 'Opción 4'].filter(option => option.toLowerCase().includes(search.toLowerCase()))" :key="option">
+                                <div @click="tags.div2.push(option); search = ''" class="dropdown-option flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                    <span x-text="option"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+            
+                    <!-- Div 3 -->
+                    <div x-show="activeDiv === 'div3'" class="relative w-full">
+                        <div class="dropdown-header flex items-center border border-gray-300 rounded-md p-3 bg-white">
+                            <input type="text" x-model="search" placeholder="Buscar..." class="w-full p-2 text-sm border-none outline-none focus:ring-2 focus:ring-blue-300" />
+                        </div>
+                        <div id="selectedTags3" class="flex flex-wrap gap-2 mt-2">
+                            <template x-for="tag in tags.div3" :key="tag">
+                                <span class="bg-blue-200 text-blue-800 rounded-full px-3 py-1 text-xs flex items-center gap-1">
+                                    <span x-text="tag"></span>
+                                    <span @click="tags.div3 = tags.div3.filter(t => t !== tag)" class="cursor-pointer text-blue-600">×</span>
+                                </span>
+                            </template>
+                        </div>
+                        <div class="dropdown-list absolute w-full max-h-48 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg mt-1 z-10">
+                            <template x-for="option in ['Opción 5', 'Opción 6'].filter(option => option.toLowerCase().includes(search.toLowerCase()))" :key="option">
+                                <div @click="tags.div3.push(option); search = ''" class="dropdown-option flex items-center p-2 hover:bg-gray-100 cursor-pointer">
+                                    <span x-text="option"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+            
+                    <!-- Input oculto para enviar las tags -->
+                    <input type="hidden" name="tags[]" :value="Object.values(tags).flat().join(',')" />
+                </div>
+
+
+                {{-- final --}}
 
                 <div class="mb-4 flex">
                     <label for="comunicacion_interna"

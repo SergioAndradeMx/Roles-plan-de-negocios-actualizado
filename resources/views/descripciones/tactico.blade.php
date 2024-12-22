@@ -177,14 +177,106 @@
                 </div>
 
 
-                <div class="mb-4 flex">
-                    <label for="supervisa_a"
-                        class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Supervisa
-                        a:</label>
-                    <input type="text"
-                        class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        name="supervisa_a" id="supervisa_a">
-                </div>
+            {{-- inicio --}}
+            <div class="mb-4 flex">
+                <label for="dropdownOperativos"
+                    class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Supervisa a:</label>
+                <select id="dropdownOperativos"
+                    class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    <option value="" disabled selected>Selecciona a los que supervisa</option>
+                    <!-- Opciones dinámicamente agregadas por JavaScript -->
+                </select>
+            </div>
+            
+            <!-- Styled Table to Display Selected Options -->
+            <div class="mb-4">
+                <table class="w-full border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+                    <thead class="bg-gray-100 rounded-t-lg">
+                        <tr>
+                            <th class="p-2 text-left text-gray-950">Opciones Seleccionadas</th>
+                            <th class="p-2 text-left text-gray-950">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="selectedOperativosTableBody" class="divide-y divide-gray-200 bg-white">
+                        <!-- Selected options will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- JavaScript to Handle Dropdown and Table -->
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const dropdown = document.getElementById('dropdownOperativos');
+                    const tableBody = document.getElementById('selectedOperativosTableBody');
+                    const selectedOptions = new Set();
+            
+                    // Fetch data to populate dropdown with Operativos
+                    fetch('/api/supervisa-a?nivel=tactico') // Cambia 'nivel=tactico' para que coincida con tu API
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Error al obtener los datos');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            // Limpiar el dropdown antes de agregar opciones
+                            dropdown.innerHTML = '<option value="" disabled selected>Selecciona a los que supervisa</option>';
+                            data.forEach(item => {
+                                const option = document.createElement('option');
+                                option.value = item.id; // ID del registro
+                                option.textContent = item.unidad_administrativa; // Nombre o descripción
+                                dropdown.appendChild(option);
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error al cargar los datos:', error);
+                        });
+            
+                    dropdown.addEventListener('change', () => {
+                        const value = dropdown.value;
+                        const text = dropdown.options[dropdown.selectedIndex].text;
+            
+                        if (!selectedOptions.has(value)) {
+                            selectedOptions.add(value);
+            
+                            // Crear una nueva fila en la tabla
+                            const row = document.createElement('tr');
+            
+                            // Crear una celda para la opción seleccionada
+                            const optionCell = document.createElement('td');
+                            optionCell.className = 'p-2 text-gray-950';
+                            optionCell.textContent = text;
+            
+                            // Crear una celda para el botón de eliminación
+                            const actionCell = document.createElement('td');
+                            actionCell.className = 'p-2';
+            
+                            const removeButton = document.createElement('button');
+                            removeButton.textContent = 'Eliminar';
+                            removeButton.className = 'px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700';
+                            removeButton.addEventListener('click', () => {
+                                selectedOptions.delete(value);
+                                tableBody.removeChild(row);
+                            });
+            
+                            actionCell.appendChild(removeButton);
+            
+                            // Agregar celdas a la fila
+                            row.appendChild(optionCell);
+                            row.appendChild(actionCell);
+            
+                            // Agregar la fila al cuerpo de la tabla
+                            tableBody.appendChild(row);
+                        }
+            
+                        // Restablecer la selección del dropdown
+                        dropdown.selectedIndex = 0;
+                    });
+                });
+            </script>
+            
+            
+            {{-- fin --}}
 
                 <div class="mb-4 flex">
                     <label for="comunicacion_interna"

@@ -33,17 +33,17 @@
                             <tr class="border-b hover:bg-gray-50 transition dark:hover:bg-gray-600">
                                 <td class="border px-4 py-2 dark:border-gray-700">Total de Sueldos Mensuales</td>
                                 <td class="border px-4 py-2 text-right dark:border-gray-700">
-                                    ${{ number_format($totalSueldoMensual, 2) }}</td>
+                                    ${{ number_format($total, 2) }}</td>
                             </tr>
                             <tr class="border-b hover:bg-gray-50 transition dark:hover:bg-gray-600">
                                 <td class="border px-4 py-2 dark:border-gray-700">Total de Sueldos Anuales</td>
                                 <td class="border px-4 py-2 text-right dark:border-gray-700">
-                                    ${{ number_format($totalSueldoAnual, 2) }}</td>
+                                    ${{ number_format($total * 12, 2) }}</td>
                             </tr>
                             <tr class="border-b hover:bg-gray-50 transition dark:hover:bg-gray-600">
                                 <td class="border px-4 py-2 dark:border-gray-700">Total de Sueldos en 5 Años</td>
                                 <td class="border px-4 py-2 text-right dark:border-gray-700">
-                                    ${{ number_format($totalSueldoCincoAnios, 2) }}</td>
+                                    ${{ number_format(($total*12)*5, 2) }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -54,14 +54,14 @@
             <!-- Columna 2: Botón Proyección Anual -->
             <!-- Columna 2: Botón Proyección Anual -->
             <div class="col-span-1 flex justify-center items-center">
-                <a href="{{ route('proyeccion.anual') }}"
+                <a href="{{route('plan_de_negocio.proyeccionsueldoanual.index', $plan_de_negocio)}}"
                     class="bg-blue-500 text-white px-8 py-12 rounded-lg hover:bg-blue-600 transition border border-blue-500 hover:border-blue-600 w-full text-center text-xl dark:bg-blue-700 dark:border-blue-600 dark:hover:bg-blue-800">Proyección
                     Anual</a>
             </div>
 
             <!-- Columna 3: Botón Proyección 5 Años -->
             <div class="col-span-1 flex justify-center items-center">
-                <a href="{{ route('proyeccion.cinco-anos') }}"
+                <a 
                     class="bg-green-500 text-white px-8 py-12 rounded-lg hover:bg-green-600 transition border border-green-500 hover:border-green-600 w-full text-center text-xl dark:bg-green-700 dark:border-green-600 dark:hover:bg-green-800">Proyección
                     5 Años</a>
             </div>

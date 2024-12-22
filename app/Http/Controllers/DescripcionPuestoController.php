@@ -81,28 +81,26 @@ class DescripcionPuestoController extends Controller
     public function edit(Plan_de_negocio $plan_de_negocio, $id)
     {
         $descripcion = DescripcionPuesto::findOrFail($id);
-        $estrategicos = $plan_de_negocio
-        ->descripcionpuesto()
-        ->where('nivel', 'estrategico')
-        ->select('id', 'unidad_administrativa')
-        ->get();
-        $tactico = $plan_de_negocio
-        ->descripcionpuesto()
-        ->where('nivel', 'tactico')
-        ->select('id','unidad_administrativa')
-        ->get();
-        $operativo = $plan_de_negocio
-        ->descripcionpuesto()
-        ->where('nivel', 'operativo')
-        ->select('id','unidad_administrativa')
-        ->get();
-        // Log::info($estrategicos);
-        // Log::info($tactico);
-        // Log::info($operativo);
-        // dd($estrategicos);
-        return view('descripciones.edit', compact('descripcion', 'plan_de_negocio','estrategicos', 'tactico', 'operativo'));
+    
+        // Obtener los niveles supervisados dinámicamente
+        $estrategicos = $plan_de_negocio->descripcionpuesto()
+            ->where('nivel', 'estrategico')
+            ->select('id', 'unidad_administrativa')
+            ->get();
+    
+        $tactico = $plan_de_negocio->descripcionpuesto()
+            ->where('nivel', 'tactico')
+            ->select('id', 'unidad_administrativa')
+            ->get();
+    
+        $operativo = $plan_de_negocio->descripcionpuesto()
+            ->where('nivel', 'operativo')
+            ->select('id', 'unidad_administrativa')
+            ->get();
+    
+        return view('descripciones.edit', compact('descripcion', 'plan_de_negocio', 'estrategicos', 'tactico', 'operativo'));
     }
-
+    
     /**
      * Actualizar una descripción de puesto existente.
      */
@@ -154,4 +152,6 @@ class DescripcionPuestoController extends Controller
         return redirect()->route('plan_de_negocio.descripciones.index', $plan_de_negocio)
             ->with('success', 'Descripción de puesto eliminada exitosamente.');
     }
+
+
 }
