@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     let bodys = document.querySelector("table tbody");
     let filas = bodys.querySelectorAll("tr");
-    var arraydatos = [];
+    var arraydatos = {};
     filas.forEach(function (fila) {
         // Obtiene el id a cual pertenece el dato.
         let id_pertenece = fila.querySelector('td[id_pertenece]').getAttribute('id_pertenece');
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     var filaResultado = document.getElementById("totales");
     var columnaResultado = filaResultado.children;
-    asignaciónResultadoFila(columnaResultado,arraydatos);
+    asignaciónResultadoFila(columnaResultado, arraydatos);
     //  console.log(arraydatos);
 
     function agregarEventInputs(input) {
@@ -35,11 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
             let columnaPosición = columnaTd.cellIndex;
             // Obtener a cual pertenece
             let id_pertenece = filaTr.querySelector('td[id_pertenece]').getAttribute('id_pertenece');
-            console.log(arraydatos);
+
             if (input.value.trim()) {
                 if (input.value != arraydatos[id_pertenece][columnaPosición - 1][1]) {
                     arraydatos[id_pertenece][columnaPosición - 1][1] = parseFloat(input.value);
-                    asignaciónResultadoFila(columnaResultado,arraydatos);
+                    asignaciónResultadoFila(columnaResultado, arraydatos);
                 }
             } else {
                 input.value = 0;
@@ -66,4 +66,136 @@ document.addEventListener("DOMContentLoaded", function () {
             columnasFila[indexColumna + 1].innerHTML = '$' + sumaResultado.toFixed(2);
         } // Fin del for de columnas.
     } // Fin de la función asignar valores en la fila resultado
+
+    //  let boton = document.getElementById("botonguardar");
+    //     boton.addEventListener("click", function () {
+
+    //         let ruta = this.getAttribute("ruta");
+    //         fetch(ruta, {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+    //             },
+    //             body: JSON.stringify(arraydatos),
+    //         }).then(Response => {
+    //             if (Response.ok) {
+    //                 alert("Datos guardados exitosamente");
+    //                 location.reload(); // Refresca la página después de guardar
+    //             } else {
+    //                 alert("Hubo un error al guardar los datos.");
+    //             }
+
+    //         });
+    //     });
+
+    let boton = document.getElementById("botonguardar");
+    boton.addEventListener("click", function () {
+        let ruta = this.getAttribute("ruta");
+        fetch(ruta, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+            },
+            body: JSON.stringify(arraydatos),
+        }).then(Response => {
+            if (Response.ok) {
+                mostrarMensajeExito("Datos guardados exitosamente", true); // Refresca la página después del mensaje
+            } else {
+                mostrarMensajeError("Hubo un error al guardar los datos.");
+            }
+        }).catch(error => {
+            console.error("Error:", error);
+            mostrarMensajeError("Ocurrió un error inesperado.");
+        });
+    });
+
+    // Función para mostrar mensaje de éxito
+    function mostrarMensajeExito(message, refresh = false) {
+        const messageDialog = document.createElement('div');
+        messageDialog.innerHTML = `
+            <div class="fixed z-10 inset-0 overflow-y-auto">
+                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                    <div class="fixed inset-0 transition-opacity">
+                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                    </div>
+                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+                    <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Éxito</h3>
+                                <div class="mt-2">
+                                    <p class="text-sm leading-5 text-gray-500">${message}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 sm:mt-4 sm:flex justify-center sm:flex-row-reverse gap-2">
+                            <span class="flex w-full mt-3 rounded-md shadow-sm sm:w-auto">
+                                <button id="closeSuccessBtn" type="button"
+                                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                                    Cerrar
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(messageDialog);
+
+        document.getElementById('closeSuccessBtn').addEventListener('click', () => {
+            document.body.removeChild(messageDialog);
+            if (refresh) {
+                location.reload(); // Refresca la página
+            }
+        });
+
+        // Refresca automáticamente después de 3 segundos
+        if (refresh) {
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        }
+    }
+
+    // Función para mostrar mensaje de error
+    function mostrarMensajeError(message) {
+        const messageDialog = document.createElement('div');
+        messageDialog.innerHTML = `
+            <div class="fixed z-10 inset-0 overflow-y-auto">
+                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                    <div class="fixed inset-0 transition-opacity">
+                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                    </div>
+                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+                    <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Error</h3>
+                                <div class="mt-2">
+                                    <p class="text-sm leading-5 text-gray-500">${message}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 sm:mt-4 sm:flex justify-center sm:flex-row-reverse gap-2">
+                            <span class="flex w-full mt-3 rounded-md shadow-sm sm:w-auto">
+                                <button id="closeErrorBtn" type="button"
+                                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                                    Cerrar
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(messageDialog);
+
+        document.getElementById('closeErrorBtn').addEventListener('click', () => {
+            document.body.removeChild(messageDialog);
+        });
+    }
 });

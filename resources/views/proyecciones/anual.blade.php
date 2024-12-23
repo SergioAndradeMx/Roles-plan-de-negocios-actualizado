@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyección Anual</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/proyeccionsueldoanual.js'])
 </head>
 
@@ -83,7 +84,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <button ruta="{{}}" id="botonguardar" type="button"
+                <button ruta="{{$ruta}}" id="botonguardar" type="button"
                     class="bg-blue-500 text-white px-6 py-2 rounded">Guardar</button>
             </div>
         </div>
