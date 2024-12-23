@@ -80,5 +80,5 @@ class Plan_de_negocio extends Model
     {
         return $this->hasMany(Proyeccion::class);
     }
-
+    
 }

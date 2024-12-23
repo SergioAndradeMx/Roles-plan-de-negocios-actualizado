@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sueldo_anual', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('proyección_de_sueldos'); // Corregido el nombre
+            $table->unsignedBigInteger('proyección_de_sueldos'); 
             $table->foreign('proyección_de_sueldos')
                   ->references('id')->on('proyeccion_de_sueldo')
                   ->onDelete('cascade');

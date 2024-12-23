@@ -19,4 +19,10 @@ class Proyeccion extends Model
         'sueldo',
         'total'
     ];
+    public function proyecciondesueldoanual()  {
+        return $this->hasMany(proyecciondesueldoanual::class,'proyección_de_sueldos');
+    }
+    public function pertenecedescripcionpuesto(){
+        return $this->belongsTo(DescripcionPuesto::class,'descripcion_de_puesto_id');
+    }
 }
