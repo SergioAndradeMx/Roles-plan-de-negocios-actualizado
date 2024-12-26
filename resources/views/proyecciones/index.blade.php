@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Proyección de Sueldos</title>
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/proyecciondesueldo.js'])
-    
+
 </head>
 
 <body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
@@ -41,7 +41,7 @@
 
                     <tbody>
                         @foreach ($arraydatos as $value)
-                            <tr idactual="{{$value[4]}}" class="border border-black dark:border-gray-600">
+                            <tr idactual="{{ $value[4] }}" class="border border-black dark:border-gray-600">
                                 <td valorid="{{ $value[0] }}"
                                     class="border px-4 py-2 border-black dark:border-gray-600">{{ $value[1] }}
                                 </td>
@@ -58,7 +58,8 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td id="totaldesueldos" class="text-right" colspan="4">Total de Sueldos: {{ number_format($totaldelossueldos, 2, '.', '') }}
+                            <td id="totaldesueldos" class="text-right" colspan="4">Total de Sueldos:
+                                {{ number_format($totaldelossueldos, 2, '.', '') }}
 
                             </td>
                         </tr>
@@ -67,9 +68,10 @@
             </div>
             <!-- Botón Guardar -->
             <div class="text-center">
-                <button ruta="{{$ruta}}" id="botonguardar" type="button" class="bg-blue-500 text-white px-6 py-2 rounded">Guardar</button>
+                <button informacion="{{ $haydatosanules }}" ruta="{{ $ruta }}" id="botonguardar" type="button"
+                    class="bg-blue-500 text-white px-6 py-2 rounded">Guardar</button>
             </div>
-            
+
             {{-- </form> --}}
         </div>
 </body>

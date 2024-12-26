@@ -17,7 +17,10 @@ class ProyeccionController extends Controller
         // $proyecciones = Proyeccion::all();
         // $totalSueldos = $proyecciones->sum('total');
         $arraydescripciondepuesto = $plan_de_negocio->descripcionpuesto;
+        $haydatosanules = count($plan_de_negocio->proyecciondesueldomensual->first()->proyecciondesueldoanual);
+        
         $arraydatos = [];
+       
         $totaldelossueldos = 0;
         foreach ($arraydescripciondepuesto as  $value) {
             $totaldelossueldos += ($value->sueldomensual)
@@ -28,7 +31,7 @@ class ProyeccionController extends Controller
 
         $ruta = route('plan_de_negocio.proyecciones.store', $plan_de_negocio);
 
-        return view('proyecciones.index', compact('arraydatos', 'totaldelossueldos', 'plan_de_negocio', 'ruta'));
+        return view('proyecciones.index', compact('arraydatos', 'totaldelossueldos', 'plan_de_negocio', 'ruta', 'haydatosanules'));
     }
 
     /**
@@ -46,10 +49,9 @@ class ProyeccionController extends Controller
     public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
 
-        // $plan_de_negocio->proyecciondesueldomensual()->delete();
+        $plan_de_negocio->proyecciondesueldomensual()->delete();
         foreach ($request->all() as $value) {
-            Proyeccion::updateOrCreate(
-                ['id' => $value[5]],
+            Proyeccion::create(
                 [
                     'plan_de_negocio_id' => $plan_de_negocio->id,
                     'descripcion_de_puesto_id' => $value[0],
@@ -93,14 +95,13 @@ class ProyeccionController extends Controller
     public function resumen(Plan_de_negocio $plan_de_negocio)
     {
         // Obtener todas las proyecciones y calcular los totales
-       
-        $sueldos=$plan_de_negocio->proyecciondesueldomensual;
-        $total=0;
+
+        $sueldos = $plan_de_negocio->proyecciondesueldomensual;
+        $total = 0;
         foreach ($sueldos as $value) {
-            $total+=$value->total;
-        
+            $total += $value->total;
         }
         // Pasar los datos a la vista
-        return view('proyecciones.resumen', compact('plan_de_negocio','total'));
+        return view('proyecciones.resumen', compact('plan_de_negocio', 'total'));
     }
 }
