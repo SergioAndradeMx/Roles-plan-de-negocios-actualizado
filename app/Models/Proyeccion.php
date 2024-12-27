@@ -25,4 +25,7 @@ class Proyeccion extends Model
     public function pertenecedescripcionpuesto(){
         return $this->belongsTo(DescripcionPuesto::class,'descripcion_de_puesto_id');
     }
+    public function proyeccionCincoAnios(){
+        return $this->hasMany(ProyeccionCincoAnios::class,'proyección_de_sueldos');
+    }
 }

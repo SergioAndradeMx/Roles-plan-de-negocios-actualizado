@@ -45,6 +45,7 @@ use App\Http\Controllers\ImagenCorporativaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 
+use App\Http\Controllers\ProyeccionCincoAniosController;
 use App\Http\Controllers\CulturaOrganizacionalController;
 use App\Http\Controllers\proyeccionsueldoanualcontroller;
 
@@ -109,7 +110,8 @@ Route::middleware('auth')->group(function () {
             'plan_de_negocio.proyecciones'=>ProyeccionController::class,
             'plan_de_negocio.operativo'=>ControladorOperativo::class,
             'plan_de_negocio.tactico'=>ControladorTactico::class,
-            'plan_de_negocio.proyeccionsueldoanual'=>proyeccionsueldoanualcontroller::class
+            'plan_de_negocio.proyeccionsueldoanual'=>proyeccionsueldoanualcontroller::class,
+            'plan_de_negocio.proyeccionsueldocincoanios'=>ProyeccionCincoAniosController::class
             
         ]);
         Route::get('/plan-de-negocio/{plan_de_negocio}/proyecciones/resumen', [App\Http\Controllers\ProyeccionController::class, 'resumen'])
