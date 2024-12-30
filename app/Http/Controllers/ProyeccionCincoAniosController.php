@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Plan_de_negocio;
 use Illuminate\Http\Request;
+use App\Models\Plan_de_negocio;
+use App\Models\ProyeccionCincoAnios;
 
 class ProyeccionCincoAniosController extends Controller
 {
@@ -60,9 +61,23 @@ class ProyeccionCincoAniosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
-        //
+        foreach ($request->all() as $key => $value) {
+            // Log::info($value);
+            for ($i = 0; $i < count($value); $i++) {
+
+                //     // for ($i = 0; $i < $value; $i++) {
+                ProyeccionCincoAnios::updateOrCreate(
+                    ['id' => $value[$i][0]],
+                    [
+                        'proyección_de_sueldos' => $key,
+                        'anio' => $i + 1,
+                        'sueldo_total_anual' => $value[$i][1]
+                    ]
+                );
+            }
+        }
     }
 
     /**

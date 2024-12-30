@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let boton = document.getElementById("botonguardar");
     boton.addEventListener("click", function () {
         let ruta = this.getAttribute("ruta");
+        // console.log(arraydatos);
         fetch(ruta, {
             method: "POST",
             headers: {
