@@ -17,10 +17,16 @@ class ProyeccionController extends Controller
         // $proyecciones = Proyeccion::all();
         // $totalSueldos = $proyecciones->sum('total');
         $arraydescripciondepuesto = $plan_de_negocio->descripcionpuesto;
-        $haydatosanules = count($plan_de_negocio->proyecciondesueldomensual->first()->proyecciondesueldoanual);
-        
+        if ($plan_de_negocio->proyecciondesueldomensual->isNotEmpty()) {
+            $haydatosanules = count($plan_de_negocio->proyecciondesueldomensual->first()->proyecciondesueldoanual);
+        } else {
+            $haydatosanules = 0;
+        }
+
+
+
         $arraydatos = [];
-       
+
         $totaldelossueldos = 0;
         foreach ($arraydescripciondepuesto as  $value) {
             $totaldelossueldos += ($value->sueldomensual)
