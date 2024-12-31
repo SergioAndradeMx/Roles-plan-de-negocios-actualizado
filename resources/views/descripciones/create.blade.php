@@ -25,7 +25,8 @@
             @include('descripciones.menu')
         </div>
 
-        <main class=" rounded-lg border-none card h-full bg-white 2xl:p-5 dark:bg-gray-800 flex-1 p-8">
+        <main class=" rounded-lg border-none card h-full bg-white 2xl:p-5 dark:bg-gray-800 flex-1 p-8"
+            x-data="{ selectedSelector: 'estrategico' }">
             <!-- Formulario -->
             <form action="{{ route('plan_de_negocio.descripciones.store', $plan_de_negocio) }}" method="POST">
                 @csrf
@@ -175,87 +176,187 @@
                     </select>
                 </div>
 
-
                 {{-- ejemplo  --}}
-      
-                <div class="mb-6">
-                    <button @click="activeDiv = 'div1'" class="px-4 py-2 bg-blue-500 text-white rounded-md">Botón 1</button>
-                    <button @click="activeDiv = 'div2'" class="px-4 py-2 bg-blue-500 text-white rounded-md">Botón 2</button>
-                    <button @click="activeDiv = 'div3'" class="px-4 py-2 bg-blue-500 text-white rounded-md">Botón 3</button>
-                </div>
-            
-                <!-- Divs -->
-                <div x-data="{ activeDiv: 'div1', tags: { div1: [], div2: [], div3: [] }, search: '', selectedTags: [] }">
-                    <!-- Div 1 -->
-                    <div x-show="activeDiv === 'div1'" class="relative w-full">
-                        <div class="dropdown-header flex items-center border border-gray-300 rounded-md p-3 bg-white">
-                            <input type="text" x-model="search" placeholder="Buscar..." class="w-full p-2 text-sm border-none outline-none focus:ring-2 focus:ring-blue-300" />
-                        </div>
-                        <div id="selectedTags1" class="flex flex-wrap gap-2 mt-2">
-                            <template x-for="tag in tags.div1" :key="tag">
-                                <span class="bg-blue-200 text-blue-800 rounded-full px-3 py-1 text-xs flex items-center gap-1">
-                                    <span x-text="tag"></span>
-                                    <span @click="tags.div1 = tags.div1.filter(t => t !== tag)" class="cursor-pointer text-blue-600">×</span>
+                <div class="mb-4 flex flex-col space-y-4" x-data="{
+                    open: false,
+                    selectedOptions: [],
+                    toggleOption(value, text) {
+                        if (this.selectedOptions.some(option => option.value === value)) {
+                            this.selectedOptions = this.selectedOptions.filter(option => option.value !== value);
+                        } else {
+                            this.selectedOptions.push({ value, text });
+                        }
+                    },
+                    isSelected(value) {
+                        return this.selectedOptions.some(option => option.value === value);
+                    }
+                }">
+                    <div class="mb-4 flex items-center">
+                        <label for="supervisa_a"
+                            class="w-1/4 bg-gray-200 rounded-lg px-4 py-2 text-gray-950 font-semibold">
+                            Supervisa a:
+                        </label>
+                        <div class="relative w-3/4">
+                            <button @click="open = !open" type="button"
+                                class="w-full bg-gray-200 border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <span
+                                    x-text="selectedOptions.length > 0 ? selectedOptions.map(option => option.text).join(', ') : 'Seleccione...'">
                                 </span>
-                            </template>
-                        </div>
-                        <div class="dropdown-list absolute w-full max-h-48 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg mt-1 z-10">
-                            <template x-for="option in ['Opción 1', 'Opción 2'].filter(option => option.toLowerCase().includes(search.toLowerCase()))" :key="option">
-                                <div @click="tags.div1.push(option); search = ''" class="dropdown-option flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                    <span x-text="option"></span>
-                                </div>
-                            </template>
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-500">
+                                    &#x25BC;
+                                </span>
+                            </button>
+                            <div x-show="open" @click.outside="open = false"
+                                class="absolute mt-1 w-full bg-white shadow-lg rounded-md border border-gray-300 z-10">
+                                <ul class="max-h-60 overflow-auto py-1 text-sm text-gray-700">
+                                    @foreach ($tacticos as $tactico)
+                                        <li class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                            @click="toggleOption('{{ $tactico->id }}', '{{ $tactico->unidad_administrativa }}')">
+                                            <span class="mr-2">
+                                                <input type="checkbox" :checked="isSelected('{{ $tactico->id }}')"
+                                                    class="form-checkbox">
+                                            </span>
+                                            <span>{{ $tactico->unidad_administrativa }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     </div>
-            
-                    <!-- Div 2 -->
-                    <div x-show="activeDiv === 'div2'" class="relative w-full">
-                        <div class="dropdown-header flex items-center border border-gray-300 rounded-md p-3 bg-white">
-                            <input type="text" x-model="search" placeholder="Buscar..." class="w-full p-2 text-sm border-none outline-none focus:ring-2 focus:ring-blue-300" />
-                        </div>
-                        <div id="selectedTags2" class="flex flex-wrap gap-2 mt-2">
-                            <template x-for="tag in tags.div2" :key="tag">
-                                <span class="bg-blue-200 text-blue-800 rounded-full px-3 py-1 text-xs flex items-center gap-1">
-                                    <span x-text="tag"></span>
-                                    <span @click="tags.div2 = tags.div2.filter(t => t !== tag)" class="cursor-pointer text-blue-600">×</span>
-                                </span>
-                            </template>
-                        </div>
-                        <div class="dropdown-list absolute w-full max-h-48 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg mt-1 z-10">
-                            <template x-for="option in ['Opción 3', 'Opción 4'].filter(option => option.toLowerCase().includes(search.toLowerCase()))" :key="option">
-                                <div @click="tags.div2.push(option); search = ''" class="dropdown-option flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                    <span x-text="option"></span>
-                                </div>
-                            </template>
-                        </div>
+
+                    <!-- Campo oculto para enviar los valores seleccionados como array -->
+                    <template x-for="option in selectedOptions" :key="option.value">
+                        <input type="hidden" name="supervisa_a[]" :value="option.value">
+                    </template>
+
+                    <!-- Tabla para mostrar los seleccionados con fondo -->
+                    <div class="w-full mt-4">
+                        <table class="w-full border-collapse border border-gray-300 bg-gray-100 rounded-lg shadow-md">
+                            <thead>
+                                <tr class="bg-gray-300">
+                                    <th class="border border-gray-400 px-4 py-2 text-left">Unidad Administrativa</th>
+                                    <th class="border border-gray-400 px-4 py-2 text-left">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template x-for="option in selectedOptions" :key="option.value">
+                                    <tr class="bg-white hover:bg-gray-50">
+                                        <td class="border border-gray-300 px-4 py-2" x-text="option.text"></td>
+                                        <td class="border border-gray-300 px-4 py-2">
+                                            <button type="button" class="text-red-500 hover:text-red-700"
+                                                @click="toggleOption(option.value, option.text)">
+                                                Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </template>
+                                <tr x-show="selectedOptions.length === 0">
+                                    <td colspan="2"
+                                        class="border border-gray-300 px-4 py-2 text-gray-500 text-center">
+                                        No hay opciones seleccionadas.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-            
-                    <!-- Div 3 -->
-                    <div x-show="activeDiv === 'div3'" class="relative w-full">
-                        <div class="dropdown-header flex items-center border border-gray-300 rounded-md p-3 bg-white">
-                            <input type="text" x-model="search" placeholder="Buscar..." class="w-full p-2 text-sm border-none outline-none focus:ring-2 focus:ring-blue-300" />
-                        </div>
-                        <div id="selectedTags3" class="flex flex-wrap gap-2 mt-2">
-                            <template x-for="tag in tags.div3" :key="tag">
-                                <span class="bg-blue-200 text-blue-800 rounded-full px-3 py-1 text-xs flex items-center gap-1">
-                                    <span x-text="tag"></span>
-                                    <span @click="tags.div3 = tags.div3.filter(t => t !== tag)" class="cursor-pointer text-blue-600">×</span>
-                                </span>
-                            </template>
-                        </div>
-                        <div class="dropdown-list absolute w-full max-h-48 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg mt-1 z-10">
-                            <template x-for="option in ['Opción 5', 'Opción 6'].filter(option => option.toLowerCase().includes(search.toLowerCase()))" :key="option">
-                                <div @click="tags.div3.push(option); search = ''" class="dropdown-option flex items-center p-2 hover:bg-gray-100 cursor-pointer">
-                                    <span x-text="option"></span>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
-            
-                    <!-- Input oculto para enviar las tags -->
-                    <input type="hidden" name="tags[]" :value="Object.values(tags).flat().join(',')" />
                 </div>
 
+                {{-- <div>
+                    <!-- Selectores Condicionales -->
+                    <select class="w-full border-gray-300 rounded-md shadow-sm"
+                        x-show="selectedSelector === 'tactico'"
+                        name="supervisa_a" id="supervisa_a">
+                        @foreach ($tacticos as $tactico)
+                            <option value="{{ $tactico->id }}">
+                                {{ $tactico->unidad_administrativa }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <!-- Contenedor del Label y Select con el Nuevo Diseño -->
+                    <div class="mb-4 flex flex-col space-y-4" x-data="{
+                        open: false,
+                        selectedOptions: [],
+                        toggleOption(value, text) {
+                            if (this.selectedOptions.some(option => option.value === value)) {
+                                this.selectedOptions = this.selectedOptions.filter(option => option.value !== value);
+                            } else {
+                                this.selectedOptions.push({ value, text });
+                            }
+                        },
+                        isSelected(value) {
+                            return this.selectedOptions.some(option => option.value === value);
+                        }
+                    }">
+                        <div class="mb-4 flex flex-col space-y-4">
+                            <div class="mb-4 flex items-center">
+                                <label for="supervisa_a"
+                                    class="w-1/4 bg-gray-200 rounded-lg px-4 py-2 text-gray-950 font-semibold">Supervisa
+                                    a:</label>
+                                <div class="relative w-3/4">
+                                    <button @click="open = !open" type="button"
+                                        class="w-full bg-gray-200 border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <span
+                                            x-text="selectedOptions.length > 0 ? selectedOptions.map(option => option.text).join(', ') : 'Seleccione...'"></span>
+                                        <span class="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-500">
+                                            &#x25BC;
+                                        </span>
+                                    </button>
+                                    <div x-show="open" @click.outside="open = false"
+                                        class="absolute mt-1 w-full bg-white shadow-lg rounded-md border border-gray-300 z-10">
+                                        <ul class="max-h-60 overflow-auto py-1 text-sm text-gray-700">
+                                            @foreach ($tacticos as $tactico)
+                                                <li class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                                    @click="if (selectedOptions.some(option => option.value === '{{ $tactico->id }}')) { selectedOptions = selectedOptions.filter(option => option.value !== '{{ $tactico->id }}'); } else { selectedOptions.push({ value: '{{ $tactico->id }}', text: '{{ $tactico->unidad_administrativa }}' }); }">
+                                                    <span class="mr-2">
+                                                        <input type="checkbox"
+                                                            :checked="selectedOptions.some(option => option
+                                                                .value === '{{ $tactico->id }}')"
+                                                            class="form-checkbox">
+                                                    </span>
+                                                    <span>{{ $tactico->unidad_administrativa }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tabla para mostrar los seleccionados con fondo -->
+                            <div class="w-full mt-4">
+                                <table
+                                    class="w-full border-collapse border border-gray-300 bg-gray-100 rounded-lg shadow-md">
+                                    <thead>
+                                        <tr class="bg-gray-300">
+                                            <th class="border border-gray-400 px-4 py-2 text-left">Unidad
+                                                Administrativa</th>
+                                            <th class="border border-gray-400 px-4 py-2 text-left">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template x-for="option in selectedOptions" :key="option.value">
+                                            <tr class="bg-white hover:bg-gray-50">
+                                                <td class="border border-gray-300 px-4 py-2" x-text="option.text">
+                                                </td>
+                                                <td class="border border-gray-300 px-4 py-2">
+                                                    <button type="button" class="text-red-500 hover:text-red-700"
+                                                        @click="toggleOption(option.value, option.text)">
+                                                        Eliminar
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                        <tr x-show="selectedOptions.length === 0">
+                                            <td colspan="2"
+                                                class="border border-gray-300 px-4 py-2 text-gray-500 text-center">
+                                                No hay opciones seleccionadas.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> --}}
 
                 {{-- final --}}
 

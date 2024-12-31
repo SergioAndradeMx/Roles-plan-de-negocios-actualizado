@@ -16,7 +16,11 @@ class ControladorTactico extends Controller
         $descripcionesEstrategicos = $plan_de_negocio->descripcionpuesto()
         ->where('nivel', 'estratégico')->select('id','unidad_administrativa')
         ->get();
-        return view('descripciones.tactico', ['descripcionesEstrategicos'=>$descripcionesEstrategicos, 'plan_de_negocio'=>$plan_de_negocio]);
+        $operativos = $plan_de_negocio->descripcionpuesto()
+        ->where('nivel', 'operativo')
+        ->select('id', 'unidad_administrativa')
+        ->get();
+        return view('descripciones.tactico', ['descripcionesEstrategicos'=>$descripcionesEstrategicos, 'plan_de_negocio'=>$plan_de_negocio, 'operativos'=>$operativos]);
         
     }
     

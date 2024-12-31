@@ -181,7 +181,7 @@
                     <label for="supervisa_a"
                         class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Supervisa
                         a:</label>
-                    <input type="text"
+                    <input disabled type="text"
                         class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         name="supervisa_a" id="supervisa_a">
                 </div>

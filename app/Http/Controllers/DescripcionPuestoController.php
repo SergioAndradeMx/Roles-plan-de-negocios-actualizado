@@ -16,6 +16,7 @@ class DescripcionPuestoController extends Controller
      */
     public function index(Plan_de_negocio $plan_de_negocio)
     {
+
         $arraydatos = [];
         // Obtener las descripciones asociadas al plan de negocio ordenadas por nivel
         $descripciones = $plan_de_negocio->descripcionpuesto()
@@ -29,7 +30,22 @@ class DescripcionPuestoController extends Controller
      */
     public function create(Plan_de_negocio $plan_de_negocio)
     {
-        return view('descripciones.create', compact('plan_de_negocio'));
+        // Obtener los niveles supervisados dinámicamente
+        // $estrategicos = $plan_de_negocio->descripcionpuesto()
+        //     ->where('nivel', 'estrategico')
+        //     ->select('id', 'unidad_administrativa')
+        //     ->get();
+
+        $tacticos = $plan_de_negocio->descripcionpuesto()
+            ->where('nivel', 'tactico')
+            ->select('id', 'unidad_administrativa')
+            ->get();
+
+        // $operativo = $plan_de_negocio->descripcionpuesto()
+        //     ->where('nivel', 'operativo')
+        //     ->select('id', 'unidad_administrativa')
+        //     ->get();
+        return view('descripciones.create', compact('plan_de_negocio', 'tacticos'));
     }
 
     /**
@@ -37,7 +53,10 @@ class DescripcionPuestoController extends Controller
      */
     public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
-        // Log::info($request);
+        // Registrar el request para depuración
+        // Log::info($request->all());
+
+        // Validación
         $validatedData = $request->validate([
             'nivel' => 'required|string',
             'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo',
@@ -51,7 +70,7 @@ class DescripcionPuestoController extends Controller
             'jornada_laboral' => 'required|string',
             'numero_plaza' => 'required|integer',
             'reporta_a' => 'nullable|integer',
-            'supervisa_a' => 'nullable|integer',
+            'supervisa_a' => 'nullable|array',
             'comunicacion_interna' => 'nullable|string',
             'comunicacion_externa' => 'nullable|string',
             'estado_civil' => 'nullable|string',
@@ -62,18 +81,21 @@ class DescripcionPuestoController extends Controller
             'habilidades_mentales' => 'nullable|string',
         ]);
 
-        // Asociar la descripción al plan de negocio
-        if (DescripcionPuesto::where('codigo', $request->codigo)->exists()) {
-            return redirect()->back()->with('codigoDuplicado', 'El código ingresado ya está en uso. Por favor, use otro.');
+        if (isset($validatedData['supervisa_a'])) {
+            $validatedData['supervisa_a'] = json_encode($validatedData['supervisa_a']);
         }
+        // Agregar el ID del plan de negocio
+        $validatedData['plan_de_negocio_id'] = $plan_de_negocio->id;
+        
+        // Crear el registro
+        DescripcionPuesto::create($validatedData);
 
-        // Asociar la descripción al plan de negocio
-        $plan_de_negocio->descripcionpuesto()->create($validatedData);
-
+        // Redirección con mensaje de éxito
         return redirect()->route('plan_de_negocio.descripciones.index', $plan_de_negocio)
             ->with('success', 'Descripción de puesto creada exitosamente.');
     }
 
+    
 
     /**
      * Mostrar el formulario para editar una descripción de puesto existente.
@@ -81,26 +103,26 @@ class DescripcionPuestoController extends Controller
     public function edit(Plan_de_negocio $plan_de_negocio, $id)
     {
         $descripcion = DescripcionPuesto::findOrFail($id);
-    
+
         // Obtener los niveles supervisados dinámicamente
         $estrategicos = $plan_de_negocio->descripcionpuesto()
             ->where('nivel', 'estrategico')
             ->select('id', 'unidad_administrativa')
             ->get();
-    
+
         $tactico = $plan_de_negocio->descripcionpuesto()
             ->where('nivel', 'tactico')
             ->select('id', 'unidad_administrativa')
             ->get();
-    
+
         $operativo = $plan_de_negocio->descripcionpuesto()
             ->where('nivel', 'operativo')
             ->select('id', 'unidad_administrativa')
             ->get();
-    
+
         return view('descripciones.edit', compact('descripcion', 'plan_de_negocio', 'estrategicos', 'tactico', 'operativo'));
     }
-    
+
     /**
      * Actualizar una descripción de puesto existente.
      */
@@ -152,6 +174,4 @@ class DescripcionPuestoController extends Controller
         return redirect()->route('plan_de_negocio.descripciones.index', $plan_de_negocio)
             ->with('success', 'Descripción de puesto eliminada exitosamente.');
     }
-
-
 }
