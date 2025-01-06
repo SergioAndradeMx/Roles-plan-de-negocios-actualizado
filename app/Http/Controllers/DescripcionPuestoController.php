@@ -103,7 +103,8 @@ class DescripcionPuestoController extends Controller
     public function edit(Plan_de_negocio $plan_de_negocio, $id)
     {
         $descripcion = DescripcionPuesto::findOrFail($id);
-
+        
+        
         // Obtener los niveles supervisados dinámicamente
         $estrategicos = $plan_de_negocio->descripcionpuesto()
             ->where('nivel', 'estrategico')

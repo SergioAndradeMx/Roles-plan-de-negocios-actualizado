@@ -41,17 +41,17 @@
                             </thead>
                             <tbody>
                                 <tr class="border-b hover:bg-gray-50 transition dark:hover:bg-gray-600">
-                                    <td class="border px-4 py-2 dark:border-gray-700">Total de Sueldos Mensuales</td>
+                                    <td class="border px-4 py-2 dark:border-gray-700">Total de Sueldos Mensuales:</td>
                                     <td class="border px-4 py-2 text-right dark:border-gray-700">
                                         ${{ number_format($total, 2) }}</td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition dark:hover:bg-gray-600">
-                                    <td class="border px-4 py-2 dark:border-gray-700">Total de Sueldos Anuales</td>
+                                    <td class="border px-4 py-2 dark:border-gray-700">Total de Sueldos Anuales:</td>
                                     <td class="border px-4 py-2 text-right dark:border-gray-700">
                                         ${{ number_format($total * 12, 2) }}</td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition dark:hover:bg-gray-600">
-                                    <td class="border px-4 py-2 dark:border-gray-700">Total de Sueldos en 5 Años</td>
+                                    <td class="border px-4 py-2 dark:border-gray-700">Total de Sueldos en 5 Años:</td>
                                     <td class="border px-4 py-2 text-right dark:border-gray-700">
                                         ${{ number_format($total * 12 * 5, 2) }}</td>
                                 </tr>

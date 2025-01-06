@@ -35,13 +35,13 @@
                     <div class="flex">
                         <label for="nivel"
                             class="block border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Nivel
-                            Organigrama</label>
+                            Organigrama:</label>
                         <select
                             class="block border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             name="nivel" id="nivel" required>
-                            <option value="estrategico">Estratégico</option>
-                            <option value="tactico">Táctico</option>
-                            <option value="operativo">Operativo</option>
+                            <option value="Estrategico">Estratégico</option>
+                            <option value="Tactico">Táctico</option>
+                            <option value="Operativo">Operativo</option>
                         </select>
                     </div>
 
@@ -159,20 +159,11 @@
                         class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         name="numero_plaza" id="numero_plaza" required>
                 </div>
-
-                {{-- <div class="mb-4 flex">
-                    <label for="reporta_a" class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Reporta a:</label>
-                    <input type="text" class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" name="reporta_a" id="reporta_a">
-                </div> --}}
-
                 <div class="mb-4 flex">
-                    <label for="reporta_a"
+                    <label  for="reporta_a"
                         class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Reporta a:</label>
-                    <select name="reporta_a" id="reporta_a"
+                    <select name="reporta_a" id="reporta_a" disabled
                         class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        {{-- @foreach ($unidadesAdministrativas as $unidad)
-                            <option value="{{ $unidad }}">{{ $unidad }}</option>
-                        @endforeach --}}
                     </select>
                 </div>
 
@@ -259,105 +250,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-
-                {{-- <div>
-                    <!-- Selectores Condicionales -->
-                    <select class="w-full border-gray-300 rounded-md shadow-sm"
-                        x-show="selectedSelector === 'tactico'"
-                        name="supervisa_a" id="supervisa_a">
-                        @foreach ($tacticos as $tactico)
-                            <option value="{{ $tactico->id }}">
-                                {{ $tactico->unidad_administrativa }}
-                            </option>
-                        @endforeach
-                    </select>
-
-                    <!-- Contenedor del Label y Select con el Nuevo Diseño -->
-                    <div class="mb-4 flex flex-col space-y-4" x-data="{
-                        open: false,
-                        selectedOptions: [],
-                        toggleOption(value, text) {
-                            if (this.selectedOptions.some(option => option.value === value)) {
-                                this.selectedOptions = this.selectedOptions.filter(option => option.value !== value);
-                            } else {
-                                this.selectedOptions.push({ value, text });
-                            }
-                        },
-                        isSelected(value) {
-                            return this.selectedOptions.some(option => option.value === value);
-                        }
-                    }">
-                        <div class="mb-4 flex flex-col space-y-4">
-                            <div class="mb-4 flex items-center">
-                                <label for="supervisa_a"
-                                    class="w-1/4 bg-gray-200 rounded-lg px-4 py-2 text-gray-950 font-semibold">Supervisa
-                                    a:</label>
-                                <div class="relative w-3/4">
-                                    <button @click="open = !open" type="button"
-                                        class="w-full bg-gray-200 border border-gray-300 rounded-lg shadow-sm px-4 py-2 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span
-                                            x-text="selectedOptions.length > 0 ? selectedOptions.map(option => option.text).join(', ') : 'Seleccione...'"></span>
-                                        <span class="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-500">
-                                            &#x25BC;
-                                        </span>
-                                    </button>
-                                    <div x-show="open" @click.outside="open = false"
-                                        class="absolute mt-1 w-full bg-white shadow-lg rounded-md border border-gray-300 z-10">
-                                        <ul class="max-h-60 overflow-auto py-1 text-sm text-gray-700">
-                                            @foreach ($tacticos as $tactico)
-                                                <li class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                                    @click="if (selectedOptions.some(option => option.value === '{{ $tactico->id }}')) { selectedOptions = selectedOptions.filter(option => option.value !== '{{ $tactico->id }}'); } else { selectedOptions.push({ value: '{{ $tactico->id }}', text: '{{ $tactico->unidad_administrativa }}' }); }">
-                                                    <span class="mr-2">
-                                                        <input type="checkbox"
-                                                            :checked="selectedOptions.some(option => option
-                                                                .value === '{{ $tactico->id }}')"
-                                                            class="form-checkbox">
-                                                    </span>
-                                                    <span>{{ $tactico->unidad_administrativa }}</span>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Tabla para mostrar los seleccionados con fondo -->
-                            <div class="w-full mt-4">
-                                <table
-                                    class="w-full border-collapse border border-gray-300 bg-gray-100 rounded-lg shadow-md">
-                                    <thead>
-                                        <tr class="bg-gray-300">
-                                            <th class="border border-gray-400 px-4 py-2 text-left">Unidad
-                                                Administrativa</th>
-                                            <th class="border border-gray-400 px-4 py-2 text-left">Acción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <template x-for="option in selectedOptions" :key="option.value">
-                                            <tr class="bg-white hover:bg-gray-50">
-                                                <td class="border border-gray-300 px-4 py-2" x-text="option.text">
-                                                </td>
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    <button type="button" class="text-red-500 hover:text-red-700"
-                                                        @click="toggleOption(option.value, option.text)">
-                                                        Eliminar
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </template>
-                                        <tr x-show="selectedOptions.length === 0">
-                                            <td colspan="2"
-                                                class="border border-gray-300 px-4 py-2 text-gray-500 text-center">
-                                                No hay opciones seleccionadas.
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div> --}}
-
+                </div>            
                 {{-- final --}}
 
                 <div class="mb-4 flex">

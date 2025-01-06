@@ -38,9 +38,9 @@
                         <select
                             class="block border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             name="nivel" id="nivel" required>
-                            <option value="tactico">Táctico</option>
-                            <option value="estrategico">Estratégico</option>
-                            <option value="operativo">Operativo</option>
+                            <option value="Tactico">Táctico</option>
+                            <option value="Estrategico">Estratégico</option>
+                            <option value="Operativo">Operativo</option>
                         </select>
                     </div>
 
