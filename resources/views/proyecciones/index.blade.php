@@ -17,18 +17,15 @@
     </div>
     <div class="flex flex-col lg:flex-row justify-center items-start gap-6 xl:px-10 p-4">
         <!-- Barra lateral -->
-        <div class="w-full lg:w-1/4 bg-white rounded-lg shadow-md dark:bg-gray-800 p-4">
+        <div class="w-full lg:w-1/6 bg-slate-500 rounded-lg shadow-md dark:bg-gray-900 p-2">
             @include('descripciones.menu')
         </div>
-        <div class="container mx-auto my-4 px-4 sm:px-6 lg:px-8">
-            <!-- Formulario de Proyecciones -->
-            {{-- <form action="{{ route('proyecciones.store') }}" method="POST">
-            @csrf --}}
+        <div class="container mx-auto sm:px-6 lg:px-8">
+
             <div class="overflow-x-auto">
-                <table
-                    class="min-w-full bg-white dark:bg-gray-800 shadow rounded mb-4 border border-black dark:border-gray-600">
+                <table class="min-w-full bg-white dark:bg-gray-800 shadow rounded mb-4 border border-black dark:border-gray-600">
                     <thead>
-                        <tr class="bg-gray-200 dark:bg-gray-700 border border-black dark:border-gray-600">
+                        <tr class="bg-slate-500 dark:bg-slate-800 text-left">
                             <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Puesto</th>
                             <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Número de
                                 Trabajadores
@@ -71,8 +68,6 @@
                 <button informacion="{{ $haydatosanules }}" ruta="{{ $ruta }}" id="botonguardar" type="button"
                     class="bg-blue-500 text-white px-6 py-2 rounded">Guardar</button>
             </div>
-
-            {{-- </form> --}}
         </div>
 </body>
 

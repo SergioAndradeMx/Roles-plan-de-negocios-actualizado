@@ -18,26 +18,27 @@
     </div>
 
     <!-- Contenedor principal -->
-    <div class="flex justify-center items-stretch  my-2 sm:my-4 2xl:px-10 gap-20 xl:mx-2 ">
+    <div class="flex justify-center items-stretch my-2 sm:my-4 2xl:px-10 gap-6 xl:mx-2 flex-wrap">
         <!-- Contenido principal -->
         <!-- Barra lateral -->
-        <div class="relative rounded-lg border-none card h-full bg-white 2xl:p-5 p-6 dark:bg-gray-800">
+        <div class="relative rounded-lg border-none card h-full bg-white 2xl:p-2 p-2 dark:bg-gray-800 w-full sm:w-auto">
             @include('descripciones.menu')
         </div>
 
-        <main class=" rounded-lg border-none card h-full bg-white 2xl:p-5 dark:bg-gray-800 flex-1 p-8"
-            x-data="{ selectedSelector: 'estrategico' }">
+        <main class="rounded-lg border-none card h-full bg-white 2xl:p-5 dark:bg-gray-800 flex-1 p-8 w-full sm:w-auto">
             <!-- Formulario -->
             <form action="{{ route('plan_de_negocio.descripciones.store', $plan_de_negocio) }}" method="POST">
                 @csrf
-
-                <div class="mb-4 flex gap-4">
-                    <div class="flex">
+                <!-- div 1 -->
+                <div class="mb-4 flex flex-col sm:flex-row gap-4 items-center">
+                    <!-- Nivel Organigrama -->
+                    <div class="flex  w-full sm:w-auto">
                         <label for="nivel"
-                            class="block border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Nivel
-                            Organigrama:</label>
+                            class="border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950 w-full sm:w-auto rounded-r-none">
+                            Nivel Organigrama:
+                        </label>
                         <select
-                            class="block border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 w-full sm:w-auto rounded-l-none"
                             name="nivel" id="nivel" required>
                             <option value="Estrategico">Estratégico</option>
                             <option value="Tactico">Táctico</option>
@@ -53,7 +54,6 @@
                                 tactico: "{{ route('plan_de_negocio.tactico.index', $plan_de_negocio) }}",
                                 operativo: "{{ route('plan_de_negocio.operativo.index', $plan_de_negocio) }}"
                             };
-
                             // Verifica si hay una ruta para el valor seleccionado y redirige
                             if (routes[selectedValue]) {
                                 window.location.href = routes[selectedValue];
@@ -61,83 +61,112 @@
                         });
                     </script>
 
-
-                    <div class="flex">
+                    <!-- Código -->
+                    <div class="flex w-full sm:w-auto">
                         <label for="codigo"
-                            class="block border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Código:</label>
+                            class="border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950 w-full sm:w-auto rounded-r-none">
+                            Código:
+                        </label>
                         <input type="text"
-                            class="block border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 w-full sm:w-auto rounded-l-none"
                             name="codigo" id="codigo" value="{{ old('codigo') }}">
-
-                        @if (session('codigoDuplicado'))
-                            <div class="mt-2 text-yellow-600 bg-yellow-100 border border-yellow-400 p-2 rounded">
-                                {{ session('codigoDuplicado') }}
-                            </div>
-                        @endif
-
                     </div>
+                    @if (session('codigoDuplicado'))
+                        <div
+                            class="text-yellow-600 bg-yellow-100 border border-yellow-400 p-2 rounded w-full sm:w-auto">
+                            {{ session('codigoDuplicado') }}
+                        </div>
+                    @endif
                 </div>
-                <div class="mb-4 flex">
-                    <label for="unidad_administrativa"
-                        class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Unidad
-                        Administrativa:</label>
-                    <input type="text"
-                        class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        name="unidad_administrativa" id="unidad_administrativa" required>
-                </div>
+                <!-- div 2 -->
+                <div class="mb-4 flex flex-col sm:flex-row gap-4 ">
+                    <!-- Unidad Administrativa -->
+                    <div class="flex w-full sm:w-1/2">
+                        <label for="unidad_administrativa"
+                            class="border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950 w-full sm:w-auto rounded-r-none">
+                            Unidad Administrativa:
+                        </label>
+                        <input type="text"
+                            class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 w-full sm:w-auto rounded-l-none"
+                            name="unidad_administrativa" id="unidad_administrativa" required>
+                    </div>
 
-                <div class="mb-4 flex">
-                    <label for="nombre_puesto"
-                        class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Nombre de
-                        Puesto:</label>
-                    <input type="text"
-                        class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        name="nombre_puesto" id="nombre_puesto" required>
-                </div>
 
-                <div class="mb-4 flex">
+                    <!-- Nombre de Puesto -->
+                    <div class="flex w-full sm:w-1/2">
+                        <label for="nombre_puesto"
+                            class="border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950 w-full sm:w-auto rounded-r-none">
+                            Nombre de Puesto:
+                        </label>
+                        <input type="text"
+                            class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 w-full sm:w-auto rounded-l-none"
+                            name="nombre_puesto" id="nombre_puesto" required>
+                    </div>
+
+                </div>
+                <!-- Descripción Genérica-->
+                <div class="mb-4 flex flex-col sm:flex-row">
                     <label for="descripcion_generica"
-                        class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Descripción
+                        class="block sm:w-1/6 border-gray-300 bg-gray-200 rounded-t-lg sm:rounded-l-lg sm:rounded-none p-2 text-gray-950">Descripción
                         Genérica:</label>
-                    <textarea class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    <textarea
+                    class="block w-full sm:w-5/6 border-gray-300 rounded-b-lg sm:rounded-r-lg sm:rounded-none shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         name="descripcion_generica" id="descripcion_generica" rows="3" required></textarea>
                 </div>
-
-                <div class="mb-4 flex">
+                <!-- Descripción Específica -->
+                <div class="mb-4 flex flex-col sm:flex-row">
                     <label for="descripcion_especifica"
-                        class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Descripción
-                        Específica:</label>
-                    <textarea class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="block sm:w-1/6 border-gray-300 bg-gray-200 rounded-t-lg sm:rounded-l-lg sm:rounded-none p-2 text-gray-950">
+                        Descripción Específica:
+                    </label>
+                    <textarea
+                        class="block w-full sm:w-5/6 border-gray-300 rounded-b-lg sm:rounded-r-lg sm:rounded-none shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         name="descripcion_especifica" id="descripcion_especifica" rows="3" required></textarea>
                 </div>
 
-                <div class="mb-4 flex">
+                <!-- Objetivos del Puesto -->
+                <div class="mb-4 flex flex-col sm:flex-row">
                     <label for="objetivos_puesto"
-                        class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Objetivos del
-                        Puesto:</label>
-                    <textarea class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="block sm:w-1/6 border-gray-300 bg-gray-200 rounded-t-lg sm:rounded-l-lg sm:rounded-none p-2 text-gray-950">
+                        Objetivos del Puesto:
+                    </label>
+                    <textarea
+                        class="block w-full sm:w-5/6 border-gray-300 rounded-b-lg sm:rounded-r-lg sm:rounded-none shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         name="objetivos_puesto" id="objetivos_puesto" rows="3" required></textarea>
                 </div>
 
-                <div class="mb-4 flex gap-4">
-                    <div class="flex items-center w-1/2">
+                <!-- div 3 -->
+                <div class="mb-4 flex  gap-4">
+                    <!-- Salario Mínimo -->
+                    <div class="flex items-center w-full sm:w-1/3">
                         <label for="salario_minimo"
-                            class="block w-1/3 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Salario
-                            Mínimo:</label>
+                            class="block w-1/3 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">
+                            Salario Mínimo:
+                        </label>
                         <input type="number"
                             class="block w-2/3 border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             name="salario_minimo" id="salario_minimo" step="0.01" required>
                     </div>
-                    <div class="flex items-center w-1/2">
+                    <!-- Salario Máximo -->
+                    <div class="flex items-center w-full sm:w-1/3">
                         <label for="salario_maximo"
-                            class="block w-1/3 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Salario
-                            Máximo:</label>
+                            class="block w-1/3 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">
+                            Salario Máximo:
+                        </label>
                         <input type="number"
                             class="block w-2/3 border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             name="salario_maximo" id="salario_maximo" step="0.01" required>
                     </div>
+                    <!-- Número de Plaza -->
+                    <div class="flex items-center w-full sm:w-1/3">
+                        <label for="numero_plaza"
+                            class="block w-1/3 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Número de
+                            Plaza:</label>
+                        <input type="number"
+                            class="block w-2/3 border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            name="numero_plaza" id="numero_plaza" required>
+                    </div>
                 </div>
-
 
                 <div class="mb-4 flex">
                     <label for="jornada_laboral"
@@ -152,15 +181,7 @@
                 </div>
 
                 <div class="mb-4 flex">
-                    <label for="numero_plaza"
-                        class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Número de
-                        Plaza:</label>
-                    <input type="number"
-                        class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        name="numero_plaza" id="numero_plaza" required>
-                </div>
-                <div class="mb-4 flex">
-                    <label  for="reporta_a"
+                    <label for="reporta_a"
                         class="block w-1/6 border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950">Reporta a:</label>
                     <select name="reporta_a" id="reporta_a" disabled
                         class="block w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -250,7 +271,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>            
+                </div>
                 {{-- final --}}
 
                 <div class="mb-4 flex">

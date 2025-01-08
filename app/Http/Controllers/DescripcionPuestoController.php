@@ -53,9 +53,6 @@ class DescripcionPuestoController extends Controller
      */
     public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
-        // Registrar el request para depuración
-        // Log::info($request->all());
-
         // Validación
         $validatedData = $request->validate([
             'nivel' => 'required|string',
@@ -83,10 +80,12 @@ class DescripcionPuestoController extends Controller
 
         if (isset($validatedData['supervisa_a'])) {
             $validatedData['supervisa_a'] = json_encode($validatedData['supervisa_a']);
+        } else {
+            $validatedData['supervisa_a'] = json_encode([]);
         }
         // Agregar el ID del plan de negocio
         $validatedData['plan_de_negocio_id'] = $plan_de_negocio->id;
-        
+
         // Crear el registro
         DescripcionPuesto::create($validatedData);
 
@@ -95,16 +94,15 @@ class DescripcionPuestoController extends Controller
             ->with('success', 'Descripción de puesto creada exitosamente.');
     }
 
-    
+
 
     /**
      * Mostrar el formulario para editar una descripción de puesto existente.
      */
-    public function edit(Plan_de_negocio $plan_de_negocio, $id)
+     public function edit(Plan_de_negocio $plan_de_negocio, $id)
     {
         $descripcion = DescripcionPuesto::findOrFail($id);
-        
-        
+        // quitar el dato actual dependiendo su nivel, ejemplo si es tactico cuando haga la busqueda no me tragia el id actual del que se esta editando
         // Obtener los niveles supervisados dinámicamente
         $estrategicos = $plan_de_negocio->descripcionpuesto()
             ->where('nivel', 'estrategico')
@@ -131,7 +129,6 @@ class DescripcionPuestoController extends Controller
     public function update(Request $request, Plan_de_negocio $plan_de_negocio, $id)
     {
         $descripcion = DescripcionPuesto::findOrFail($id);
-
         $validatedData = $request->validate([
             'nivel' => 'required|string',
             'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo,' . $descripcion->id,
@@ -145,7 +142,7 @@ class DescripcionPuestoController extends Controller
             'jornada_laboral' => 'required|string',
             'numero_plaza' => 'required|integer',
             'reporta_a' => 'nullable|string',
-            'supervisa_a' => 'nullable|string',
+            'supervisa_a' => 'nullable|array',
             'comunicacion_interna' => 'nullable|string',
             'comunicacion_externa' => 'nullable|string',
             'estado_civil' => 'nullable|string',
@@ -157,7 +154,13 @@ class DescripcionPuestoController extends Controller
         ], [
             'codigo.unique' => 'El código ya está en uso. Por favor, elija otro código.',
         ]);
-        Log::info($request);
+
+        if (isset($validatedData['supervisa_a'])) {
+            $validatedData['supervisa_a'] = json_encode($validatedData['supervisa_a']);
+        } else {
+            $validatedData['supervisa_a'] = json_encode([]);
+        }
+
         $descripcion->update($validatedData);
 
         return redirect()->route('plan_de_negocio.descripciones.index', ['plan_de_negocio' => $plan_de_negocio])
