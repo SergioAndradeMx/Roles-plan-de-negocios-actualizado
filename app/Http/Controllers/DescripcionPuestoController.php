@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DescripcionPuesto;
 use App\Models\Plan_de_negocio;
-use Illuminate\Contracts\Support\ValidatedData;
-use Illuminate\Support\Facades\Log;
-use PhpParser\Node\Stmt\Foreach_;
 
 class DescripcionPuestoController extends Controller
 {
@@ -31,20 +28,11 @@ class DescripcionPuestoController extends Controller
     public function create(Plan_de_negocio $plan_de_negocio)
     {
         // Obtener los niveles supervisados dinámicamente
-        // $estrategicos = $plan_de_negocio->descripcionpuesto()
-        //     ->where('nivel', 'estrategico')
-        //     ->select('id', 'unidad_administrativa')
-        //     ->get();
-
         $tacticos = $plan_de_negocio->descripcionpuesto()
             ->where('nivel', 'tactico')
             ->select('id', 'unidad_administrativa')
             ->get();
 
-        // $operativo = $plan_de_negocio->descripcionpuesto()
-        //     ->where('nivel', 'operativo')
-        //     ->select('id', 'unidad_administrativa')
-        //     ->get();
         return view('descripciones.create', compact('plan_de_negocio', 'tacticos'));
     }
 
@@ -53,49 +41,60 @@ class DescripcionPuestoController extends Controller
      */
     public function store(Request $request, Plan_de_negocio $plan_de_negocio)
     {
-        // Validación
-        $validatedData = $request->validate([
-            'nivel' => 'required|string',
-            'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo',
-            'unidad_administrativa' => 'required|string|max:255',
-            'nombre_puesto' => 'required|string|max:255',
-            'descripcion_generica' => 'required|string',
-            'descripcion_especifica' => 'required|string',
-            'objetivos_puesto' => 'required|string',
-            'salario_minimo' => 'required|numeric',
-            'salario_maximo' => 'required|numeric',
-            'jornada_laboral' => 'required|string',
-            'numero_plaza' => 'required|integer',
-            'reporta_a' => 'nullable|integer',
-            'supervisa_a' => 'nullable|array',
-            'comunicacion_interna' => 'nullable|string',
-            'comunicacion_externa' => 'nullable|string',
-            'estado_civil' => 'nullable|string',
-            'edad' => 'nullable|integer',
-            'genero' => 'nullable|string',
-            'requisitos_generales' => 'nullable|string',
-            'habilidades_fisicas' => 'nullable|string',
-            'habilidades_mentales' => 'nullable|string',
-        ]);
-
-        if (isset($validatedData['supervisa_a'])) {
-            $validatedData['supervisa_a'] = json_encode($validatedData['supervisa_a']);
-        } else {
-            $validatedData['supervisa_a'] = json_encode([]);
+        try {
+            // Validación
+            $validatedData = $request->validate([
+                'nivel' => 'required|string',
+                'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo',
+                'unidad_administrativa' => 'required|string|max:255',
+                'nombre_puesto' => 'required|string|max:255',
+                'descripcion_generica' => 'required|string',
+                'descripcion_especifica' => 'required|string',
+                'objetivos_puesto' => 'required|string',
+                'salario_minimo' => 'required|numeric',
+                'salario_maximo' => 'required|numeric',
+                'jornada_laboral' => 'required|string',
+                'numero_plaza' => 'required|integer',
+                'reporta_a' => 'nullable|integer',
+                'supervisa_a' => 'nullable|array',
+                'comunicacion_interna' => 'nullable|string',
+                'comunicacion_externa' => 'nullable|string',
+                'estado_civil' => 'nullable|string',
+                'edad' => 'nullable|integer',
+                'genero' => 'nullable|string',
+                'requisitos_generales' => 'nullable|string',
+                'habilidades_fisicas' => 'nullable|string',
+                'habilidades_mentales' => 'nullable|string',
+            ]);
+    
+            if (isset($validatedData['supervisa_a'])) {
+                $validatedData['supervisa_a'] = json_encode($validatedData['supervisa_a']);
+            } else {
+                $validatedData['supervisa_a'] = json_encode([]);
+            }
+    
+            // Agregar el ID del plan de negocio
+            $validatedData['plan_de_negocio_id'] = $plan_de_negocio->id;
+    
+            // Crear el registro
+            DescripcionPuesto::create($validatedData);
+    
+            // Redirección con mensaje de éxito
+            return redirect()->route('plan_de_negocio.descripciones.index', $plan_de_negocio)
+                ->with('success', 'Descripción de puesto creada exitosamente.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Verificar si el error corresponde al campo 'codigo'
+            if ($e->validator->errors()->has('codigo')) {
+                return back()
+                    ->withInput()
+                    ->with('codigoDuplicado', 'El código ingresado ya existe. Por favor, ingresa un código diferente.');
+            }
+    
+            // Si ocurre otro error de validación, lanzarlo de nuevo
+            throw $e;
         }
-        // Agregar el ID del plan de negocio
-        $validatedData['plan_de_negocio_id'] = $plan_de_negocio->id;
-
-        // Crear el registro
-        DescripcionPuesto::create($validatedData);
-
-        // Redirección con mensaje de éxito
-        return redirect()->route('plan_de_negocio.descripciones.index', $plan_de_negocio)
-            ->with('success', 'Descripción de puesto creada exitosamente.');
     }
-
-
-
+    
     /**
      * Mostrar el formulario para editar una descripción de puesto existente.
      */

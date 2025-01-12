@@ -10,44 +10,46 @@
 
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+<body class="bg-gray-600">
     @include('layouts.navigation')
-    <div class="text-center text-black dark:text-white my-4 sm:my-6">
-        <h1 class="text-4xl font-semibold antialiased">Proyección de Sueldos</h1>
+    <div class="text-center text-white my-4 sm:my-6 ml-4 sm:ml-8 md:ml-16 lg:ml-32">
+        <h1 class="text-3xl md:text-4xl font-bold mx-auto">Proyección de Sueldos.</h1>
     </div>
     <div class="flex flex-col lg:flex-row justify-center items-start gap-6 xl:px-10 p-4">
         <!-- Barra lateral -->
-        <div class="w-full lg:w-1/6 bg-slate-500 rounded-lg shadow-md dark:bg-gray-900 p-2">
+        <div class="w-full lg:w-1/6  rounded-lg shadow-md bg-gray-900 p-2">
             @include('descripciones.menu')
         </div>
+
         <div class="container mx-auto sm:px-6 lg:px-8">
 
             <div class="overflow-x-auto">
-                <table class="min-w-full bg-white dark:bg-gray-800 shadow rounded mb-4 border border-black dark:border-gray-600">
+                <table class="w-full bg-gray-900 shadow rounded mb-4 border border-black">
                     <thead>
-                        <tr class="bg-slate-500 dark:bg-slate-800 text-left">
-                            <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Puesto</th>
-                            <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Número de
+                        <tr class="bg-gray-900 text-left">
+                            <th class="px-4 py-2 text-left border border-black text-white">Puesto</th>
+                            <th class="px-4 py-2 text-left border border-black text-white">Número de
                                 Trabajadores
                             </th>
-                            <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Salario</th>
-                            <th class="px-4 py-2 text-left border border-black dark:border-gray-600">Total</th>
+                            <th class="px-4 py-2 text-left border border-black text-white">Salario</th>
+                            <th class="px-4 py-2 text-left border border-black text-white">Total</th>
 
                         </tr>
                     </thead>
 
                     <tbody>
                         @foreach ($arraydatos as $value)
-                            <tr idactual="{{ $value[4] }}" class="border border-black dark:border-gray-600">
+                            <tr idactual="{{ $value[4] }}"  class="border  font-semibold odd:bg-gray-600 even:bg-gray-500 text-white">
                                 <td valorid="{{ $value[0] }}"
-                                    class="border px-4 py-2 border-black dark:border-gray-600">{{ $value[1] }}
+                                class="border border-black px-4 py-2">{{ $value[1] }}
                                 </td>
-                                <td class="border px-4 py-2 border-black dark:border-gray-600">{{ $value[2] }}
+                                <td class="border border-black px-4 py-2">{{ $value[2] }}
                                 </td>
-                                <td class="border px-4 py-2 border-black dark:border-gray-600"><input type="number"
-                                        value="{{ $value[3] }}">
+                                <td class="border border-black px-4 py-2">
+                                    <input type="number" value="{{ $value[3] }}"
+                                        class="bg-slate-800 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full">
                                 </td>
-                                <td class="border px-4 py-2 border-black dark:border-gray-600">
+                                <td class="border px-4 border-black py-2">
                                     {{ sprintf('%.2f', $value[2] * $value[3]) }}
                                 </td>
                             </tr>
@@ -55,9 +57,8 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td id="totaldesueldos" class="text-right" colspan="4">Total de Sueldos:
-                                {{ number_format($totaldelossueldos, 2, '.', '') }}
-
+                            <td id="totaldesueldos" class="text-right text-white font-bold px-4 py-2" colspan="4">
+                                Total de Sueldos: {{ number_format($totaldelossueldos, 2, '.', '') }}
                             </td>
                         </tr>
                     </tfoot>
@@ -66,7 +67,9 @@
             <!-- Botón Guardar -->
             <div class="text-center">
                 <button informacion="{{ $haydatosanules }}" ruta="{{ $ruta }}" id="botonguardar" type="button"
-                    class="bg-blue-500 text-white px-6 py-2 rounded">Guardar</button>
+                    class="bg-green-800 font-bold hover:bg-green-600 text-white px-6 py-2 rounded w-full sm:w-auto">
+                    Guardar
+                </button>
             </div>
         </div>
 </body>

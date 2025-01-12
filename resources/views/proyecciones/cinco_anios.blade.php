@@ -4,56 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyección Anual</title>
+    <title>Proyección A Cinco Años</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/proyeccionsueldocincoanios.js'])
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+<body class="bg-gray-600">
     @include('layouts.navigation')
-    <div class="container mx-auto p-2 max-w-full">
-        <h1 class="text-4xl font-bold mb-6 text-center">Proyección Anual</h1>
-        <div class="flex flex-col lg:flex-row justify-start gap-2">
+
+    <div class="text-center text-white my-4 sm:my-6 ml-4 sm:ml-8 md:ml-16 lg:ml-32">
+        <h1 class="text-3xl md:text-4xl font-bold mx-auto">Proyección A Cinco Años.</h1>
+    </div>
+
+        <div class="flex flex-col lg:flex-row justify-center items-start gap-6 xl:px-10 p-4">
             <!-- Barra lateral -->
-            <div class="w-full lg:w-1/6 bg-white rounded-md shadow-sm dark:bg-gray-800 p-1">
+            <div class="w-full lg:w-1/6  rounded-lg shadow-md bg-gray-900 p-2">
                 @include('descripciones.menu')
             </div>
             <!-- Tabla de Proyección Anual -->
             <div class="w-full lg:w-4/4">
                 <div class="overflow-x-auto p-1">
-                    <table class="table-auto w-full text-xs bg-white dark:bg-gray-800 border dark:border-gray-700">
+                    <table class="table-auto w-full text-xs bg-gray-800 border">
                         <thead>
-                            <tr class="bg-gray-200 dark:bg-gray-700">
-                                <th class="px-2 py-1 border dark:border-gray-600">Puesto</th>
-                                {{-- <th class="px-2 py-1 border dark:border-gray-600">Núm. Trabajadores</th> --}}
-                                <th class="px-2 py-1 border dark:border-gray-600">Año 1</th>
-                                <th class="px-2 py-1 border dark:border-gray-600">Año 2</th>
-                                <th class="px-2 py-1 border dark:border-gray-600">Año 3</th>
-                                <th class="px-2 py-1 border dark:border-gray-600">Año 4</th>
-                                <th class="px-2 py-1 border dark:border-gray-600">Año 5</th>
-
+                            <tr class="bg-slate-800">
+                                <th class="px-2 py-1 border border-black text-left text-white">Puesto</th>
+                                <th class="px-2 py-1 border border-black text-right text-white">Año 1</th>
+                                <th class="px-2 py-1 border border-black text-right text-white">Año 2</th>
+                                <th class="px-2 py-1 border border-black text-right text-white">Año 3</th>
+                                <th class="px-2 py-1 border border-black text-right text-white">Año 4</th>
+                                <th class="px-2 py-1 border border-black text-left text-white">Año 5</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($arraydatoscincoanios as $iddescripciondepuesto => $itemsdescripciondepuesto)
                                 @foreach ($itemsdescripciondepuesto as $nombrePertenece => $datosanuales)
                                     <tr>
-                                        <td class="border" width="15%" id_pertenece="{{ $iddescripciondepuesto }}">
+                                        <td class="px-2 py-1 border odd:bg-gray-600   text-white font-medium border-black " width="15%" id_pertenece="{{ $iddescripciondepuesto }}">
                                             {{ $nombrePertenece }}</td>
                                         @if (count($datosanuales) > 1)
                                             @foreach ($datosanuales as $item)
-                                                <td class="border" width="7%" id_actual={{ $item['id_anual'] }}>
+                                                <td class="border border-gray-600"  width="7%" id_actual={{ $item['id_anual'] }}>
                                                     <input type="number"
-                                                        class="w-full border text-black rounded-sm text-xs px-0 text-right"
+                                                    class="w-full border border-black text-black rounded-sm text-xs px-0 text-right"
                                                         value="{{ $item['monto'] }}">
                                                 </td>
                                             @endforeach
                                         @else
                                             @foreach ($datosanuales as $item)
                                                 @for ($i = 0; $i < 5; $i++)
-                                                    <td class="border" width="7%" id_actual={{ $item['id_anual'] }}>
+                                                    <td class="border border-gray-600 " width="7%" id_actual={{ $item['id_anual'] }}>
                                                         <input type="number"
-                                                            class="w-full border text-black rounded-sm text-xs px-0 text-right"
+                                                        class="w-full border border-black text-black rounded-sm text-xs px-0 text-right"
                                                             value="{{ $item['monto'] }}">
                                                     </td>
                                                 @endfor
@@ -64,23 +65,22 @@
                             @endforeach
                         </tbody>
                         <tfoot>
-                            <tr id="totales" class="bg-gray-200 dark:bg-gray-700">
-                                <th class="px-2 py-1 border dark:border-gray-600">Total Sueldos: </th>
-                                {{-- <th class="px-2 py-1 border dark:border-gray-600">Núm. Trabajadores</th> --}}
-                                <th class="px-2 py-1 border dark:border-gray-600"></th>
-                                <th class="px-2 py-1 border dark:border-gray-600"></th>
-                                <th class="px-2 py-1 border dark:border-gray-600"></th>
-                                <th class="px-2 py-1 border dark:border-gray-600"></th>
-                                <th class="px-2 py-1 border dark:border-gray-600"></th>
+                            <tr id="totales" class="bg-gray-800">
+                                <th class="px-2 py-1 border border-black text-white">Total Sueldos: </th>
+                                <th class="px-2 py-1 border border-black text-white"></th>
+                                <th class="px-2 py-1 border border-black text-white"></th>
+                                <th class="px-2 py-1 border border-black text-white"></th>
+                                <th class="px-2 py-1 border border-black text-white"></th>
+                                <th class="px-2 py-1 border border-black text-white"></th>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
-            <div class="text-center">
-                <button ruta="{{ $ruta }}" id="botonguardar" type="button"
-                    class="bg-blue-500 text-white px-6 py-2 rounded">Guardar</button>
-            </div>
+        </div>
+        <div class="flex justify-center   px-10 py-2 items-center ml-4 sm:ml-[5%]">
+            <button ruta="{{ $ruta }}" id="botonguardar" type="button"
+            class=" text-white px-6 py-2 rounded hover:border-green-600  text-center text-xl bg-green-700 border-green-600 hover:bg-green-800">Guardar</button>
         </div>
     </div>
 </body>
