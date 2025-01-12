@@ -65,14 +65,7 @@ class ProyeccionController extends Controller
                     'total' => $value[4]
                 ]
             );
-            // Log::info($value);
-            // Proyeccion::create([
-            //     'plan_de_negocio_id'=>$plan_de_negocio->id,
-            //     'descripcion_de_puesto_id'=>$value[0],
-            //     'sueldo'=>$value[3],
-            //     'total'=>$value[4]
-
-            // ]);
+           
         }
     }
 
@@ -101,8 +94,11 @@ class ProyeccionController extends Controller
     public function resumen(Plan_de_negocio $plan_de_negocio)
     {
         // Obtener todas las proyecciones y calcular los totales
-
+        // dd(count($plan_de_negocio->proyecciondesueldomensual));
         $sueldos = $plan_de_negocio->proyecciondesueldomensual;
+        if (count($plan_de_negocio->descripcionpuesto) > count($sueldos)) {
+            return redirect()->back()->with('mensaje', 'No se pueden ingresar hasta que se guarden los datos de sueldo.');
+        }
         $total = 0;
         foreach ($sueldos as $value) {
             $total += $value->total;
