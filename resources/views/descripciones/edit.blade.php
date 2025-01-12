@@ -97,15 +97,16 @@
                         id="salario_maximo" value="{{ $descripcion->salario_maximo }}" required>
                 </div>
 
-                <div>
-                    <label for="jornada_laboral" class="block text-gray-50 font-semibold mb-1">Jornada Laboral</label>
-                    <select class="w-full border-gray-300 rounded-md shadow-sm" name="jornada_laboral"
-                        id="jornada_laboral" required>
-                        <option value="Normal" {{ $descripcion->jornada_laboral == 'Normal' ? 'selected' : '' }}>Normal
-                        </option>
-                        <option value="Inglesa" {{ $descripcion->jornada_laboral == 'Inglesa' ? 'selected' : '' }}>
-                            Inglesa</option>
-                    </select>
+                <div class="mb-4 flex flex-col sm:flex-row">
+                    <!-- Etiqueta -->
+                    <label for="jornada_laboral"
+                        class="block w-full sm:w-1/6 border-gray-300 font-bold bg-gray-200 p-2 text-gray-950  sm:text-left rounded-t sm:rounded-l-lg rounded-r-none">
+                        Jornada Laboral:
+                    </label>
+                    <!-- Select -->
+                    <input type="text"
+                        class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 rounded-l-none"
+                        name="jornada_laboral" id="jornada_laboral" value="{{ $descripcion->jornada_laboral }}" required>
                 </div>
 
                 <div>
@@ -403,20 +404,20 @@
                         id="estado_civil" value="{{ $descripcion->estado_civil }}">
                 </div>
 
-                <div>
-                    <label for="edad" class="block text-gray-50 font-semibold mb-1">Edad</label>
-                    <input type="number" class="w-full border-gray-300 rounded-md shadow-sm" name="edad"
-                        id="edad" value="{{ $descripcion->edad }}">
+                <div class="flex w-full sm:w-1/3">
+                    <label for="edad"
+                        class="block border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950  sm:w-auto  font-bold rounded-r-none">Edad:</label>
+                    <input type="text"
+                        class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 rounded-l-none"
+                        name="edad" id="edad" value="{{$descripcion->edad }}" required>
                 </div>
-
-                <div>
-                    <label for="genero" class="block text-gray-50 font-semibold mb-1">Género</label>
-                    <select class="w-full border-gray-300 rounded-md shadow-sm" name="genero" id="genero">
-                        <option value="Hombre" {{ $descripcion->genero == 'Hombre' ? 'selected' : '' }}>Hombre
-                        </option>
-                        <option value="Mujer" {{ $descripcion->genero == 'Mujer' ? 'selected' : '' }}>Mujer
-                        </option>
-                    </select>
+                {{-- genero --}}
+                <div class="flex w-full sm:w-1/3">
+                    <label for="genero"
+                        class="block border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950  sm:w-auto font-bold rounded-r-none">Género:</label>
+                        <input type="text"
+                        class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 rounded-l-none"
+                        name="genero" id="genero" value="{{ $descripcion->genero }}" required>
                 </div>
 
                 <div>

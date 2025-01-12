@@ -183,12 +183,9 @@
                             Jornada Laboral:
                         </label>
                         <!-- Select -->
-                        <select
-                            class="block w-full sm:flex-grow border-gray-300 shadow-sm  focus:border-blue-500 focus:ring-blue-500 rounded-b sm:rounded-r-lg "
-                            name="jornada_laboral" id="jornada_laboral" required>>
-                            <option value="Normal">Normal</option>
-                            <option value="Inglesa">Inglesa</option>
-                        </select>
+                        <input type="text"
+                                class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 rounded-l-none"
+                                name="jornada_laboral" id="jornada_laboral" value="{{ old('jornada_laboral') }}" required>
                     </div>
 
                     <div class="mb-4 flex flex-col sm:flex-row">
@@ -240,22 +237,21 @@
                                 class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500  rounded-l-none"
                                 name="estado_civil" value="{{ old('estado_civil') }}" id="estado_civil" required>
                         </div>
+                        {{-- edad --}}
                         <div class="flex w-full sm:w-1/3">
                             <label for="edad"
                                 class="block border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950  sm:w-auto  font-bold rounded-r-none">Edad:</label>
-                            <input type="number"
+                            <input type="text"
                                 class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 rounded-l-none"
                                 name="edad" id="edad" value="{{ old('edad') }}" required>
                         </div>
+                        {{-- genero --}}
                         <div class="flex w-full sm:w-1/3">
                             <label for="genero"
                                 class="block border-gray-300 bg-gray-200 rounded-lg p-2 text-gray-950  sm:w-auto font-bold rounded-r-none">Género:</label>
-                            <select
+                            <input type="text"
                                 class="block flex-grow border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 rounded-l-none"
-                                name="genero" id="genero">
-                                <option value="Hombre">Hombre</option>
-                                <option value="Mujer">Mujer</option>
-                            </select>
+                                name="genero" id="genero" value="{{ old('genero') }}" required>
                         </div>
 
                     </div>

@@ -30,7 +30,7 @@ return new class extends Migration
             $table->text('comunicacion_interna')->nullable(); // Comunicación interna
             $table->text('comunicacion_externa')->nullable(); // Comunicación externa
             $table->string('estado_civil')->nullable(); // Estado civil del candidato
-            $table->integer('edad')->nullable(); // Edad del candidato
+            $table->string('edad')->nullable(); // Edad del candidato
             $table->string('genero')->nullable(); // Género del candidato
             $table->text('requisitos_generales')->nullable(); // Requisitos generales
             $table->text('habilidades_fisicas')->nullable(); // Habilidades físicas
