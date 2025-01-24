@@ -64,18 +64,23 @@ class proyeccionsueldoanualcontroller extends Controller
         foreach ($request->all() as $key => $value) {
             // Log::info($value);
             for ($i = 0; $i < count($value); $i++) {
-              
-            //     // for ($i = 0; $i < $value; $i++) {
-                    proyecciondesueldoanual::updateOrCreate(
-                        ['id' => $value[$i][0]],
-                        [
-                            'proyección_de_sueldos' => $key,
-                            'mes' => $i +1,
-                            'sueldo_total_por_mes' => $value[$i][1]
-                        ]
-                    );
-            //     // }
+
+                //     // for ($i = 0; $i < $value; $i++) {
+                proyecciondesueldoanual::updateOrCreate(
+                    ['id' => $value[$i][0]],
+                    [
+                        'proyección_de_sueldos' => $key,
+                        'mes' => $i + 1,
+                        'sueldo_total_por_mes' => $value[$i][1]
+                    ]
+                );
+                //     // }
             }
+        }
+        // Log::info($plan_de_negocio->proyecciondesueldomensual);
+        $descripciones = $plan_de_negocio->proyecciondesueldomensual;
+        foreach ($descripciones as  $value) {
+            $value->proyeccionCincoAnios()->delete();
         }
     }
 

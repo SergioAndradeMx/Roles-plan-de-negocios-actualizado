@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     }
+    
     function caculartotaldesueldo() {
         let totaldesueldos = document.getElementById("totaldesueldos");
         let total = 0;
@@ -62,26 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
         totaldesueldos.innerText = "Total de Sueldos: " + total.toFixed(2);
     }
 
-    // let boton = document.getElementById("botonguardar");
-    // boton.addEventListener("click", function () {
-    //     let ruta = this.getAttribute("ruta");
-    //     fetch(ruta, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
-    //         },
-    //         body: JSON.stringify(arraydatos),
-    //     }).then(Response => {
-    //         if (Response.ok) {
-    //             alert("Datos guardados exitosamente");
-    //             location.reload(); // Refresca la página después de guardar
-    //         } else {
-    //             alert("Hubo un error al guardar los datos.");
-    //         }
-    //         console.log("Hubo error");
-    //     });
-    // });
     const toastDiv = document.createElement('div');
     toastDiv.classList.add('relative', 'z-10');
     toastDiv.setAttribute('aria-labelledby', 'modal-title');

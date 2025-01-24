@@ -66,7 +66,32 @@ document.addEventListener("DOMContentLoaded", function () {
             columnasFila[indexColumna + 1].innerHTML = '$' + sumaResultado.toFixed(2);
         } // Fin del for de columnas.
     } // Fin de la función asignar valores en la fila resultado
-
+   
+    actualizarTotal(); // Llamar a la función para actualizar el total
+    function actualizarTotal() {
+        // Obtener la fila con los totales
+        let filaTotales = document.getElementById("totales");
+        // Obtener todas las celdas de la fila
+        let celdasTotales = filaTotales.querySelectorAll('th');
+        
+        // Inicializar una variable para el total
+        let totalGeneral = 0;
+    
+        // Recorrer las celdas (excepto la primera celda que contiene el texto "Total Sueldos")
+        for (let i = 1; i < celdasTotales.length; i++) {
+            let valor = parseFloat(celdasTotales[i].innerText.replace('$', '').replace(',', ''));
+    
+            // Asegurarse de que el valor no sea NaN
+            if (!isNaN(valor)) {
+                totalGeneral += valor;
+            }
+        }
+    
+        // Actualizar la celda con el total
+        let celdaTotal = document.getElementById("total-general");
+        celdaTotal.innerText = `$${totalGeneral.toFixed(2)}`;
+    }
+    
     let boton = document.getElementById("botonguardar");
     boton.addEventListener("click", function () {
         let ruta = this.getAttribute("ruta");

@@ -17,14 +17,12 @@ class ProyeccionController extends Controller
         // $proyecciones = Proyeccion::all();
         // $totalSueldos = $proyecciones->sum('total');
         $arraydescripciondepuesto = $plan_de_negocio->descripcionpuesto;
+       
         if ($plan_de_negocio->proyecciondesueldomensual->isNotEmpty()) {
             $haydatosanules = count($plan_de_negocio->proyecciondesueldomensual->first()->proyecciondesueldoanual);
         } else {
             $haydatosanules = 0;
         }
-
-
-
         $arraydatos = [];
 
         $totaldelossueldos = 0;
@@ -34,7 +32,7 @@ class ProyeccionController extends Controller
             array_push($arraydatos, [$value->id, $value->nombre_puesto, $value->numero_plaza, ($value->sueldomensual)
                 ? $value->sueldomensual->sueldo : $value->salario_maximo, ($value->sueldomensual) ? $value->sueldomensual->id : 0]);
         }
-
+        
         $ruta = route('plan_de_negocio.proyecciones.store', $plan_de_negocio);
 
         return view('proyecciones.index', compact('arraydatos', 'totaldelossueldos', 'plan_de_negocio', 'ruta', 'haydatosanules'));
@@ -106,4 +104,5 @@ class ProyeccionController extends Controller
         // Pasar los datos a la vista
         return view('proyecciones.resumen', compact('plan_de_negocio', 'total'));
     }
+    
 }

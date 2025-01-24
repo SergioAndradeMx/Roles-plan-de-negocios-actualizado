@@ -47,11 +47,13 @@
                         @foreach ($arraydatosanuales as $iddescripciondepuesto => $itemsdescripciondepuesto)
                             @foreach ($itemsdescripciondepuesto as $nombrePertenece => $datosanuales)
                                 <tr>
-                                    <td class="px-2 py-1 border odd:bg-gray-600   text-white font-medium border-black " width="15%" id_pertenece="{{ $iddescripciondepuesto }}">
+                                    <td class="px-2 py-1 border odd:bg-gray-600   text-white font-medium border-black "
+                                        width="15%" id_pertenece="{{ $iddescripciondepuesto }}">
                                         {{ $nombrePertenece }}</td>
 
                                     @foreach ($datosanuales as $item)
-                                        <td class="border border--gray-600 border-gray-600" width="7%" id_actual={{ $item['id_anual'] }}>
+                                        <td class="border border--gray-600 border-gray-600" width="7%"
+                                            id_actual={{ $item['id_anual'] }}>
                                             <input type="number"
                                                 class="w-full border  border-black text-black rounded-sm text-xs px-0 text-right"
                                                 value="{{ $item['monto'] }}">
@@ -63,7 +65,7 @@
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <tr id="totales" class="bg-gray-800">
+                        <tr id="totales" class="bg-gray-800 text-right">
                             <th class="px-2 py-1 border border-black text-white">Total Sueldos: </th>
                             <th class="px-2 py-1 border border-black text-white"></th>
                             <th class="px-2 py-1 border border-black text-white"></th>
@@ -78,15 +80,26 @@
                             <th class="px-2 py-1 border border-black text-white"></th>
                             <th class="px-2 py-1 border border-black text-white"></th>
                         </tr>
+                        <tr id="sumatotal" class="bg-gray-800 ">
+                            <!-- Celdas vacías para dejar espacio -->
+                            <th colspan="12" class="px-2 py-1 border border-black text-white text-right">
+                                Total Sueldos:
+                            </th>
+                            <!-- Celda para el total -->
+                            <th class="px-2 py-1 border text-right border-black text-white " id="total-general">
+                                $0.00
+                            </th>
+                        </tr>
                     </tfoot>
                 </table>
+                <div class="flex justify-center   px-10 py-2 items-center ml-4 sm:ml-[5%]">
+                    <button ruta="{{ $ruta }}" id="botonguardar" type="button"
+                        class=" text-white px-6 py-2 rounded hover:border-green-600  text-center text-xl bg-green-700 border-green-600 hover:bg-green-800">Guardar</button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="flex justify-center   px-10 py-2 items-center ml-4 sm:ml-[5%]">
-        <button ruta="{{ $ruta }}" id="botonguardar" type="button"
-            class=" text-white px-6 py-2 rounded hover:border-green-600  text-center text-xl bg-green-700 border-green-600 hover:bg-green-800">Guardar</button>
-    </div>
+
 </body>
 
 </html>
