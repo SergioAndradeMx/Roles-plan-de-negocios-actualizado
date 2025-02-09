@@ -40,10 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (input.value != arraydatos[id_pertenece][columnaPosición - 1][1]) {
                     arraydatos[id_pertenece][columnaPosición - 1][1] = parseFloat(input.value);
                     asignaciónResultadoFila(columnaResultado, arraydatos);
+                    actualizarTotal();
                 }
             } else {
                 input.value = 0;
                 arraydatos[id_pertenece][columnaPosición - 1][1] = 0;
+                asignaciónResultadoFila(columnaResultado, arraydatos);
+                actualizarTotal();
                 alert("No se permite Vacio")
             }
         });

@@ -45,7 +45,7 @@ class DescripcionPuestoController extends Controller
             // Validación
             $validatedData = $request->validate([
                 'nivel' => 'required|string',
-                'codigo' => 'required|string|max:255|unique:descripcion_puestos,codigo',
+                'codigo' => 'required|string|max:255',
                 'unidad_administrativa' => 'required|string|max:255',
                 'nombre_puesto' => 'required|string|max:255',
                 'descripcion_generica' => 'required|string',

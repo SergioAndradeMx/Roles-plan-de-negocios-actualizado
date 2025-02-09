@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use PgSql\Lob;
 use App\Models\Proyeccion;
+use function Ramsey\Uuid\v1;
 use Illuminate\Http\Request;
 use App\Models\Plan_de_negocio;
-use Illuminate\Support\Facades\Log;
 
-use function Ramsey\Uuid\v1;
+use Illuminate\Support\Facades\Log;
+use App\Models\ProyeccionCincoAnios;
+use App\Models\proyecciondesueldoanual;
 
 class ProyeccionController extends Controller
 {
@@ -17,7 +19,9 @@ class ProyeccionController extends Controller
         // $proyecciones = Proyeccion::all();
         // $totalSueldos = $proyecciones->sum('total');
         $arraydescripciondepuesto = $plan_de_negocio->descripcionpuesto;
-       
+        if (count($plan_de_negocio->descripcionpuesto) === 0) {
+            return redirect()->back()->with('mensaje', 'No se pueden ingresar hasta que se guarden los datos de sueldo.');
+        }
         if ($plan_de_negocio->proyecciondesueldomensual->isNotEmpty()) {
             $haydatosanules = count($plan_de_negocio->proyecciondesueldomensual->first()->proyecciondesueldoanual);
         } else {
@@ -28,7 +32,7 @@ class ProyeccionController extends Controller
         $totaldelossueldos = 0;
         foreach ($arraydescripciondepuesto as  $value) {
             $totaldelossueldos += ($value->sueldomensual)
-                ? $value->sueldomensual->total : $value->salario_maximo;
+                ? $value->sueldomensual->total : $value->salario_maximo * $value->jornada_laboral;
             array_push($arraydatos, [$value->id, $value->nombre_puesto, $value->numero_plaza, ($value->sueldomensual)
                 ? $value->sueldomensual->sueldo : $value->salario_maximo, ($value->sueldomensual) ? $value->sueldomensual->id : 0]);
         }
@@ -94,15 +98,32 @@ class ProyeccionController extends Controller
         // Obtener todas las proyecciones y calcular los totales
         // dd(count($plan_de_negocio->proyecciondesueldomensual));
         $sueldos = $plan_de_negocio->proyecciondesueldomensual;
+        
+        if (count($plan_de_negocio->descripcionpuesto) === 0) {
+            return redirect()->back()->with('mensaje', 'No se pueden ingresar hasta que se guarden los datos de sueldo.');
+        }
         if (count($plan_de_negocio->descripcionpuesto) > count($sueldos)) {
             return redirect()->back()->with('mensaje', 'No se pueden ingresar hasta que se guarden los datos de sueldo.');
         }
-        $total = 0;
+        
+        $totalmensual = 0;
+        $totalanual= 0;
+        $totalcincoanios= 0;
         foreach ($sueldos as $value) {
-            $total += $value->total;
+       
+            $datosanual = proyecciondesueldoanual::where('proyección_de_sueldos', $value->id)->get();
+            $datoscincoanios = ProyeccionCincoAnios::where('proyección_de_sueldos', $value->id)->get();
+            foreach ($datosanual as $anual) {
+                $totalanual += $anual->sueldo_total_por_mes;
+            }
+            foreach ($datoscincoanios as  $cincoanios) {
+                $totalcincoanios += $cincoanios->sueldo_total_anual;
+            }
+            $totalmensual += $value->total;
+            
         }
         // Pasar los datos a la vista
-        return view('proyecciones.resumen', compact('plan_de_negocio', 'total'));
+        return view('proyecciones.resumen', compact('plan_de_negocio', 'totalmensual','totalanual','totalcincoanios'));
     }
     
 }

@@ -74,24 +74,24 @@
                                     <td class="border px-4 py-2 border-black text-white font-medium">Total de Sueldos
                                         Mensuales:</td>
                                     <td class="border px-4 py-2 text-right border-black text-white font-medium ">
-                                        ${{ number_format($total, 2) }}</td>
+                                        ${{ number_format($totalmensual , 2) }}</td>
                                 </tr>
                                 <tr class="border-b bg-gray-500 transition text-white font-medium">
                                     <td class="border px-4 py-2 border-black">Total de Sueldos Anuales:</td>
                                     <td class="border px-4 py-2 text-right border-black text-white font-medium">
-                                        $<span id="totalSueldoMensual"></span></td>
+                                        ${{ number_format($totalanual, 2) }}</td>
                                 </tr>
                                 <tr class="border-b transition bg-gray-600">
                                     <td class="border px-4 py-2 border-black text-white font-medium">Total de Sueldos en
                                         5 Años:</td>
                                     <td class="border px-4 py-2 text-right border-black text-white font-medium">
-                                        $<span id="totalSueldoCincoAnos"></span></td>
+                                        ${{ number_format($totalcincoanios, 2) }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <script>
+                {{-- <script>
                     // Función para obtener los sueldos desde el servidor
                     async function obtenerSueldosTotales() {
                         try {
@@ -116,7 +116,7 @@
             
                     // Llamar a la función cuando la página esté lista
                     window.onload = obtenerSueldosTotales;
-                </script>
+                </script> --}}
                 <!-- Columna 2: Botón Proyección Anual -->
                 <div class="col-span-1 flex justify-center items-center">
                     <a href="{{ route('plan_de_negocio.proyeccionsueldoanual.index', $plan_de_negocio) }}"

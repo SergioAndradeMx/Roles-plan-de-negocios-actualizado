@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var filaResultado = document.getElementById("totales");
     var columnaResultado = filaResultado.children;
     asignaciónResultadoFila(columnaResultado, arraydatos);
+   
     function agregarEventInputs(input) {
         input.addEventListener("blur", function () {
             let columnaTd = input.closest('td');
@@ -39,11 +40,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     arraydatos[id_pertenece][columnaPosición - 1][1] = parseFloat(input.value);
                     asignaciónResultadoFila(columnaResultado, arraydatos);
                 }
+                actualizarTotal();
             } else {
                 input.value = 0;
                 arraydatos[id_pertenece][columnaPosición - 1][1] = 0;
+                asignaciónResultadoFila(columnaResultado, arraydatos);
+                actualizarTotal();
                 alert("No se permite Vacio")
             }
+            
         });
     }
     actualizarTotal(); // Llamar a la función para actualizar el total

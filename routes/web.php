@@ -122,19 +122,19 @@ Route::middleware('auth')->group(function () {
     
     
     
-    Route::get('/api/sueldos', function () {
-        // Obtener los sueldos totales mensuales
-        $sueldosMensuales = DB::table('sueldo_anual')->pluck('sueldo_total_por_mes');
+    // Route::get('/api/sueldos', function () {
+    //     // Obtener los sueldos totales mensuales
+    //     $sueldosMensuales = DB::table('sueldo_anual')->pluck('sueldo_total_por_mes');
         
-        // Obtener los sueldos totales anuales
-        $sueldosAnuales = DB::table('proyeccion_cinco_anos')->pluck('sueldo_total_anual');
+    //     // Obtener los sueldos totales anuales
+    //     $sueldosAnuales = DB::table('proyeccion_cinco_anos')->pluck('sueldo_total_anual');
         
-        // Retornar ambos conjuntos de sueldos en un único array
-        return response()->json([
-            'sueldos_mensuales' => $sueldosMensuales,
-            'sueldos_anuales' => $sueldosAnuales
-        ]);
-    });
+    //     // Retornar ambos conjuntos de sueldos en un único array
+    //     return response()->json([
+    //         'sueldos_mensuales' => $sueldosMensuales,
+    //         'sueldos_anuales' => $sueldosAnuales
+    //     ]);
+    // });
 
   
     //Route::resource('organigramas', OrganigramaController::class);

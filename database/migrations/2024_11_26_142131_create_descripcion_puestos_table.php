@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id(); // ID autoincrementable
             $table->foreignId('plan_de_negocio_id')->constrained('plan_de_negocios')->onDelete('cascade'); // Relación con la tabla plan_de_negocios
             $table->string('nivel'); // Nivel del puesto
-            $table->string('codigo')->unique(); // Código que el usuario puede ingresar manualmente y debe ser único
+            $table->string('codigo'); // Código que el usuario puede ingresar manualmente y debe ser único
             $table->string('unidad_administrativa'); // Unidad administrativa del puesto
             $table->string('nombre_puesto'); // Nombre del puesto
             $table->text('descripcion_generica'); // Descripción general
